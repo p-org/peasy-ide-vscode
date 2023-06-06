@@ -1,0 +1,37 @@
+{
+  "name": "p-lang",
+  "displayName": "P-Language",
+  "description": "syntax highlighting",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.78.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "p",
+        "aliases": [
+          "P",
+          "p"
+        ],
+        "extensions": [
+          ".p"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "p",
+        "scopeName": "source.p",
+        "path": "./syntaxes/p.tmLanguage.json"
+      }
+    ]
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}
