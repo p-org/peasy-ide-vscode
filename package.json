@@ -1,0 +1,168 @@
+{
+  "name": "p-compile",
+  "displayName": "p_compile",
+  "description": "P Compiling",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.78.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "taskDefinitions": [
+      {
+          "type": "Errors"
+      }
+    ],
+    "problemMatchers": [
+      {
+        "name": "Type",
+        "fileLocation": ["search", {"include": ["${workspaceFolder}"]}],
+        "pattern": [
+          {
+              "regexp": "(?:\\[Error:\\])"
+          }, 
+          {
+              "regexp": "\\[([a-zA-Z\\/\\.]+):([0-9]+):([0-9]+)\\](.*)", 
+              "file": 1,
+              "line": 2,
+              "column": 3, 
+              "message": 4
+          }
+        ]
+
+      }, 
+      {
+        "name": "Parse",
+        "fileLocation": ["search", {"include": ["${workspaceFolder}"]}],
+        "pattern": [
+          {
+              "regexp": "(?:\\[Parser Error:\\])"
+          }, 
+          {
+              "regexp": "\\[(.*)\\]\\s+(?:parse error:)\\s+(?:line\\s+)([0-9]+)\\:([0-9]+)(.+)", 
+              "file": 1,
+              "line": 2,
+              "column": 3, 
+              "message": 4
+          }
+          ]
+      }
+    ],
+    "themes": [
+      {
+        "label": "P's Custom Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/P Theme-color-theme.json"
+      }
+    ], 
+    "keybindings": [
+      {
+        "command": "p.run",
+        "key": "f5",
+        "mac": "f5"
+      }
+    ],
+    "configuration": {
+      "type": "object", 
+      "title": "P extension configuration", 
+      "properties": {
+        "p.languageServerLaunchArgs": {
+          "type": "array", 
+          "items": {
+            "type": "string"
+          }, 
+          "default": [], 
+          "description": "Optional array of strings to pass to the language server."
+        }, 
+        "p.runArgs": {
+          "type": "array", 
+          "items": {
+            "type": "string"
+          }, 
+          "default": [], 
+          "description": "Optional array of strings as P run and build arguments."
+        }, 
+        "p.dotnetExecutablePath": {
+          "type": "string",
+          "description": "The absolute path of the dotnet binary. Only necessary if dotnet is not in system PATH (you'll get an error if that's the case)."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "p-compile.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "p.run",
+        "title": "P: Run"
+      }, 
+      {
+        "command": "workbench.errors",
+        "title": "Error"
+      }
+    ], 
+    "languages": [
+      {
+        "id": "p",
+        "aliases": [
+          "P",
+          "p"
+        ],
+        "extensions": [
+          ".p", 
+          ".pproj"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "p",
+        "scopeName": "source.p",
+        "path": "./syntaxes/p.tmLanguage.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.78.0",
+    "@types/which": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
+    "@vscode/test-electron": "^2.3.0",
+    "eslint": "^8.39.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-import": "^2.27.5",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "webpack": "^5.81.0",
+    "webpack-cli": "^5.0.2"
+  },
+  "dependencies": {
+    "cross-fetch": "^3.1.6",
+    "extract-zip": "^2.0.1",
+    "vscode-languageclient": "^8.1.0",
+    "vscode-uri": "^3.0.7",
+    "which": "^3.0.1",
+    "which-module": "^2.0.1"
+  }
+}
