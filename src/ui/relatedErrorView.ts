@@ -24,10 +24,11 @@ const RelatedErrorDecoration: vscode.DecorationRenderOptions = {
   }
 
 export default class RelatedErrorView {
-    private readonly errorDecoration = vscode.window.createTextEditorDecorationType(RelatedErrorDecoration);
     private readonly relatedViewByDocument = new Map<string, IRelatedErrorView>();
+    static watcher: any = vscode.workspace.createFileSystemWatcher("**/*.p", false, false, false);;
 
-    private constructor() {}
+    private constructor() {
+    }
     private static instance: RelatedErrorView;
 
     public static createAndRegister(context: vscode.ExtensionContext): RelatedErrorView {
@@ -35,7 +36,7 @@ export default class RelatedErrorView {
         
         context.subscriptions.push(
             //adds errors
-            vscode.window.onDidChangeActiveTextEditor(editor => RelatedErrorView.instance.refreshRelatedErrors()),
+            this.watcher.onDidChange(async () => await RelatedErrorView.instance.refreshRelatedErrors()),
             RelatedErrorView.instance
         );
         RelatedErrorView.instance.updateRelatedErrors();
@@ -43,6 +44,7 @@ export default class RelatedErrorView {
     }
 
     public updateRelatedErrors(): void {
+      //finds the scope of the current Task
       var scope: any;
       if (vscode.workspace.workspaceFolders === undefined) {
         scope = vscode.TaskScope.Workspace;
@@ -61,6 +63,8 @@ export default class RelatedErrorView {
       t.presentationOptions.echo = false;
       t.presentationOptions.focus = true;
       t.presentationOptions.reveal = vscode.TaskRevealKind.Never;
+
+      
       var tasks: Array<vscode.Task> = [];
       tasks.push(t);
       vscode.tasks.registerTaskProvider('Errors', {
@@ -78,8 +82,8 @@ export default class RelatedErrorView {
     public async refreshRelatedErrors(): Promise<void> {
       for (var t of await vscode.tasks.fetchTasks()) {
         if (t.name === "Errors") {
-          vscode.tasks.executeTask(t);
-          vscode.tasks.onDidEndTask
+          var exec: vscode.TaskExecution = await vscode.tasks.executeTask(t);
+
         }
       }
       console.log("No Errors Task");
@@ -90,6 +94,6 @@ export default class RelatedErrorView {
     }
 
     public dispose(): void {
-    this.errorDecoration.dispose();
+      //not sure what to place here
     }
 }

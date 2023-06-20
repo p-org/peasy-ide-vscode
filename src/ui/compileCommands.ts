@@ -19,17 +19,6 @@ export default class CompileCommands {
 }
 
 async function buildOrRun(useCustomArgs: boolean, run: boolean): Promise<boolean> {
-  const document = window.activeTextEditor?.document;
-  if(document == null) {
-    return false;
-  }
-  if(document.isUntitled) {
-    commands.executeCommand(VSCodeCommands.SAVEAS);
-    return false;
-  }
-  if(!await document.save()) {
-    return false;
-  }
   const compilerCommand = "p compile";
   if(compilerCommand == null) {
     return false;
@@ -38,8 +27,18 @@ async function buildOrRun(useCustomArgs: boolean, run: boolean): Promise<boolean
   return true;
 }
 
+//Runs the current command in the terminal, outside of the "Errors Task" terminal.
 function runCommandInTerminal(command: string): void {
-  const terminal = window.activeTerminal ?? window.createTerminal();
+  let terminal = window.activeTerminal ?? window.createTerminal();
+  const activeTerminalName = window.activeTerminal?.name;
+  if (terminal.name == "Errors") {
+    for (let i = 0; i<window.terminals.length; i++) {
+      if (window.terminals.at(i)?.name != 'Errors') {
+        terminal = window.terminals.at(i) ?? window.createTerminal();
+        break;
+      }
+    }
+  }
   terminal.show();
   terminal.sendText(command);
 }

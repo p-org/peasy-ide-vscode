@@ -13,7 +13,14 @@
   "contributes": {
     "taskDefinitions": [
       {
-          "type": "Errors"
+          "type": "Errors", 
+          "required": ["background"],
+          "properties": {
+            "background": {
+              "type":"object", 
+              "description": "background format"
+            }
+          }
       }
     ],
     "problemMatchers": [

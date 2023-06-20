@@ -84,66 +84,11 @@
     },
     {
       "name": "keyword.control",
-      "match": "\\bgoto\\b|\\bforeach\\b|\\bon\\b|\\bdo\\b|\\belse\\b|\\bwhile\\b|\\breturn\\b|\\bbreak\\b|\\bcontinue\\b"
+      "match": "\\bgoto\\b|\\bforeach\\b|\\bon\\b|\\bdo\\b|\\belse\\b|\\bwhile\\b|\\breturn\\b|\\bbreak\\b|\\bcontinue\\b|\\bignore\\b|\\bdefer\\b"
     },
     {
       "name": "keyword.statement.other",
       "match": "\\bassert\\b|\\bprint\\b|\\bnew\\b|\\braise\\b|\\bsend\\b|\\bannounce\\b"
-    },
-    {
-      "name": "expression.format",
-      "begin": "(\\bformat\\b)\\s*\\(",
-      "beginCaptures": {
-        "1": {
-          "name": "support.function"
-        }
-      },
-      "end": "\\)",
-      "patterns": [
-        {
-          "include": "#strings"
-        }
-      ]
-    },
-    {
-      "name": "expression.if",
-      "begin": "(\\bif\\b)\\(",
-      "beginCaptures": {
-        "1": {
-          "name": "keyword.control"
-        }
-      },
-      "end": "\\)",
-      "patterns": [
-        {
-          "include": "#operators"
-        },
-        {
-          "include": "#constants"
-        },
-        {
-          "include": "#strings"
-        },
-        {
-          "include": "#attributes"
-        }
-      ]
-    },
-    {
-      "name": "support.function",
-      "match": "\\bhalt\\b|\\bthis\\b|\\bnew\\b|\\bas\\b|\\bto\\b|\\bchoose\\b"
-    },
-    {
-      "name": "support.function",
-      "match": "\\$"
-    },
-    {
-      "name": "entity.name.function.primitive",
-      "match": "\\bsizeof\\b|\\bkeys\\b|\\bvalues\\b|\\bin\\b|\\bdefault\\b"
-    },
-    {
-      "name": "storage.type",
-      "match": "\\b\\w*Interface\\b|\\bI[A-Z]\\w*\\b"
     },
     {
       "include": "#comments"
@@ -153,6 +98,9 @@
     },
     {
       "include": "#functiondeclare"
+    },
+    {
+      "include": "#expressions"
     },
     {
       "include": "#functioncall"
@@ -177,6 +125,68 @@
     }
   ],
   "repository": {
+    "expressions": {
+      "patterns": [
+        {
+          "name": "expression.format",
+          "begin": "(\\bformat\\b)\\s*\\(",
+          "beginCaptures": {
+            "1": {
+              "name": "support.function"
+            }
+          },
+          "end": "\\)",
+          "patterns": [
+            {
+              "include": "#strings"
+            }
+          ]
+        },
+        {
+          "name": "expression.if",
+          "begin": "(\\bif\\b)\\(",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control"
+            }
+          },
+          "end": "\\)",
+          "patterns": [
+            {
+              "include": "#operators"
+            },
+            {
+              "include": "#constants"
+            },
+            {
+              "include": "#strings"
+            },
+            {
+              "include": "#attributes"
+            },
+            {
+              "include": "#expressions"
+            }
+          ]
+        },
+        {
+          "name": "support.function",
+          "match": "\\bhalt\\b|\\bthis\\b|\\bnew\\b|\\bas\\b|\\bto\\b|\\bchoose\\b"
+        },
+        {
+          "name": "support.function",
+          "match": "\\$"
+        },
+        {
+          "name": "entity.name.function.primitive",
+          "match": "\\bsizeof\\b|\\bkeys\\b|\\bvalues\\b|\\bin\\b|\\bdefault\\b"
+        },
+        {
+          "name": "storage.type",
+          "match": "\\b\\w*Interface\\b|\\bI[A-Z]\\w*\\b"
+        }
+      ]
+    },
     "operators": {
       "patterns": [
         {
@@ -223,12 +233,6 @@
           "patterns": [
             {
               "include": "#colon_parameters"
-            },
-            {
-              "include": "#constants"
-            },
-            {
-              "include": "#strings"
             }
           ]
         },
@@ -298,6 +302,9 @@
       "patterns": [
         {
           "include": "#colon_parameters"
+        },
+        {
+          "include": "#"
         }
       ]
     },
@@ -313,6 +320,12 @@
       "patterns": [
         {
           "include": "#colon_parameters"
+        },
+        {
+          "include": "#expressions"
+        },
+        {
+          "include": "#attributes"
         }
       ]
     },
@@ -358,16 +371,16 @@
     },
     "attributes": {
       "name": "meta.structure.attribute",
-      "match": "([[:alpha:]_]+)\\.([[:alpha:]_]+)",
+      "match": "\\.([[:alpha:]_]+)",
       "captures": {
-        "2": {
+        "1": {
           "name": "storage.type"
         }
       }
     },
     "colon_parameters": {
       "name": "meta.parameters",
-      "match": ":([\\w_]+)",
+      "match": ":\\s*([\\w_]+)",
       "captures": {
         "1": {
           "name": "storage.type"

@@ -833,7 +833,7 @@
 		{
 			"scope": "entity.name.function.primitive",
 			"settings": {
-				"foreground": "#0B3D0F",
+				"foreground": "#047c0e",
 				"fontStyle": ""
 			}
 		},

@@ -19,8 +19,7 @@ export class GitHubReleaseInstaller {
 
   public async getExecutable(server: boolean, newArgs: string[]): Promise<Executable | undefined> {
     const { path: dotnetExecutable } = await getDotnetExecutablePath();
-    newArgs.unshift('server');
-    const standaloneServerpath = "/Users/esthersu/P/PLanguageServer/bin/Debug/net7.0/PLanguageServer.dll";
+    const standaloneServerpath = "/Users/esthersu/P/Binaries/net7.0/PDriver.dll";
     return { command: dotnetExecutable, args: [ standaloneServerpath, ...newArgs ] };
   }
 

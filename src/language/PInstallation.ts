@@ -21,14 +21,10 @@ export class PInstaller {
     }
     
     public async getCliExecutable(server: boolean, newArgs: string[]): Promise<Executable> {
-
-    
         const githubExecutable = await new GitHubReleaseInstaller(this.context, this.statusOutput).getExecutable(server, newArgs);
         if(githubExecutable) {
           return githubExecutable;
-        }
-    
-    
+        } 
         throw new Error('Could not install a P language server.');
       }
 
