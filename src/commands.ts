@@ -1,5 +1,6 @@
 export namespace PCommands {
-    export const RUN = 'p.run';
+    export const RUN = 'p.Run';
+    export const RUN2 = 'Run_Report';
   }
   
    export namespace VSCodeCommands {

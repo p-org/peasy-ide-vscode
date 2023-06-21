@@ -47,6 +47,6 @@ export class PLanguageClient extends LanguageClient {
         }
       }
     };
-    return new PLanguageClient(LanguageServerId, 'LOML IS SAMEEM', serverOptions, clientOptions, diagnosticsListeners);
+    return new PLanguageClient(LanguageServerId, LanguageServerId, serverOptions, clientOptions, diagnosticsListeners);
   } 
 }

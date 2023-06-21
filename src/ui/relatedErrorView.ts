@@ -25,8 +25,9 @@ const RelatedErrorDecoration: vscode.DecorationRenderOptions = {
 
 export default class RelatedErrorView {
     private readonly relatedViewByDocument = new Map<string, IRelatedErrorView>();
-    static watcher: any = vscode.workspace.createFileSystemWatcher("**/*.p", false, false, false);;
-
+    static watcherP: any = vscode.workspace.createFileSystemWatcher("**/*.p", false, false, false);;
+    static watcher_pproj: any = vscode.workspace.createFileSystemWatcher("**/*.pproj", false, false, false);;
+    
     private constructor() {
     }
     private static instance: RelatedErrorView;
@@ -36,7 +37,8 @@ export default class RelatedErrorView {
         
         context.subscriptions.push(
             //adds errors
-            this.watcher.onDidChange(async () => await RelatedErrorView.instance.refreshRelatedErrors()),
+            this.watcherP.onDidChange(async () => await RelatedErrorView.instance.refreshRelatedErrors()),
+            this.watcher_pproj.onDidChange(async () => await RelatedErrorView.instance.refreshRelatedErrors()),
             RelatedErrorView.instance
         );
         RelatedErrorView.instance.updateRelatedErrors();
@@ -52,36 +54,14 @@ export default class RelatedErrorView {
       else {
         scope = vscode.workspace.workspaceFolders[0];
       }
-      var t: vscode.Task = new vscode.Task (
-        {type: 'shell'}, // this is the same type as in tasks.json
-        scope , // The workspace folder
-        'Errors', // how you name the task
-        'MyTask', // Shows up as MyTask: name 
-        new vscode.ShellExecution("p compile"),
-        ["Type", "Parse"] // list of problem matchers (can use $gcc or other pre-built matchers, or the ones defined in package.json)
-      );
-      t.presentationOptions.echo = false;
-      t.presentationOptions.focus = true;
-      t.presentationOptions.reveal = vscode.TaskRevealKind.Never;
 
       
-      var tasks: Array<vscode.Task> = [];
-      tasks.push(t);
-      vscode.tasks.registerTaskProvider('Errors', {
-        provideTasks: () => {
-          return tasks;
-        },
-        resolveTask(_task: vscode.Task): vscode.Task | undefined {
-          // as far as I can see from the documentation this just needs to return undefined.
-          return undefined;
-        }
-      });
       this.refreshRelatedErrors();
     }
 
     public async refreshRelatedErrors(): Promise<void> {
       for (var t of await vscode.tasks.fetchTasks()) {
-        if (t.name === "Errors") {
+        if (t.name === "Run_Report") {
           var exec: vscode.TaskExecution = await vscode.tasks.executeTask(t);
 
         }

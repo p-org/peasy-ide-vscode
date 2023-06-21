@@ -792,21 +792,21 @@
 			"scope": "storage.type",
 			"settings": {
 				"foreground": "#66D9EF",
-				"fontStyle": "italic"
+				"fontStyle": ""
 			}
 		},
 		{
 			"scope": "storage.type.primitives",
 			"settings": {
 				"foreground": "#765ad1",
-				"fontStyle": "italic"
+				"fontStyle": ""
 			}
 		},
 		{
 			"scope": "storage.type.other",
 			"settings": {
 				"foreground": "#66D9EF",
-				"fontStyle": "italic"
+				"fontStyle": ""
 			}
 		},
 		{
@@ -841,7 +841,7 @@
 			"scope": "variable.parameter",
 			"settings": {
 				"foreground": "#FD971F",
-				"fontStyle": "italic"
+				"fontStyle": ""
 			}
 		},
 		{
@@ -876,7 +876,7 @@
 			"scope": "support.type, support.class",
 			"settings": {
 				"foreground": "#66D9EF",
-				"fontStyle": "italic"
+				"fontStyle": ""
 			}
 		},
 		{
@@ -988,7 +988,7 @@
 			"scope": "markup.quote.markdown",
 			"settings": {
 				"foreground": "#75715E",
-				"fontStyle": "italic"
+				"fontStyle": ""
 			}
 		},
 		{
