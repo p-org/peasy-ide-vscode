@@ -38,7 +38,6 @@ patterns:
 # Other rules in P
 - include: '#comments'
 - include: "#primitive_func"
-- include: "#control_statements"
 - include: "#expressions"
 - include: "#statements"
 - include: "#predefined_types"
@@ -47,7 +46,6 @@ patterns:
 - include: "#functioncall"
 - include: "#tuples"
 - include: "#attributes"
-- include: "#othertypes"
 - include: "#constants"
 - include: "#operators"
 - include: "#strings"
@@ -72,7 +70,7 @@ repository:
         name: entity.name.function.primitive
     end: \)
     patterns:
-    - include: "#othertypes"
+    - include: "#expressions"
   expressions:
     patterns:
     - name: expression.format
@@ -165,7 +163,6 @@ repository:
     patterns:
 
       - include: "#colon_parameters"
-      - include: "#"
   functioncall:
     name: meta.method.functioncall
     begin: ([[:alpha:]_][[:alnum:]_]*)\s*(\()
