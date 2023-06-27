@@ -1,7 +1,9 @@
 {
+
   "name": "p-compile",
   "displayName": "p_compile",
   "description": "P Compiling",
+
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.78.0"
@@ -38,7 +40,12 @@
               "column": 3, 
               "message": 4
           }
-        ]
+        ], 
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Parsing",
+          "endsPattern": "~"
+        }
 
       }, 
       {
@@ -55,7 +62,12 @@
               "column": 3, 
               "message": 4
           }
-          ]
+          ], 
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "Parsing",
+            "endsPattern": "~"
+          }
       }
     ],
     "themes": [
@@ -67,8 +79,9 @@
     ], 
     "keybindings": [
       {
-        "command": "p.run",
-        "key": "f5",
+        "command": "workbench.action.tasks.runTask",
+        "args": "Run_Report",
+        "key": "f5", 
         "mac": "f5"
       }
     ],
@@ -76,6 +89,17 @@
       "type": "object", 
       "title": "P extension configuration", 
       "properties": {
+        "p-vscode.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "verbose",
+          "description": "Traces the communication between VS Code and the language server."
+        },
         "p.languageServerLaunchArgs": {
           "type": "array", 
           "items": {
@@ -104,14 +128,15 @@
         "title": "Hello World"
       },
       {
-        "command": "p.run",
-        "title": "P: Run"
+        "command": "p.definition",
+        "title": "P: Go to Definition"
       }, 
       {
         "command": "workbench.errors",
         "title": "Error"
       }
     ], 
+
     "languages": [
       {
         "id": "p",
@@ -122,6 +147,7 @@
         "extensions": [
           ".p", 
           ".pproj"
+
         ],
         "configuration": "./language-configuration.json"
       }

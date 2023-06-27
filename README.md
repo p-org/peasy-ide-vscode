@@ -1,6 +1,7 @@
 # peasy-ide-vscode
 Peasy: An Intuitive Development Environment for P
 
+
 This is the IDE extension for P specifically geared for VS Code. 
 
 Preliminary instructions to install this extension:
@@ -17,6 +18,7 @@ Further P Extension Support:
 2. Use P's Custom Theme by selecting with the dropdown at Code > Settings > Theme > Color Theme.\
 3. P should now support Errors that occur during compilation in the Problems panel. 
 
+
 ## Features
 
 Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
@@ -24,7 +26,6 @@ Describe specific features of your extension including screenshots of your exten
 For example if there is an image subfolder under your extension project workspace:
 
 \!\[feature X\]\(images/feature-x.png\)
-![Client Machine Example](./images/client_machine.png?raw=true)
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
@@ -47,9 +48,10 @@ This extension contributes the following settings:
 Calling out known issues can help limit users opening duplicate issues against your extension.
 
 ## Release Notes
-### 1.0.0
+
 
 Initial release of Syntax Highlighting, Compilation upon pressing F + 5, a P Theme File, and Problem Reporting
+
 
 ### 1.0.1
 

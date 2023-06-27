@@ -53,7 +53,7 @@ class ExtensionRuntime {
 
 	public async initialize(): Promise<void> {
 		//Initialize Runtime
-		// await this.startClientAndWaitforVersion();
+		//await this.startClientAndWaitforVersion();
 		createAndRegisterPIntegration(this.installer);
 		this.statusOutput.appendLine('P is ready');
 	}
