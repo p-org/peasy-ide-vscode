@@ -41,23 +41,10 @@ export default class RelatedErrorView {
             this.watcher_pproj.onDidChange(async () => await RelatedErrorView.instance.refreshRelatedErrors()),
             RelatedErrorView.instance
         );
-        RelatedErrorView.instance.updateRelatedErrors();
+        RelatedErrorView.instance.refreshRelatedErrors();
         return RelatedErrorView.instance;
     }
 
-    public updateRelatedErrors(): void {
-      //finds the scope of the current Task
-      var scope: any;
-      if (vscode.workspace.workspaceFolders === undefined) {
-        scope = vscode.TaskScope.Workspace;
-      }
-      else {
-        scope = vscode.workspace.workspaceFolders[0];
-      }
-
-      
-      this.refreshRelatedErrors();
-    }
 
     public async refreshRelatedErrors(): Promise<void> {
       for (var t of await vscode.tasks.fetchTasks()) {

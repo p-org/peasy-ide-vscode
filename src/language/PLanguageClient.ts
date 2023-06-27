@@ -22,6 +22,7 @@ export class PLanguageClient extends LanguageClient {
 
   private constructor(id: string, name: string, serverOptions: ServerOptions, clientOptions: LanguageClientOptions,
     private readonly diagnosticsListeners: DiagnosticListener[], forceDebug?: boolean) {
+      
     super(id, name, serverOptions, clientOptions, forceDebug);
     this.diagnosticsListeners = diagnosticsListeners;
   }
@@ -47,6 +48,13 @@ export class PLanguageClient extends LanguageClient {
         }
       }
     };
+
     return new PLanguageClient(LanguageServerId, LanguageServerId, serverOptions, clientOptions, diagnosticsListeners);
-  } 
+  }
+
+  // write a onpublishdiagnostics function
+  public onPublishDiagnostics(callback: (uri: Uri, diagnostics: Diagnostic[]) => void): void {
+    this.diagnosticsListeners.push(callback);
+  }
+  
 }

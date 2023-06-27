@@ -5,9 +5,10 @@ import { window, commands} from 'vscode';
 import { PCommands, VSCodeCommands} from '../commands';
 
 
-
+//Class is DEPRECATED right now. Only keeping in case it becomes useful.
 // const OutputPathArg = '--output';
 //This class runs commands in the terminal based on Compile Command (example: F5 = "p compile")
+
 export default class CompileCommands {
   public static createAndRegister(): CompileCommands {
     commands.registerCommand(PCommands.RUN, () => compile(false, true));

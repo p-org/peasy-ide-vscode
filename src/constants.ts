@@ -1,5 +1,5 @@
 export namespace LanguageConstants {
-    export const Id = 'P';
+    export const Id = 'p';
   }
   
   export namespace ExtensionConstants {

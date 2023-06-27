@@ -1,7 +1,9 @@
 {
+
   "name": "p-compile",
   "displayName": "p_compile",
   "description": "P Compiling",
+
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.78.0"
@@ -126,14 +128,15 @@
         "title": "Hello World"
       },
       {
-        "command": "p.Run",
-        "title": "P: Run"
+        "command": "p.definition",
+        "title": "P: Go to Definition"
       }, 
       {
         "command": "workbench.errors",
         "title": "Error"
       }
     ], 
+
     "languages": [
       {
         "id": "p",
@@ -144,6 +147,7 @@
         "extensions": [
           ".p", 
           ".pproj"
+
         ],
         "configuration": "./language-configuration.json"
       }
