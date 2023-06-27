@@ -7,20 +7,8 @@
   "uuid": "02d90f6f-553b-4a22-a121-a8ddeb6dade4",
   "patterns": [
     {
-      "name": "meta.vardecl",
-      "match": "(\\bvar\\b)\\s*([\\w'?]+\\b(?!<))?\\s*",
-      "captures": {
-        "1": {
-          "name": "keyword.statement.structural"
-        },
-        "2": {
-          "name": "variable"
-        }
-      }
-    },
-    {
       "name": "meta.typedecl",
-      "match": "(\\btype\\b)\\s*([\\w'?]+\\b(?!<))?\\s*",
+      "match": "(\\btype\\b)\\s+([\\w_]+\\b)\\s*",
       "captures": {
         "1": {
           "name": "keyword.statement.structural"
@@ -31,38 +19,49 @@
       }
     },
     {
-      "name": "keyword.statement.structural",
-      "match": "\\bvar\\b|\\bstate\\b|\\bhot\\b|\\bcold\\b|\\bstart\\b|\\bspec\\b|\\bcase\\b|\\bmodule\\b|\\btest\\b|\\bmain\\b|\\bfun\\b|\\bobserves\\b|\\bentry\\b|\\bexit\\b|\\bwith\\b|\\bunion\\b|\\main\\b|\\btype\\b"
+      "name": "meta.enumdecl",
+      "begin": "(\\benum\\b)\\s*([\\w_]+\\b)\\s+({)",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.type.primitives"
+        },
+        "2": {
+          "name": "storage.type.other"
+        }
+      },
+      "end": "(})",
+      "patterns": [
+        {
+          "include": "#normal_parameters"
+        }
+      ]
     },
     {
-      "name": "keyword.control",
-      "match": "\\bif\\b|\\bgoto\\b|\\bforeach\\b|\\bon\\b|\\bdo\\b|\\belse\\b|\\bwhile\\b|\\breturn\\b|\\bbreak\\b|\\bcontinue\\b"
-    },
-    {
-      "name": "keyword.statement.other",
-      "match": "\\bassert\\b|\\bprint\\b|\\bnew\\b|\\braise\\b|\\bsend\\b|\\bannounce\\b"
-    },
-    {
-      "name": "support.function",
-      "match": "\\bhalt\\b|\\bthis\\b|\\bformat\\b|\\bnew\\b|\\bas\\b|\\bto\\b|\\bchoose\\b"
-    },
-    {
-      "name": "support.function",
-      "match": "\\$"
-    },
-    {
-      "name": "entity.name.function.primitive",
-      "match": "\\bsizeof\\b|\\bkeys\\b|\\bvalues\\b|\\bin\\b|\\bdefault\\b"
-    },
-    {
-      "name": "storage.type",
-      "match": "\\b\\w*Interface\\b|\\bI[A-Z]\\w*\\b"
+      "name": "meta.eventdecl",
+      "match": "(\\bevent\\b)\\s+([\\w_]+\\b)",
+      "captures": {
+        "1": {
+          "name": "storage.type.primitives"
+        },
+        "2": {
+          "name": "storage.type.other"
+        }
+      }
     },
     {
       "include": "#comments"
     },
     {
-      "include": "#primitives"
+      "include": "#primitive_func"
+    },
+    {
+      "include": "#expressions"
+    },
+    {
+      "include": "#statements"
+    },
+    {
+      "include": "#predefined_types"
     },
     {
       "include": "#functiondeclare"
@@ -77,16 +76,112 @@
       "include": "#attributes"
     },
     {
-      "include": "#othertypes"
-    },
-    {
       "include": "#constants"
     },
     {
       "include": "#operators"
+    },
+    {
+      "include": "#strings"
     }
   ],
   "repository": {
+    "statements": {
+      "patterns": [
+        {
+          "name": "keyword.statement.structural",
+          "match": "\\bnew\\b|\\bvar\\b|\\bstate\\b|\\bhot\\b|\\bcold\\b|\\bstart\\b|\\bspec\\b|\\bcase\\b|\\bmodule\\b|\\btest\\b|\\bmain\\b|\\bfun\\b|\\bobserves\\b|\\bentry\\b|\\bexit\\b|\\bwith\\b|\\bunion\\b|\\main\\b|\\btype\\b"
+        },
+        {
+          "name": "keyword.control",
+          "match": "\\bgoto\\b|\\bforeach\\b|\\bon\\b|\\bdo\\b|\\belse\\b|\\bwhile\\b|\\breturn\\b|\\bbreak\\b|\\bcontinue\\b|\\bignore\\b|\\bdefer\\b"
+        },
+        {
+          "name": "keyword.statement.other",
+          "match": "\\bassert\\b|\\bprint\\b|\\bnew\\b|\\braise\\b|\\bsend\\b|\\bannounce\\b"
+        }
+      ]
+    },
+    "primitive_func": {
+      "name": "primitive_func",
+      "begin": "(sizeof|keys|values|default|choose)",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.function.primitive"
+        }
+      },
+      "end": "\\)",
+      "patterns": [
+        {
+          "include": "#expressions"
+        }
+      ]
+    },
+    "expressions": {
+      "patterns": [
+        {
+          "name": "expression.format",
+          "begin": "(\\bformat\\b)\\s*\\(",
+          "beginCaptures": {
+            "1": {
+              "name": "support.function"
+            }
+          },
+          "end": "\\)",
+          "patterns": [
+            {
+              "include": "#strings"
+            },
+            {
+              "include": "#attributes"
+            }
+          ]
+        },
+        {
+          "name": "expression.controls",
+          "begin": "(while|if|foreach)\\(",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control"
+            }
+          },
+          "end": "\\)",
+          "patterns": [
+            {
+              "include": "#operators"
+            },
+            {
+              "include": "#constants"
+            },
+            {
+              "include": "#strings"
+            },
+            {
+              "include": "#attributes"
+            },
+            {
+              "include": "#expressions"
+            }
+          ]
+        },
+        {
+          "name": "support.function",
+          "match": "\\bhalt\\b|\\bthis\\b|\\bas\\b|\\bto\\b|\\bchoose\\b"
+        },
+        {
+          "name": "support.function",
+          "match": "\\$"
+        },
+        {
+          "name": "entity.name.function.primitive",
+          "match": "\\bin\\b|\\bsizeof\\b|\\bkeys\\b|\\bvalues\\b|\\bdefault\\b|\\bchoose\\b"
+        },
+        {
+          "name": "storage.type",
+          "match": "\\b\\w*Interface\\b|\\bI[A-Z]\\w*\\b"
+        }
+      ]
+    },
     "operators": {
       "patterns": [
         {
@@ -111,31 +206,23 @@
         },
         {
           "name": "constant.numeric",
-          "match": "\\b([1-9]+[0-9]*|0|[0-9]*\\.[0-9]*)\\b"
-        },
-        {
-          "name": "string",
-          "match": "(\".*\")"
+          "match": "(-?[1-9]+[0-9]*|0|[0-9]*\\.[0-9]+)"
         }
       ]
+    },
+    "strings": {
+      "name": "string",
+      "match": "(\".*\")"
     },
     "tuples": {
       "patterns": [
         {
           "name": "meta.tuple.named.types",
-          "begin": "(\\()([\\w]+)\\s?:\\s?([\\w]+)",
-          "beginCaptures": {
-            "3": {
-              "name": "storage.type"
-            }
-          },
+          "begin": "(\\()([\\w]+)\\s?:\\s?(?=[\\w]\\,)",
           "end": "\\)",
           "patterns": [
             {
-              "include": "#parameters"
-            },
-            {
-              "include": "#constants"
+              "include": "#predefined_types"
             }
           ]
         },
@@ -157,23 +244,28 @@
             },
             {
               "include": "#constants"
+            },
+            {
+              "include": "#strings"
+            },
+            {
+              "include": "#functioncall"
+            },
+            {
+              "include": "#expressions"
             }
           ]
         },
         {
           "name": "meta.tuple.unnamed",
-          "begin": "(\\()",
+          "begin": "\\((?=\\w+\\,)",
           "end": "\\)",
           "patterns": [
             {
-              "name": "storage.type",
-              "match": "([\\w])+"
+              "include": "#constants"
             },
             {
-              "include": "#primitives"
-            },
-            {
-              "include": "#operators"
+              "include": "#predefined_types"
             }
           ]
         }
@@ -198,13 +290,13 @@
       },
       "patterns": [
         {
-          "include": "#parameters"
+          "include": "#colon_parameters"
         }
       ]
     },
     "functioncall": {
       "name": "meta.method.functioncall",
-      "begin": "([[:alpha:]_][[:alnum:]_]*)(?=(\\())",
+      "begin": "([[:alpha:]_][[:alnum:]_]*)\\s*(\\()",
       "beginCaptures": {
         "1": {
           "name": "entity.name.function.user"
@@ -213,7 +305,22 @@
       "end": "(\\))",
       "patterns": [
         {
-          "include": "#parameters"
+          "include": "#predefined_types"
+        },
+        {
+          "include": "#colon_parameters"
+        },
+        {
+          "include": "#expressions"
+        },
+        {
+          "include": "#attributes"
+        },
+        {
+          "include": "#tuples"
+        },
+        {
+          "include": "#operators"
         }
       ]
     },
@@ -240,13 +347,17 @@
         }
       ]
     },
-    "primitives": {
-      "name": "storage.type.primitives",
-      "match": "\\bint\\b|\\bbool\\b|\\bfloat\\b|\\bstring\\b|\\benum\\b|\\bmachine\\b|\\bevent\\b"
-    },
-    "othertypes": {
-      "name": "storage.type.other",
-      "match": "\\bseq\\b|\\bmap\\b|\\bset\\b|\\bany\\b|\\bdata\\b"
+    "predefined_types": {
+      "patterns": [
+        {
+          "name": "storage.type.primitives",
+          "match": "\\bint\\b|\\bbool\\b|\\bfloat\\b|\\bstring\\b|\\bmachine\\b|\\bevent\\b"
+        },
+        {
+          "name": "storage.type.other",
+          "match": "\\bseq\\b|\\bmap\\b|\\bset\\b|\\bany\\b|\\bdata\\b"
+        }
+      ]
     },
     "assignments": {
       "name": "assignments",
@@ -259,16 +370,29 @@
     },
     "attributes": {
       "name": "meta.structure.attribute",
-      "match": "([[:alpha:]_]+)\\.([[:alpha:]_]+)",
+      "match": "\\.([[:alpha:]_]+)",
       "captures": {
-        "2": {
+        "1": {
           "name": "storage.type"
         }
       }
     },
-    "parameters": {
+    "colon_parameters": {
       "name": "meta.parameters",
-      "match": ":\\s?([\\w]+)",
+      "match": ":\\s*(?=[\\w_]+)",
+      "patterns": [
+        {
+          "include": "#predefined_types"
+        },
+        {
+          "name": "storage.type",
+          "match": "(\\w_)+"
+        }
+      ]
+    },
+    "normal_parameters": {
+      "name": "meta.parameters",
+      "match": "([\\w_]+)",
       "captures": {
         "1": {
           "name": "storage.type"

@@ -1,19 +1,23 @@
 # peasy-ide-vscode
 Peasy: An Intuitive Development Environment for P
 
-This is the language grammar extension for P specifically geared for VS Code. 
 
-Preliminary instructions to install grammar highlighting:
-1. Move this folder into the ~/.vscode/extensions directory.
-2. Add {"identifier":{"id":"undefined_publisher.peasy-ide-vscode"},"version":"0.0.1","location":{"$mid":1,"path":"~/.vscode/extensions/peasy-ide-vscode","scheme":"file"},"relativeLocation":"peasy-ide-vscode"} to ~/.vscode/extensions/extensions.json
-3. Restart VS Code.
-4. Feel free to change to different themes, or follow the instructions below to use the P Team's custom theme!
+This is the IDE extension for P specifically geared for VS Code. 
 
-Preliminary instructions to install a P custom theme. 
-1. Move the p-theme file inside the folder into the ~/.vscode/extensions directory.
-2. Add {"identifier":{"id":"undefined_publisher.p-theme"},"version":"0.0.1","location":{"$mid":1,"path":"~/.vscode/extensions/p-theme","scheme":"file"},"relativeLocation":"p-theme"} to ~/.vscode/extensions/extensions.json
-3. Restart VS Code. 
-4. Change the theme in VS Code: Code -> Settings -> Theme -> Dropdown Menu (Select P's Custom Theme).
+Preliminary instructions to install this extension:
+1. Clone this repository.
+2. cd into this repository and call 'npm install'
+3. Run 'cmd' 'shift' 'B' on this repository in VSCode to build this project.
+4. Move this folder into the ~/.vscode/extensions directory.
+5. Add {"identifier":{"id":"undefined_publisher.peasy-ide-vscode"},"version":"0.0.1","location":{"$mid":1,"path":"~/.vscode/extensions/peasy-ide-vscode","scheme":"file"},"relativeLocation":"peasy-ide-vscode"} to ~/.vscode/extensions/extensions.json
+6. Restart VS Code.
+7. Any P files should now be populated with syntax highlighting! Use P's Custom Theme by selecting with the dropdown at Code > Settings > Theme > Color Theme.
+
+Further P Extension Support:
+1. Compilation: Open any P project folder. Navigate to a file that ends with .p or .pproj and press 'f5' to compile. 
+2. Use P's Custom Theme by selecting with the dropdown at Code > Settings > Theme > Color Theme.\
+3. P should now support Errors that occur during compilation in the Problems panel. 
+
 
 ## Features
 
@@ -22,7 +26,6 @@ Describe specific features of your extension including screenshots of your exten
 For example if there is an image subfolder under your extension project workspace:
 
 \!\[feature X\]\(images/feature-x.png\)
-![Client Machine Example](./images/client_machine.png?raw=true)
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
@@ -46,11 +49,9 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
 
-### 1.0.0
+Initial release of Syntax Highlighting, Compilation upon pressing F + 5, a P Theme File, and Problem Reporting
 
-Initial release of ...
 
 ### 1.0.1
 

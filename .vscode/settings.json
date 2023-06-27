@@ -1,0 +1,8 @@
+{
+    "FSharp.suggestGitignore": false,
+    "p-vscode.trace.server": "verbose",
+    "search.useIgnoreFiles": false,
+    "search.exclude": {
+        "**/node_modules": true,
+    },
+}
