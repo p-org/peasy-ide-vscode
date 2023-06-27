@@ -177,7 +177,13 @@
         {
           "name": "support.function",
 <<<<<<< HEAD
+<<<<<<< HEAD
           "match": "\\bhalt\\b|\\bthis\\b|\\bas\\b|\\bto\\b|\\bchoose\\b"
+=======
+          "match": "\\b
+          
+          \\b|\\bthis\\b|\\bnew\\b|\\bas\\b|\\bto\\b|\\bchoose\\b"
+>>>>>>> f9a9b7fa537a75a55f37273a23cc80a3b278c27d
 =======
           "match": "\\b
           
@@ -223,7 +229,12 @@
         },
         {
           "name": "constant.numeric",
+<<<<<<< HEAD
           "match": "(-?[1-9]+[0-9]*|0|[0-9]*\\.[0-9]+)"
+=======
+          "match": "\\b([1-9]+[0-9]*|0|[0-9]*\\.[0-9]*)\\b"
+
+>>>>>>> f9a9b7fa537a75a55f37273a23cc80a3b278c27d
         }
       ]
     },
@@ -241,7 +252,13 @@
           "patterns": [
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
               "include": "#predefined_types"
+=======
+
+              "include": "#colon_parameters"
+
+>>>>>>> f9a9b7fa537a75a55f37273a23cc80a3b278c27d
 =======
 
               "include": "#colon_parameters"
@@ -275,9 +292,13 @@
             },
             {
               "include": "#functioncall"
+<<<<<<< HEAD
             },
             {
               "include": "#expressions"
+=======
+
+>>>>>>> f9a9b7fa537a75a55f37273a23cc80a3b278c27d
             }
           ]
         },
@@ -326,7 +347,13 @@
     },
     "functioncall": {
       "name": "meta.method.functioncall",
+<<<<<<< HEAD
       "begin": "([[:alpha:]_][[:alnum:]_]*)\\s*(\\()",
+=======
+
+      "begin": "([[:alpha:]_][[:alnum:]_]*)\\s*(?=(\\())",
+
+>>>>>>> f9a9b7fa537a75a55f37273a23cc80a3b278c27d
       "beginCaptures": {
         "1": {
           "name": "entity.name.function.user"
@@ -335,9 +362,13 @@
       "end": "(\\))",
       "patterns": [
         {
+<<<<<<< HEAD
           "include": "#predefined_types"
         },
         {
+=======
+
+>>>>>>> f9a9b7fa537a75a55f37273a23cc80a3b278c27d
           "include": "#colon_parameters"
         },
         {
@@ -345,12 +376,16 @@
         },
         {
           "include": "#attributes"
+<<<<<<< HEAD
         },
         {
           "include": "#tuples"
         },
         {
           "include": "#operators"
+=======
+
+>>>>>>> f9a9b7fa537a75a55f37273a23cc80a3b278c27d
         }
       ]
     },
@@ -422,6 +457,7 @@
     },
     "colon_parameters": {
       "name": "meta.parameters",
+<<<<<<< HEAD
       "match": ":\\s*(?=[\\w_]+)",
       "patterns": [
         {
@@ -430,6 +466,13 @@
         {
           "name": "storage.type",
           "match": "(\\w_)+"
+=======
+      "match": ":\\s*([\\w_]+)",
+      "captures": {
+        "1": {
+
+          "name": "storage.type"
+>>>>>>> f9a9b7fa537a75a55f37273a23cc80a3b278c27d
         }
       ]
     },
