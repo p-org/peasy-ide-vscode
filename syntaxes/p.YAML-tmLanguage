@@ -7,16 +7,20 @@ uuid: 02d90f6f-553b-4a22-a121-a8ddeb6dade4
 
 patterns:
 # Declarations of types, variables, enums, and events
-
+- name: meta.vardecl 
+  match: (\bvar\b)\s+([A-Za-z]+\w*)
+  captures:
+    "1":
+      name: keyword.statement.structural 
 - name: meta.typedecl
-  match: (\btype\b)\s+([\w_]+\b)\s*
+  match: (\btype\b)\s+([A-Za-z]+\w*)\s*
   captures:
     "1":
       name: keyword.statement.structural
     "2":
       name: storage.type.other
 - name: meta.enumdecl 
-  begin: (\benum\b)\s*([\w_]+\b)\s+({)
+  begin: (\benum\b)\s*([A-Za-z]+\w*)\s+({)
   beginCaptures:
     "1":
       name: storage.type.primitives
@@ -26,13 +30,44 @@ patterns:
   patterns:
   - include: "#normal_parameters"
 - name: meta.eventdecl 
-  match: (\bevent\b)\s+([\w_]+\b)
+  match: (\bevent\b)\s+([A-Za-z]+\w*)
   captures:
     "1":
       name: storage.type.primitives
     "2":        
+      name: storage.type.event
+- name: meta.onstatement
+  match: (\bon\b)\s+([A-Za-z]+\w*)\s+(do|goto)
+  captures: 
+    "1":
+      name: keyword.statement.structural 
+    "2":
+      name: storage.type.event
+    "3":
+      name: keyword.statement.structural 
+- name: meta.casestatement 
+  match: (\bcase\b)\s+([A-Za-z]+\w*)
+  captures:
+    "1":
+      name: keyword.control 
+    "2":
+      name: storage.type.event 
+- name: meta.sendstatement 
+  match: (\bsend\b)\s+([A-Za-z]+\w*)\,\s+([A-Za-z]+\w*)
+  captures:
+    "1": 
+      name: keyword.statement.other 
+    "3":
+      name: storage.type.event
+- name: meta.machinedecl 
+  match: (\bmachine\b)\s+([A-Za-z]+\w*)
+  captures:
+    "1":
+      name: storage.type.primitives
+    "2":
       name: storage.type.other
 
+    
   
 
 # Other rules in P
@@ -42,13 +77,13 @@ patterns:
 - include: "#statements"
 - include: "#predefined_types"
 - include: "#functiondeclare"
-
+- include: "#colon_parameters"
 - include: "#functioncall"
 - include: "#tuples"
-- include: "#attributes"
 - include: "#constants"
 - include: "#operators"
 - include: "#strings"
+- include: "#identifier"
 
 
 
@@ -57,11 +92,11 @@ repository:
   statements:
     patterns:
     - name: keyword.statement.structural
-      match: \bnew\b|\bvar\b|\bstate\b|\bhot\b|\bcold\b|\bstart\b|\bspec\b|\bcase\b|\bmodule\b|\btest\b|\bmain\b|\bfun\b|\bobserves\b|\bentry\b|\bexit\b|\bwith\b|\bunion\b|\main\b|\btype\b
+      match: \bvar\b|\bstate\b|\bhot\b|\bcold\b|\bstart\b|\bspec\b|\bcase\b|\bmodule\b|\btest\b|\bmain\b|\bfun\b|\bobserves\b|\bentry\b|\bexit\b|\bwith\b|\bunion\b|\main\b|\btype\b|\bon\b|\bdo\b
     - name: keyword.control
-      match: \bgoto\b|\bforeach\b|\bon\b|\bdo\b|\belse\b|\bwhile\b|\breturn\b|\bbreak\b|\bcontinue\b|\bignore\b|\bdefer\b
+      match: \bforeach\b|\belse\b|\bwhile\b|\breturn\b|\bbreak\b|\bcontinue\b|\bignore\b|\bdefer\b
     - name: keyword.statement.other
-      match: \bassert\b|\bprint\b|\bnew\b|\braise\b|\bsend\b|\bannounce\b
+      match: \bassert\b|\bprint\b|\bnew\b|\braise\b|\bsend\b|\bannounce\b|\breceive\b|\bgoto\b
   primitive_func:
     name: primitive_func
     begin: (sizeof|keys|values|default|choose)
@@ -70,7 +105,11 @@ repository:
         name: entity.name.function.primitive
     end: \)
     patterns:
-    - include: "#expressions"
+      - include: "#operators"
+      - include: "#constants"
+      - include: "#strings"
+      - include: "#expressions"
+      - include: "#identifier"
   expressions:
     patterns:
     - name: expression.format
@@ -81,7 +120,6 @@ repository:
       end: \)
       patterns:
       - include: "#strings"
-      - include: "#attributes"
     - name: expression.controls
       begin: (while|if|foreach)\(
       beginCaptures: 
@@ -92,8 +130,8 @@ repository:
       - include: "#operators"
       - include: "#constants"
       - include: "#strings"
-      - include: "#attributes" 
       - include: "#expressions"
+      - include: "#identifier"
 
     - name: support.function
       match: \bhalt\b|\bthis\b|\bas\b|\bto\b|\bchoose\b
@@ -126,26 +164,27 @@ repository:
   tuples: #Tuples in P, including named tuples and unnamed tuples. 
     patterns:
     - name: meta.tuple.named.types
-      begin: (\()([\w]+)\s?:\s?(?=[\w]\,)
+      begin: (\()([A-Za-z]+\w*)\s?:\s?(?=[\w]\,)
       end: \)
       patterns:
       - include: "#predefined_types"
     - name: meta.tuple.named.assigned
-      begin: (\()([\w]+)\s?=
+      begin: (\()([A-Za-z]+\w*)\s?(=)
       beginCaptures:
         '2': {name: storage.type}
+        '3': {name: keyword.operator.assignment}
       end: \)
       patterns:
       - include: "#assignments"
-      - include: "#attributes"
       - include: "#constants"
       - include: "#strings"
       - include: "#functioncall"
       - include: "#expressions"
+      - include: "#identifier"
 
     #Un-named tuples 
     - name: meta.tuple.unnamed
-      begin: \((?=\w+\,)
+      begin: \((?=[A-Za-z]+\w*\,)
       end: \)
       patterns:
       - include: "#constants"
@@ -153,11 +192,11 @@ repository:
   #These rules cover various function interactions, including function declarations and function calls. 
   functiondeclare:  
     name: meta.method.functiondecl
-    begin: (fun)\s+([[:alpha:]_][[:alnum:]_]*)(?=(\())
+    begin: (fun)\s+([A-Za-z]+\w*)(?=(\())
     beginCaptures:
       '1': {name: keyword.other}
       '2': {name: entity.name.function}
-    end: (\))\s?(:\s?[[:alpha:]_]+)?
+    end: (\))\s?(:\s?[A-Za-z]+\w*)?
     endCaptures:
       '2': {name: storage.type}
     patterns:
@@ -165,7 +204,7 @@ repository:
       - include: "#colon_parameters"
   functioncall:
     name: meta.method.functioncall
-    begin: ([[:alpha:]_][[:alnum:]_]*)\s*(\()
+    begin: ([A-Za-z]+\w*)\s*(\()
     beginCaptures:
       '1': {name: entity.name.function.user}
     end: (\))
@@ -173,9 +212,9 @@ repository:
       - include: "#predefined_types"
       - include: "#colon_parameters"
       - include: "#expressions"
-      - include: "#attributes"
       - include: "#tuples"
       - include: "#operators"
+      - include: "#identifier"
 
 
   #Comments, including comment blocks and one-line comments. 
@@ -200,26 +239,38 @@ repository:
   #The below rules cover the different data strucutures within function interactions as well as within tuples. 
   assignments:
     name: assignments
-    match: ([\w]+)\s?=
+    match: ([A-Za-z]+\w*)\s?(=)
     captures:
       '1': {name: storage.type}
+      '2': {name: keyword.operator.assignment}
   attributes:
     name: meta.structure.attribute
-    match: \.([[:alpha:]_]+)
+    match: \.([A-Za-z]+\w*)
     captures:
       '1': {name: storage.type} 
   colon_parameters:
-    name: meta.parameters
-    match: :\s*(?=[\w_]+)
     patterns:
-      - include: "#predefined_types"
-      - name: storage.type
-        match: (\w_)+
+    - name: meta.parameters.predefined
+      match: :\s*(\bint\b|\bbool\b|\bfloat\b|\bstring\b|\bmachine\b|\bevent\b)
+      captures:
+        '1': {name: storage.type.primitives}
+    - name: meta.parameters.other
+      match: :\s*([A-Za-z]+\w*)
+      captures:
+        '1': {name: storage.type.other}
+    
   normal_parameters:
     name: meta.parameters
-    match: ([\w_]+)
+    match: ([A-Za-z]+\w*)
     captures:
       '1': {name: storage.type}
+  identifier:
+    name: meta.identifier 
+    match: ([A-Za-z]+[\w_]*)
+  equal_sign:
+    name: keyword.operator.assignment
+    match: \=
+
   
 
 
