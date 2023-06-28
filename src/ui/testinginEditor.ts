@@ -86,6 +86,9 @@ async function runPTestCase(tc: vscode.TestItem) {
             break;
           }
         }
+        if (terminal.name == ExtensionConstants.RunTask) {
+            terminal = vscode.window.createTerminal();
+        }
       }
     terminal.show();
     const command = "p check -tc " + tc.label + " -i 1000";

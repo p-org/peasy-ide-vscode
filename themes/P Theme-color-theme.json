@@ -791,14 +791,14 @@
 		{
 			"scope": "storage.type.other",
 			"settings": {
-				"foreground": "#2a82ad",
+				"foreground": "#4aafe1",
 				"fontStyle": ""
 			}
 		},
 		{
 			"scope": "storage.type.primitives",
 			"settings": {
-				"foreground": "#2c57bc",
+				"foreground": "#5384e5",
 				"fontStyle": ""
 			}
 		},
