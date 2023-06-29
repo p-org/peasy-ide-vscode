@@ -20,9 +20,19 @@ export default class TestingEditor {
             vscode.workspace.onDidOpenTextDocument(e => updateNodeFromDocument(e) )
         )
 
-        for (const document of vscode.workspace.textDocuments) {
-            updateNodeFromDocument(document);
+        if (vscode.workspace.workspaceFolders !== undefined) {
+            const folder = vscode.workspace.workspaceFolders[0].uri
+            let filePattern: vscode.RelativePattern = new vscode.RelativePattern(folder,"PTst/Test*.p" )
+            const files = await vscode.workspace.findFiles(filePattern)
+
+            for (var i = 0; i<files.length; i++) {
+                var x = files.at(i)
+                if (x !== undefined) {
+                    updateNodeFromDocument(await vscode.workspace.openTextDocument(x));
             
+                }
+            }
+            const dog = ""
         }
         return TestingEditor.instance;
     }
@@ -37,6 +47,9 @@ function updateFromContents(controller: vscode.TestController, content: string, 
             item.children.add(tCase);
         }
     })
+    if (item.children.size == 0) {
+        controller.items.delete(item.id)
+    }
     if (controller.items.size>0) {
         const runProfile = controller.createRunProfile(
             'Run',
