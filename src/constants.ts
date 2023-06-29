@@ -4,6 +4,7 @@ export namespace LanguageConstants {
   
   export namespace ExtensionConstants {
     export const ChannelName = 'P VSCode';
+    export const RunTask = 'Run_Report';
   }
   
   export namespace ConfigurationConstants {
