@@ -1,5 +1,4 @@
 import { ExtensionContext, FileSystemError, OutputChannel, Uri, window, workspace } from 'vscode';
-import { LanguageServerConstants } from '../constants';
 import * as os from 'os';
 import fetch from 'cross-fetch';
 import * as fs from 'fs';
