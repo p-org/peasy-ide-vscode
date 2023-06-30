@@ -87,38 +87,24 @@
     ],
     "configuration": {
       "type": "object", 
-      "title": "P extension configuration", 
+      "title": "P Extension configuration", 
       "properties": {
         "p-vscode.trace.server": {
           "scope": "window",
           "type": "string",
           "enum": [
-            "off",
+            "off", 
             "messages",
             "verbose"
           ],
           "default": "verbose",
           "description": "Traces the communication between VS Code and the language server."
-        },
-        "p.languageServerLaunchArgs": {
-          "type": "array", 
-          "items": {
-            "type": "string"
-          }, 
-          "default": [], 
-          "description": "Optional array of strings to pass to the language server."
         }, 
-        "p.runArgs": {
-          "type": "array", 
-          "items": {
-            "type": "string"
-          }, 
-          "default": [], 
-          "description": "Optional array of strings as P run and build arguments."
-        }, 
-        "p.dotnetExecutablePath": {
-          "type": "string",
-          "description": "The absolute path of the dotnet binary. Only necessary if dotnet is not in system PATH (you'll get an error if that's the case)."
+        "p-vscode.iterations": {
+          "scope": "window",
+          "type": "integer",
+          "default": 1000,
+          "description": "Manages the number of iterations run during P testing at a 'p check' command."
         }
       }
     },
@@ -157,6 +143,12 @@
         "language": "p",
         "scopeName": "source.p",
         "path": "./syntaxes/p.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "p",
+        "path": "./snippets/snippets.json"
       }
     ]
   },

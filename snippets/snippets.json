@@ -1,0 +1,64 @@
+{
+    "Machine": {
+        "prefix": ["machine "],
+        "body": ["machine ${1:_name_} ", 
+        "{",
+            "\tstart state ${2:_stateName_} {",
+            "\t\tentry (${3:_entryName_})",
+            "\t\t{",
+            "\t\t\t${4:_body_};",
+            "\t\t}",
+        "\t}",
+        "}"
+        ]
+
+    }, 
+    "Entry": {
+        "prefix": ["entry ("],
+        "body": ["entry (${1:_parameters_})",
+        "{",
+        "\t${2:_body_};",
+        "}"
+        ]
+    },
+    "Exit": {
+        "prefix": ["exit ("],
+        "body": ["exit (${1:_parameters_})",
+        "{",
+        "\t${2:_body_};",
+        "}"
+        ]
+    },
+    "On Do": {
+        "prefix": ["on "],
+        "body": ["on ${1:_event_} do ${2|_function_,_nonFunction_|};"]
+    },
+    "On Goto": {
+        "prefix": ["on "],
+        "body": ["on ${1:_event_} goto ${2:_stateName_} with ${3|_function_,_nonFunction_|};"]
+    },
+    "Test": {
+        "prefix": ["test "],
+        "body": ["test ${1:_name_} [main=${2:_mainMachine_}]:", "\tassert ${3:_monitorList_} in", "\t${4:_module_}"]
+    },
+
+    "While-Loop": {
+        "prefix": ["while ( "],
+        "body": ["counter = 0;","while (i < ${1:_expression_})","{", "\t${2:_statement_};", "\tcounter = counter+1;","}"]
+    }, 
+
+    "ForEach-Loop": {
+        "prefix": ["foreach ( "],
+        "body": ["foreach (${2:_element_} in ${1:_array_})", "{", "\t${3:_statement_};", "}"]
+    },
+    "Raise": {
+        "prefix": ["raise "],
+        "body": ["raise ${1:_event_}, ${2:_payload_};"]
+    },
+    "Send": {
+        "prefix": ["send "],
+        "body": ["send ${1:_targetMachine_}, ${2:_event_}, ${3:_payload_};"]
+    }
+}
+
+

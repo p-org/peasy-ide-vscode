@@ -1,5 +1,6 @@
 export namespace LanguageConstants {
     export const Id = 'p';
+    export const LanguageServerId = 'p-vscode'
   }
   
   export namespace ExtensionConstants {
