@@ -3,10 +3,10 @@ import { HandleDiagnosticsSignature, LanguageClient, LanguageClientOptions, Serv
 import { PDocumentFilter } from '../tools/vscode';
 import { PInstaller } from './PInstallation';
 import Configuration from '../configuration';
-import { ConfigurationConstants } from '../constants';
+import { ConfigurationConstants,LanguageConstants } from '../constants';
 import * as os from 'os';
 
-const LanguageServerId = 'p-vscode';
+
 const LanguageServerName = 'P_Language_Server';
 
 function getLanguageServerLaunchArgsNew(): string[] {
@@ -38,7 +38,7 @@ export class PLanguageClient extends LanguageClient {
     const diagnosticsListeners: ((uri: Uri, diagnostics: Diagnostic[]) => void)[] = [];
     const clientOptions: LanguageClientOptions = {
       documentSelector: [ PDocumentFilter ],
-      diagnosticCollectionName: LanguageServerId,
+      diagnosticCollectionName: LanguageConstants.LanguageServerId,
       middleware: {
         handleDiagnostics: (uri: Uri, diagnostics: Diagnostic[], next: HandleDiagnosticsSignature) => {
           for(const handler of diagnosticsListeners) {
@@ -49,7 +49,7 @@ export class PLanguageClient extends LanguageClient {
       }
     };
 
-    return new PLanguageClient(LanguageServerId, LanguageServerId, serverOptions, clientOptions, diagnosticsListeners);
+    return new PLanguageClient(LanguageConstants.LanguageServerId, LanguageConstants.LanguageServerId, serverOptions, clientOptions, diagnosticsListeners);
   }
 
   // write a onpublishdiagnostics function
