@@ -1,8 +1,7 @@
 {
-
-  "name": "p-compile",
-  "displayName": "p_compile",
-  "description": "P Compiling",
+  "name": "P Extension",
+  "displayName": "P Extension",
+  "description": "P Extension provides compilation support, a custom theme, syntax highlighting, a testing framework",
 
   "version": "0.0.1",
   "engines": {
@@ -109,10 +108,6 @@
       }
     },
     "commands": [
-      {
-        "command": "p-compile.helloWorld",
-        "title": "Hello World"
-      },
       {
         "command": "p.definition",
         "title": "P: Go to Definition"
