@@ -15,17 +15,18 @@ Preliminary instructions to install this extension:
 
 Further P Extension Support:
 1. Compilation: Open any P project folder. Navigate to a file that ends with .p or .pproj and press 'f5' to compile. 
-2. Use P's Custom Theme by selecting with the dropdown at Code > Settings > Theme > Color Theme.\
+2. Use P's Custom Theme by selecting with the dropdown at Code > Settings > Theme > Color Theme.
 3. P should now support Errors that occur during compilation in the Problems panel. 
+4. Snippets: Typing out the beginning of P data structures and syntactic structures within a P program, such as "machine", "test", and "foreach" will cause snippets to load that have the general structure loaded as well. Pressing tab will allow the user to 'fill in the blank' of each structure.
+5. P's testing framework allows for testing done by clicking a green play button. It automatically runs a p check command. The user can also change the settings of the number of iterations run every time a test is run from the IDE.
 
 
 ## Features
-
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
+\!\[Error Reporting\]\(images/error_reporting.png\)
+\!\[Snippets\]\(images/snippets.png\)
+\!\[Syntax Highlighting\]\(images/syntax_highlighting_1.png\)
+\!\[Testing Framework\]\(images/testing_framework.png\)
+\!\[Iteration Settings\]\(images/Iteration_Settings.png\)
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
@@ -40,8 +41,8 @@ For example:
 
 This extension contributes the following settings:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+* `p-vscode.iterations`: Set to the number of iterations you want when p check is run inside of the IDE of a P testing folder.
+* `p-vscode.trace.server`: Set to 'verbose' to see the language server and client interactions in the Debug Console.
 
 ## Known Issues
 
@@ -50,16 +51,10 @@ Calling out known issues can help limit users opening duplicate issues against y
 ## Release Notes
 
 
-Initial release of Syntax Highlighting, Compilation upon pressing F + 5, a P Theme File, and Problem Reporting
+Initial release of Syntax Highlighting, Compilation upon pressing F + 5, a P Theme File, Problem Reporting, Testing Framework, and Snippets
 
 
-### 1.0.1
 
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
 
 ---
 
@@ -78,4 +73,4 @@ You can author your README using Visual Studio Code. Here are some useful editor
 
 **Enjoy!**
 
-npx js-yaml syntaxes/p.YAML-tmLanguage > syntaxes/p.tmLanguage.json
+
