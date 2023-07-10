@@ -20,14 +20,7 @@
   "contributes": {
     "taskDefinitions": [
       {
-          "type": "Run_Report", 
-          "required": ["background"],
-          "properties": {
-            "background": {
-              "type":"object", 
-              "description": "background format"
-            }
-          }
+          "type": "Run_Report"
       }
     ],
     "problemMatchers": [
@@ -85,7 +78,7 @@
     "keybindings": [
       {
         "command": "workbench.action.tasks.runTask",
-        "args": "Run_Report",
+        "args": "p-vscode: Run_Report",
         "key": "f5", 
         "mac": "f5"
       }

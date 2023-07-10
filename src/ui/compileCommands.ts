@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 
 
 import { PCommands, VSCodeCommands} from '../commands';
+import { ExtensionConstants } from '../constants';
 
 
 //Class is DEPRECATED right now. Only keeping in case it becomes useful.
@@ -20,7 +21,7 @@ export default class CompileCommands {
 
 // Runs p compile in the terminal.
 async function createTask() {
-  var type = "Tasks";
+  var type = ExtensionConstants.RunTask;
   vscode.tasks.registerTaskProvider(type, {
     provideTasks(token?: vscode.CancellationToken) {
         var execution = new vscode.ShellExecution("p compile");

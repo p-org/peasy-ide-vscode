@@ -89,11 +89,17 @@
         "body": ["assert (${1:_assertion_}), format(\"${2:_errorMessage_}\");"],
         "description": ["Assert Statement: Makes a local assertion and also prints a formatted message in the error trace."]
     }, 
-    "Print Statement": {
+    "Print Message": {
         "prefix": ["print "],
         "body": ["print ${1:_expression_}"],
-        "description": []
+        "description": ["Print Statement: Writes or prints log message into error traces. "]
+    }, 
+    "Print Formatted Message": {
+        "prefix": ["print format(\""],
+        "body": ["print format(${1:_expression_})"],
+        "description": ["Print Statement: Writes or prints formatted log message into the error traces. "]
     }
+    
 }
 
 
