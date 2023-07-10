@@ -144,8 +144,16 @@ async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
             })
         }
     }
+    //number of p checker iterations that are run
     const numIterations: String =  vscode.workspace.getConfiguration("p-vscode").get("iterations")?? "1000";
-    const command = "p check -tc " + tc.label + " -o " + outputDirectory + " -i " + numIterations + " |& tee " + outputFile;
+    //The p check command depends on if the terminal is bash or zsh.
+    var command; 
+    if (terminal.name == "bash") {
+        command = "p check -tc " + tc.label + " -o " + outputDirectory + " -i " + numIterations + " 2>&1 | tee " + outputFile;
+    }
+    else {  //hopefully a zsh terminal
+        command = "p check -tc " + tc.label + " -o " + outputDirectory + " -i " + numIterations + " |& tee " + outputFile;
+    }
     terminal.sendText(command);
 
     if (vscode.workspace.workspaceFolders !== undefined) {

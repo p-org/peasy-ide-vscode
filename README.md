@@ -5,13 +5,15 @@ Peasy: An Intuitive Development Environment for P
 This is the IDE extension for P specifically geared for VS Code. 
 
 Preliminary instructions to install this extension:
+NOTE: Remove any previous versions of the extension from the extensions folder in .vscode. 
 1. Clone this repository.
-2. cd into this repository and call 'npm install'
-3. Run 'cmd' 'shift' 'B' on this repository in VSCode to build this project.
-4. Move this folder into the ~/.vscode/extensions directory.
-5. Add {"identifier":{"id":"undefined_publisher.peasy-ide-vscode"},"version":"0.0.1","location":{"$mid":1,"path":"~/.vscode/extensions/peasy-ide-vscode","scheme":"file"},"relativeLocation":"peasy-ide-vscode"} to ~/.vscode/extensions/extensions.json
-6. Restart VS Code.
-7. Any P files should now be populated with syntax highlighting! Use P's Custom Theme by selecting with the dropdown at Code > Settings > Theme > Color Theme.
+2. cd into the repository.
+3. Run 'vsce package -o ~ '. If the command errors, run 'brew install vsce' and re-run the command.
+4. The extension should now be in your user directory. Now, open a P code directory and navigate to the command pallete.
+5. Search and click onto the command "Extensions: Install from VSIX..."
+6. Install the VSIX file you just created.
+You should get a notification saying "Completed installing P Extension extension from VSIX."
+Reload VSCode, and your extension should now be working!
 
 Further P Extension Support:
 1. Compilation: Open any P project folder. Navigate to a file that ends with .p or .pproj and press 'f5' to compile. 
