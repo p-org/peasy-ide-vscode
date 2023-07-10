@@ -1,12 +1,17 @@
 {
-
-  "name": "p-compile",
-  "displayName": "p_compile",
-  "description": "P Compiling",
-
+  "name": "p-extension",
+  "displayName": "P Extension",
+  "description": "P Extension provides compilation support, a custom theme, syntax highlighting, a testing framework",
+  "publisher": "P_Team",
   "version": "0.0.1",
+  "icon": "p-icon.png",
   "engines": {
     "vscode": "^1.78.0"
+  },
+  "activationEvents": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/p-org/peasy-ide-vscode.git"
   },
   "categories": [
     "Other"
@@ -110,10 +115,6 @@
     },
     "commands": [
       {
-        "command": "p-compile.helloWorld",
-        "title": "Hello World"
-      },
-      {
         "command": "p.definition",
         "title": "P: Go to Definition"
       }, 
@@ -153,7 +154,7 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run package",
+    "vscode:prepublish": "npm install && webpack",
     "compile": "webpack",
     "watch": "webpack --watch",
     "package": "webpack --mode production --devtool hidden-source-map",
