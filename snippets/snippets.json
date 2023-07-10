@@ -91,15 +91,49 @@
     }, 
     "Print Message": {
         "prefix": ["print "],
-        "body": ["print ${1:_expression_}"],
+        "body": ["print ${1:_message_};"],
         "description": ["Print Statement: Writes or prints log message into error traces. "]
     }, 
     "Print Formatted Message": {
         "prefix": ["print format(\""],
-        "body": ["print format(${1:_expression_})"],
+        "body": ["print format(${1:_message_});"],
         "description": ["Print Statement: Writes or prints formatted log message into the error traces. "]
+    },
+    "If Statement": {
+        "prefix": ["if ", "if( "],
+        "body": ["if (${1:_condition_})", "{", "\t${2:_statement_};", "}"], 
+        "description": ["If statement: If the conditional is met, the statement is run."]
+    },
+    "If-Else Statement": {
+        "prefix": ["if ", "if( "],
+        "body": ["if (${1:_condition_})", "{", "\t${2:_statement_};", "}", "else", "{","${3:_statement_}", "}"], 
+        "description": ["If-Else statement: If the conditional is met, the statement is run. If it isn't met, the else statement is run."]
+    },
+    "New Statement": {
+        "prefix": ["new "],
+        "body": ["new ${1:_instance_}(${2:_constructorParameters_});"], 
+        "description": ["Creates a dynamic instance of the object and passes the constructor parameters in."]
+    }, 
+    "Announce Statement": {
+        "prefix": ["announce "], 
+        "body": ["announce ${1:_event_}, ${2:_payload_};"],
+        "description": ["Announce Statement: Announces if an event has occured to specification monitors during system execution."]
+    },
+    "Goto Statement": {
+        "prefix": ["goto "],
+        "body": ["goto ${1:_state_};"],
+        "description": ["Goto Statement: Terminates the execution of the current function and enters the target state."]
+    },
+    "Goto Statement with Payload": {
+        "prefix": ["goto "], 
+        "body": ["goto ${1:_state_}, ${2:_payload_};"], 
+        "description": ["Goto Statement: Terminates the execution of the current function and enters the target state with the input parameters."]
+    }, 
+    "Receive Statement": {
+        "prefix": ["receive {"], 
+        "body": ["receive { ", "\tcase ${1:_event_}: {${2:_caseHandler_}}","}"],
+        "description": ["Receive Statement: Blocks await/receive for a set of events inside a function."]
     }
-    
 }
 
 
