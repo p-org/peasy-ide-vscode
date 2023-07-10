@@ -20,7 +20,7 @@
   "contributes": {
     "taskDefinitions": [
       {
-          "type": "Errors", 
+          "type": "Run_Report", 
           "required": ["background"],
           "properties": {
             "background": {
