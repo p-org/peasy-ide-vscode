@@ -1,8 +1,10 @@
 import * as os from 'os';
 import * as path from 'path';
+import * as vscode from 'vscode';
 
-import { window, commands} from 'vscode';
+
 import { PCommands, VSCodeCommands} from '../commands';
+import { ExtensionConstants } from '../constants';
 
 
 //Class is DEPRECATED right now. Only keeping in case it becomes useful.
@@ -11,34 +13,29 @@ import { PCommands, VSCodeCommands} from '../commands';
 
 export default class CompileCommands {
   public static createAndRegister(): CompileCommands {
-    commands.registerCommand(PCommands.RUN, () => compile(false, true));
+    createTask();
+
     return new CompileCommands();
   }
 }
 
 // Runs p compile in the terminal.
-async function compile(useCustomArgs: boolean, run: boolean): Promise<boolean> {
-  const compilerCommand = "p compile";
-  if(compilerCommand == null) {
-    return false;
-  }
-  runCommandInTerminal(compilerCommand);
-  return true;
+async function createTask() {
+  var type = ExtensionConstants.RunTask;
+  vscode.tasks.registerTaskProvider(type, {
+    provideTasks(token?: vscode.CancellationToken) {
+        var execution = new vscode.ShellExecution("p compile");
+        var problemMatchers = ["$Parse", "$Type"];
+        return [
+            new vscode.Task({type: type}, vscode.TaskScope.Workspace,
+                "Run_Report", "p-vscode", execution, problemMatchers)
+        ];
+    },
+    resolveTask(task: vscode.Task, token?: vscode.CancellationToken) {
+        return task;
+    }
+  });
 }
 
-//Runs the current command in the terminal, outside of the "Errors Task" terminal.
-function runCommandInTerminal(command: string): void {
-  let terminal = window.activeTerminal ?? window.createTerminal();
-  const activeTerminalName = window.activeTerminal?.name;
-  if (terminal.name == "Errors") {
-    for (let i = 0; i<window.terminals.length; i++) {
-      if (window.terminals.at(i)?.name != 'Errors') {
-        terminal = window.terminals.at(i) ?? window.createTerminal();
-        break;
-      }
-    }
-  }
-  terminal.show();
-  terminal.sendText(command);
-}
+
 
