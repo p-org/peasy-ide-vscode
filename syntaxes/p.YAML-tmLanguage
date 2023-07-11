@@ -127,6 +127,7 @@ repository:
           name: keyword.control
       end:  \)
       patterns:
+      - include: "#functioncall"
       - include: "#operators"
       - include: "#constants"
       - include: "#strings"

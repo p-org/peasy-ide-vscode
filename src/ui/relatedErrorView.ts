@@ -37,16 +37,16 @@ export default class RelatedErrorView {
         
         context.subscriptions.push(
             //adds errors
-            this.watcherP.onDidChange(async () => await RelatedErrorView.instance.refreshRelatedErrors()),
-            this.watcher_pproj.onDidChange(async () => await RelatedErrorView.instance.refreshRelatedErrors()),
+            this.watcherP.onDidChange(async () => await RelatedErrorView.refreshRelatedErrors()),
+            this.watcher_pproj.onDidChange(async () => await RelatedErrorView.refreshRelatedErrors()),
             RelatedErrorView.instance
         );
-        RelatedErrorView.instance.refreshRelatedErrors();
+        RelatedErrorView.refreshRelatedErrors();
         return RelatedErrorView.instance;
     }
 
 
-    public async refreshRelatedErrors(): Promise<void> {
+    public static async refreshRelatedErrors(): Promise<void> {
       for (var t of await vscode.tasks.fetchTasks()) {
         if (t.name === "Run_Report") {
           var exec: vscode.TaskExecution = await vscode.tasks.executeTask(t);

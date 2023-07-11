@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { ExtensionConstants, LanguageConstants, TestResults } from '../constants';
+import RelatedErrorView from './relatedErrorView';
 const fs = require('fs');
 
 export default class TestingEditor {
@@ -107,8 +108,11 @@ async function runHandler (request: vscode.TestRunRequest, token: vscode.Cancell
     run.end();
 }
 
+//Compiles the P directory.
 //If the Test Item is a file: run its children. Else: Run the test case.
 async function handlePTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
+    await RelatedErrorView.refreshRelatedErrors();
+
     if (tc.parent == undefined) {
         tc.children.forEach(item => runPTestCase(run, item))
     }
@@ -120,6 +124,7 @@ async function handlePTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
 //Always runs a single P Test Case.
 async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
     var result = TestResults.Error;
+    
     let terminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
     if (terminal.name == ExtensionConstants.RunTask) {
         for (let i = 0; i<vscode.window.terminals.length; i++) {
