@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import { ExtensionConstants, LanguageConstants, TestResults } from '../constants';
 import RelatedErrorView from './relatedErrorView';
+import { searchDirectory } from '../miscTools';
+import { PCommands } from '../commands';
 const fs = require('fs');
 
 export default class TestingEditor {
@@ -12,21 +14,24 @@ export default class TestingEditor {
     public static async createAndRegister(context: vscode.ExtensionContext) : Promise<TestingEditor> {
         context.subscriptions.push(TestingEditor.controller);
         context.subscriptions.push(
-            //Change Text Document => Update the parsing of a Test File
-            //Delete a Text Document => Update parsing of Test File
+            /*
+            CHANGE Text Document => Update the parsing of a Test File
+            DELETE or CREATE a Text Document => Update parsing of Test File
+
+            */
             vscode.workspace.onDidChangeTextDocument(e => updateNodeFromDocument(e.document)),
             vscode.workspace.onWillDeleteFiles(e => e.files.forEach(async fileUri => {
                 updateNodeFromDocument(await vscode.workspace.openTextDocument(fileUri))
             })
-            ) 
+            ),
+            vscode.workspace.onDidCreateFiles(e => e.files.forEach(async fileUri => {
+                updateNodeFromDocument(await vscode.workspace.openTextDocument(fileUri))
+            })) 
         )     
 
         //Looks through the entire test folder to discover where is the test file and where the tests are.
-        if (vscode.workspace.workspaceFolders !== undefined) {
-            const folder = vscode.workspace.workspaceFolders[0].uri
-            let filePattern: vscode.RelativePattern = new vscode.RelativePattern(folder,"PTst/Test*.p" )
-            const files = await vscode.workspace.findFiles(filePattern)
-
+        var files = await searchDirectory("**/PTst/Test*.p");
+        if (files != null) {
             for (var i = 0; i<files.length; i++) {
                 var x = files.at(i)
                 if (x !== undefined) {
@@ -48,7 +53,8 @@ function updateFromContents(controller: vscode.TestController, content: string, 
     
     parsePTestFile(content, {
         onTest: (name, range) => {
-            const tCase = controller.createTestItem(range.start.line.toString(), name, uri);
+            var uniqueID = range.start.line.toString() + uri;
+            const tCase = controller.createTestItem(uniqueID, name, uri);
             tCase.range = range;
             item.children.add(tCase);
         }
@@ -79,7 +85,7 @@ function parsePTestFile(text: string,
         const test = TestingEditor.testRe.exec(line);
         if (test) {
             const range = new vscode.Range(new vscode.Position(lineNo, 0), new vscode.Position(lineNo, line.length));
-            const words = line.split('test ')[1].split(" ");
+            const words = line.split('test ')[1].split(/ |[^A-Za-z_]/);
             events.onTest(words[0], range);
             continue;
         }
@@ -93,8 +99,6 @@ async function runHandler (request: vscode.TestRunRequest, token: vscode.Cancell
     const run = TestingEditor.controller.createTestRun(request);
     const queue: vscode.TestItem[] = [];
 
-
-
     if (request.include) {
         request.include.forEach(test => queue.push(test));
     }
@@ -103,37 +107,40 @@ async function runHandler (request: vscode.TestRunRequest, token: vscode.Cancell
         const test = queue.pop()!;
         run.started(test);
         await handlePTestCase(run, test);
+
         
     }
-    run.end();
+
 }
 
-//Compiles the P directory.
-//If the Test Item is a file: run its children. Else: Run the test case.
+/*
+Compiles the P directory.
+If the Test Item is a file: run its children. Else: Run the test case.
+*/
 async function handlePTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
-    await RelatedErrorView.refreshRelatedErrors();
+    //await RelatedErrorView.refreshRelatedErrors();
 
     if (tc.parent == undefined) {
-        tc.children.forEach(item => runPTestCase(run, item))
+        tc.children.forEach(async item => await runPTestCase(run, item))
     }
     else {
-        runPTestCase(run, tc);
+        await runPTestCase(run, tc);
     }
 }
 
-//Always runs a single P Test Case.
+//Always runs a SINGLE P Test Case.
 async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
     var result = TestResults.Error;
     
     let terminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
-    if (terminal.name == ExtensionConstants.RunTask) {
+    if (terminal.name == PCommands.RunTask) {
         for (let i = 0; i<vscode.window.terminals.length; i++) {
-          if (vscode.window.terminals.at(i)?.name != ExtensionConstants.RunTask) {
+          if (vscode.window.terminals.at(i)?.name != PCommands.RunTask) {
             terminal = vscode.window.terminals.at(i) ?? vscode.window.createTerminal();
             break;
           }
         }
-        if (terminal.name == ExtensionConstants.RunTask) {
+        if (terminal.name == PCommands.RunTask) {
             terminal = vscode.window.createTerminal();
         }
       }
@@ -160,10 +167,10 @@ async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
         command = "p check -tc " + tc.label + " -o " + outputDirectory + " -i " + numIterations + " |& tee " + outputFile;
     }
     terminal.sendText(command);
-
+    
     if (vscode.workspace.workspaceFolders !== undefined) {
         const outputName = vscode.workspace.workspaceFolders[0].uri.path + "/" +  outputFile;
-        const contents = (await vscode.workspace.openTextDocument(vscode.Uri.file(outputName))).getText();
+        const contents = (await (vscode.workspace.openTextDocument(vscode.Uri.file(outputName)))).getText();
         if (contents.includes("Found 0 bugs")) {
             result= TestResults.Pass;
         }
@@ -214,7 +221,7 @@ function getFile(uri: vscode.Uri) {
 	if (existing) {
 		return existing;
 	}
-    const file = TestingEditor.controller.createTestItem(uri.toString(), uri.path.split('/').pop()!, uri);
+    const file = TestingEditor.controller.createTestItem(uri.toString(), uri.path, uri);
     TestingEditor.controller.items.add(file);
     file.canResolveChildren = true;
     return file;
@@ -224,25 +231,23 @@ function getFile(uri: vscode.Uri) {
 
 
 
-export class TestFile {
-
-
-    parsePTestFile(text: string, events: {
-            onTest(name: string, range: vscode.Range): void
-            }) 
-    {
-        const lines = text.split('\n');
+// export class TestFile {
+//     parsePTestFile(text: string, events: {
+//             onTest(name: string, range: vscode.Range): void
+//             }) 
+//     {
+//         const lines = text.split('\n');
     
-        for (let lineNo = 0; lineNo < lines.length; lineNo++) {
-            const line = lines[lineNo];
-            const test = TestingEditor.testRe.exec(line);
-            if (test) {
-                const range = new vscode.Range(new vscode.Position(lineNo, 0), new vscode.Position(lineNo, 0));
-                const words = line.split('\s+');
-                events.onTest(words[1], range);
-                continue;
-            }
+//         for (let lineNo = 0; lineNo < lines.length; lineNo++) {
+//             const line = lines[lineNo];
+//             const test = TestingEditor.testRe.exec(line);
+//             if (test) {
+//                 const range = new vscode.Range(new vscode.Position(lineNo, 0), new vscode.Position(lineNo, 0));
+//                 const words = line.split('\s+');
+//                 events.onTest(words[1], range);
+//                 continue;
+//             }
     
-        }
-    }
-}
+//         }
+//     }
+// }

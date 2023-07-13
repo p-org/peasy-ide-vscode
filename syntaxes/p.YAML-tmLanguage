@@ -98,18 +98,26 @@ repository:
     - name: keyword.statement.other
       match: \bassert\b|\bprint\b|\bnew\b|\braise\b|\bsend\b|\bannounce\b|\breceive\b|\bgoto\b
   primitive_func:
-    name: primitive_func
-    begin: (sizeof|keys|values|default|choose)
-    beginCaptures: 
-      "1":
-        name: entity.name.function.primitive
-    end: \)
     patterns:
+    - name: primitive_func
+      begin: (sizeof|keys|values|choose)
+      beginCaptures: 
+        "1":
+          name: entity.name.function.primitive
+      end: \)
+      patterns:
       - include: "#operators"
       - include: "#constants"
       - include: "#strings"
       - include: "#expressions"
       - include: "#identifier"
+    - name: default_func 
+      begin: default
+      beginCaptures:
+        "1": 
+          name: entity.name.function.primitive 
+      end: \) 
+      contentName: storage.type.other
   expressions:
     patterns:
     - name: expression.format

@@ -18,7 +18,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "Ps Extension" is live!');
+	console.log('Congratulations, your extension "P\'s Extension" is live!');
 
 
 	const statusOutput = window.createOutputChannel(ExtensionConstants.ChannelName);

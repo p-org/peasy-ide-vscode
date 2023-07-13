@@ -8,7 +8,9 @@
   "engines": {
     "vscode": "^1.78.0"
   },
-  "activationEvents": [],
+  "activationEvents": [
+    "workspaceContains:**/*.p"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/p-org/peasy-ide-vscode.git"
@@ -81,6 +83,11 @@
         "args": "p-vscode: Run_Report",
         "key": "f5", 
         "mac": "f5"
+      }, 
+      {
+        "command": "workbench.files",
+        "key": "f4",
+        "mac": "f4"
       }
     ],
     "configuration": {
@@ -114,6 +121,10 @@
       {
         "command": "workbench.errors",
         "title": "Error"
+      }, 
+      {
+        "command": "workbench.files",
+        "title": "Files"
       }
     ], 
 

@@ -1,18 +1,8 @@
 export namespace Messages {
     export namespace CompilationStatus {
-      export const Parsing = '$(sync~spin) Parsing...';
-      export const Resolving = '$(sync~spin) Resolving...';
-      export const ParsingFailed = '$(thumbsdown) Parsing Failed';
-      export const ResolutionFailed = '$(thumbsdown) Resolution Failed';
-      export const PreparingVerification = '$(sync~spin) Preparing verification...';
-      export const CompilationSucceeded = '$(book) Resolved (not verified)';
-      export const Verifying = '$(sync~spin) Verifying';
-      export const VerificationSucceeded = '$(thumbsup) Verification Succeeded';
-      export const VerificationFailedOld = '$(thumbsdown) Verification Failed';
-      export const VerificationFailed = '$(thumbsdown) Could not prove';
-  
-      export const Verified = '$(thumbsup) Verified';
-      export const NotVerified = '$(thumbsdown) Not Verified';
+      export const NoPprojFile = "The current directory does not contain ANY local *.pproj folder. Compilation is impossible.";
+      export const MultiplePprofFile = "The current directory contains multiple *.pproj folders. Please select which project to compile.";
+      export const NoDirectory = "The current directory is invalid.";
     }
   
     export namespace Compiler {
