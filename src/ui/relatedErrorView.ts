@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { PLanguageClient } from '../language/PLanguageClient';
-import { getVsDocumentPath } from '../tools/vscode';
+
 
 //This class helps create error messages when you hover over error squiggles. 
 
@@ -53,7 +53,6 @@ export default class RelatedErrorView {
 
         }
       }
-      console.log("No Errors Task");
     }
 
     public clearRelatedErrors(documentPath: string): void {

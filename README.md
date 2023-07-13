@@ -8,7 +8,7 @@ Preliminary instructions to install this extension:
 NOTE: Remove any previous versions of the extension from the extensions folder in .vscode. 
 1. Clone this repository.
 2. cd into the repository.
-3. Run 'vsce package -o ~ '. If the command errors, run 'brew install vsce' and re-run the command.
+3. Run 'vsce package -o ~ '. If the command errors, run 'brew install vsce' and re-run the previous command.
 4. The extension should now be in your user directory. Now, open a P code directory and navigate to the command pallete.
 5. Search and click onto the command "Extensions: Install from VSIX..."
 6. Install the VSIX file you just created.
@@ -16,7 +16,7 @@ You should get a notification saying "Completed installing P Extension extension
 Reload VSCode, and your extension should now be working!
 
 Further P Extension Support:
-1. Compilation: Open any P project folder. Navigate to a file that ends with .p or .pproj and press 'f5' to compile. 
+1. Compilation: Open any P project repository. Press 'f5' OR Save any file to compile. If there are multiple P projects, choose which project to compile at the top bar. 
 2. Use P's Custom Theme by selecting with the dropdown at Code > Settings > Theme > Color Theme.
 3. P should now support Errors that occur during compilation in the Problems panel. 
 4. Snippets: Typing out the beginning of P data structures and syntactic structures within a P program, such as "machine", "test", and "foreach" will cause snippets to load that have the general structure loaded as well. Pressing tab will allow the user to 'fill in the blank' of each structure.
@@ -24,11 +24,11 @@ Further P Extension Support:
 
 
 ## Features
-\!\[Error Reporting\]\(images/error_reporting.png\)
-\!\[Snippets\]\(images/snippets.png\)
-\!\[Syntax Highlighting\]\(images/syntax_highlighting_1.png\)
-\!\[Testing Framework\]\(images/testing_framework.png\)
-\!\[Iteration Settings\]\(images/Iteration_Settings.png\)
+![Error Reporting](./images/error_reporting.png)
+![Snippets](./images/snippets.png)
+![Syntax Highlighting](./images/syntax_highlighting_1.png)
+![Testing Framework](./images/testing_framework.png)
+![Iteration Settings](./images/Iteration_Settings.png)
 > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
