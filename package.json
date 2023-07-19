@@ -20,6 +20,24 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "peasy-visualizer",
+          "title": "Peasy Visualizer",
+          "icon": "media/icons/P-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "peasy-visualizer": [
+        {
+          "id": "peasy-visualizer-view",
+          "name": "Action Menu",
+          "contents": "In order to use git features, you can open a folder containing a git repository or clone from a URL.\n[Open Folder](command:vscode.openFolder)\n[Clone Repository](command:git.clone)\nTo learn more about how to use git and source control in VS Code [read our docs](https://aka.ms/vscode-scm)."
+        }
+      ]
+    },
     "taskDefinitions": [
       {
           "type": "Run_Report"
@@ -125,6 +143,11 @@
       {
         "command": "workbench.files",
         "title": "Files"
+      }, 
+      {
+        "command": "peasy-visualizer.run",
+        "category": "PeasyViz",
+        "title": "Run"
       }
     ], 
 
