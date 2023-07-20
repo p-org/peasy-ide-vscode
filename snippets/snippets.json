@@ -106,7 +106,7 @@
     },
     "If-Else Statement": {
         "prefix": ["if ", "if( "],
-        "body": ["if (${1:_condition_})", "{", "\t${2:_statement_};", "}", "else", "{","${3:_statement_}", "}"], 
+        "body": ["if (${1:_condition_})", "{", "\t${2:_statement_};", "}", "else", "{","\t${3:_statement_};", "}"], 
         "description": ["If-Else statement: If the conditional is met, the statement is run. If it isn't met, the else statement is run."]
     },
     "New Statement": {
@@ -133,6 +133,11 @@
         "prefix": ["receive {"], 
         "body": ["receive { ", "\tcase ${1:_event_}: {${2:_caseHandler_}}","}"],
         "description": ["Receive Statement: Blocks await/receive for a set of events inside a function."]
+    },
+    "Variable": {
+        "prefix": ["var "],
+        "body": ["var ${1:_name_}: ${2:_type_};"],
+        "description": ["This is a variable declaration."]
     }
 }
 

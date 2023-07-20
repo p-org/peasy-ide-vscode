@@ -3,6 +3,8 @@ import { ExtensionConstants, LanguageConstants, TestResults } from '../constants
 import RelatedErrorView from './relatedErrorView';
 import { searchDirectory } from '../miscTools';
 import { PCommands } from '../commands';
+import * as child_process from 'child_process';
+import { SpawnSyncReturns } from 'child_process';
 const fs = require('fs');
 
 export default class TestingEditor {
@@ -101,16 +103,18 @@ async function runHandler (request: vscode.TestRunRequest, token: vscode.Cancell
 
     if (request.include) {
         request.include.forEach(test => queue.push(test));
+        request.include.forEach(test => run.enqueued(test));
     }
 
     while (queue.length >0) {
         const test = queue.pop()!;
         run.started(test);
+
         await handlePTestCase(run, test);
 
         
     }
-
+    run.end();
 }
 
 /*
@@ -121,6 +125,7 @@ async function handlePTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
     //await RelatedErrorView.refreshRelatedErrors();
 
     if (tc.parent == undefined) {
+        tc.children.forEach(item => run.enqueued(item));
         tc.children.forEach(async item => await runPTestCase(run, item))
     }
     else {
@@ -130,8 +135,8 @@ async function handlePTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
 
 //Always runs a SINGLE P Test Case.
 async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
+    run.started(tc);
     var result = TestResults.Error;
-    
     let terminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
     if (terminal.name == PCommands.RunTask) {
         for (let i = 0; i<vscode.window.terminals.length; i++) {
@@ -148,37 +153,24 @@ async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
     terminal.show();
     const outputDirectory = "PCheckerOutput/" + tc.label
     var outputFile = outputDirectory + "/check.log";
+    var projectDirectory = tc.uri?.fsPath.split("PTst")[0];
+
     if (vscode.workspace.workspaceFolders !== undefined) {
-        const outputName = vscode.workspace.workspaceFolders[0].uri.path + "/" +  outputFile;
-        if (!fs.existsSync(outputName)) {
-            fs.writeFile(outputName, '', function (err: any) {
-                if (err) throw err;
-            })
-        }
-    }
-    //number of p checker iterations that are run
-    const numIterations: String =  vscode.workspace.getConfiguration("p-vscode").get("iterations")?? "1000";
-    //The p check command depends on if the terminal is bash or zsh.
-    var command; 
-    if (terminal.name == "bash") {
-        command = "p check -tc " + tc.label + " -o " + outputDirectory + " -i " + numIterations + " 2>&1 | tee " + outputFile;
-    }
-    else {  //hopefully a zsh terminal
-        command = "p check -tc " + tc.label + " -o " + outputDirectory + " -i " + numIterations + " |& tee " + outputFile;
-    }
-    terminal.sendText(command);
-    
-    if (vscode.workspace.workspaceFolders !== undefined) {
-        const outputName = vscode.workspace.workspaceFolders[0].uri.path + "/" +  outputFile;
-        const contents = (await (vscode.workspace.openTextDocument(vscode.Uri.file(outputName)))).getText();
-        if (contents.includes("Found 0 bugs")) {
-            result= TestResults.Pass;
-        }
-        else if (contents.includes("found a bug")) {
-            result= TestResults.Fail;
-        }
+        var contents =  await runCheckCommand(terminal, tc, outputDirectory, projectDirectory?? '');
+        await checkResult(result, outputFile, run, tc, projectDirectory?? '', contents);
     }
     
+    return;
+}
+
+//Check the output of the test.
+async function checkResult(result: string, outputFile:string, run:vscode.TestRun, tc:vscode.TestItem, projectDirectory:string, contents:string) {
+    if (contents.includes("Found 0 bugs")) {
+        result= TestResults.Pass;
+    }
+    else if (contents.includes("found a bug")) {            
+        result= TestResults.Fail;
+    }
     switch (result) {
         case TestResults.Pass: {
             run.passed(tc);
@@ -195,7 +187,31 @@ async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
             run.errored(tc, msg);
         }
     }
-    return;
+}
+
+//Runs p check in a child process and returns the stdout or result. 
+function runCheckCommand(terminal:vscode.Terminal, tc:vscode.TestItem, outputDirectory:string, projectDirectory:string):string {
+    //number of p checker iterations that are run
+    const numIterations: String =  vscode.workspace.getConfiguration("p-vscode").get("iterations")?? "1000";
+    //The p check command depends on if the terminal is bash or zsh.
+    var command; 
+
+    command = "cd " + projectDirectory + " && p check -tc " + tc.label + " -i " + numIterations;
+    terminal.sendText(command);
+    var contents:string;
+    try {
+        let stdOut =child_process.execSync(command, {shell: '/bin/sh'});
+        return stdOut.toString();
+    }
+    catch (e) {
+        const val: SpawnSyncReturns<Buffer> = e as SpawnSyncReturns<Buffer>;
+        contents = val.stdout.toString();
+        if (contents.length==0) {
+            vscode.window.showErrorMessage("Test Failed: " + tc.label);
+            throw e;
+        }
+    }
+    return contents;
 }
 
 

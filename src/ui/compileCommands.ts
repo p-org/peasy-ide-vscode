@@ -22,7 +22,7 @@ export default class CompileCommands {
   public static createAndRegister(context:vscode.ExtensionContext): CompileCommands {
     generateProjects();
     createCompileTask();
-    vscode.commands.registerCommand('workbench.files', async() => vscode.window.showQuickPick(CompileCommands.projects, this.options))
+    vscode.commands.registerCommand('workbench.files', async() => showFiles())
 
     context.subscriptions.push(
       vscode.workspace.onDidDeleteFiles(e => generateProjects()),
@@ -33,9 +33,32 @@ export default class CompileCommands {
   }
 }
 
+/*
+Shows message if there is no need to select a project.
+Shows quick pick if there are multiple projects to compile. 
+ */
+async function showFiles() {
+  if (CompileCommands.projects.length == 0) {
+    vscode.window.showInformationMessage("There is no alternative P project to select because there is only one P project in the repository.")
+  }
+  else {
+    var selection = vscode.window.showQuickPick(CompileCommands.projects, CompileCommands.options)
+    selection.then( async value =>
+      {
+          for (var t of await vscode.tasks.fetchTasks()) {
+            if (t.name === "Run_Report") {
+              vscode.tasks.executeTask(t);
+
+            }
+        }
+      }
+    )
+    
+  }
+}
 //Change the command WHEN the user selects a different item. 
 async function changeCompilationCommand(item: vscode.QuickPickItem) {
-  CompileCommands.command = "p compile -pp " + item.description;
+  CompileCommands.command = "cd " + item.description + " && p compile";
 }
 
 
@@ -95,12 +118,15 @@ async function generateProjects() {
       vscode.window.showErrorMessage(messages.Messages.CompilationStatus.NoPprojFile);
       return;
     }
-    //We just want to CHECK if the current compile command has been set yet. 
+
+    //If there is only a single pproj file: Set the command and a single project. 
     else if (files.length == 1 && files.at(0)!=undefined) {
-      var projectName = files.at(0)?.fsPath.split('/').at(-1);
-      CompileCommands.command = "p compile -pp " + files.at(0)?.path;
-      if (projectName != undefined) {
-        CompileCommands.projects = [({label:projectName, description: files.at(0)?.fsPath})]
+      var fileName = files.at(0)?.fsPath.split('/').at(-1);
+      
+      if (fileName != undefined) {
+        var directory = files.at(0)?.path.replace(fileName, '');
+        CompileCommands.projects = [({label:fileName, description: directory})]
+        CompileCommands.command = "cd " + directory + " && p compile";
       }
       
       return;
@@ -111,13 +137,13 @@ async function generateProjects() {
         //Add all the file pproj files to the options for the user to choose from. 
         var fileName = f.fsPath.split('/').at(-1);
         if (fileName != undefined) {
-          var item:vscode.QuickPickItem = {label:fileName, description:f.fsPath};
+          var item:vscode.QuickPickItem = {label:fileName, description:f.fsPath.replace(fileName, '')};
           CompileCommands.projects.push(item);
         }
       }
 
       //Set the compile command to the first P project discovered.
-      CompileCommands.command = "p compile -pp " + CompileCommands.projects.at(0)?.description;
+      CompileCommands.command = "cd " + CompileCommands.projects.at(0)?.description + " && p compile";
 
     }
 
