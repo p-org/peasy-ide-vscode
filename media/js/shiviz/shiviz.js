@@ -264,22 +264,26 @@ Shiviz.prototype.visualize = function (
   descending
 ) {
   try {
+    /*******************
+     * Old ShiViz Code *
+     *******************/
+
     d3.selectAll("#vizContainer svg").remove();
 
-    delimiterString = delimiterString.trim();
-    var delimiter =
-      delimiterString == "" ? null : new NamedRegExp(delimiterString, "m");
-    regexpString = regexpString.trim();
+    // delimiterString = delimiterString.trim();
+    // var delimiter =
+    //   delimiterString == "" ? null : new NamedRegExp(delimiterString, "m");
+    // regexpString = regexpString.trim();
 
-    if (regexpString == "") {
-      throw new Exception("The parser regexp field must not be empty.", true);
-    }
+    // if (regexpString == "") {
+    //   throw new Exception("The parser regexp field must not be empty.", true);
+    // }
 
-    const parsedLog = generateShiVizCompatiableInput(log);
+    // // const parsedLog = generateShiVizCompatiableInput(log);
 
-    var regexp = new NamedRegExp(regexpString, "m");
+    // var regexp = new NamedRegExp(regexpString, "m");
     // var parser = new LogParser(log, delimiter, regexp);
-    var parser = new LogParser(parsedLog, delimiter, regexp);
+    // // var parser = new LogParser(parsedLog, delimiter, regexp);
 
     var hostPermutation = null;
 
@@ -293,14 +297,50 @@ Shiviz.prototype.visualize = function (
 
     var labelGraph = {};
 
-    var labels = parser.getLabels();
+    // var labels = parser.getLabels();
+
+    /***********************
+     * End Old ShiViz Code *
+     ***********************/
+
+    /********************************************
+     * New Code to Accommodate to P JSON Output *
+     ********************************************/
+
+    // parse the logs into JSON
+    const jsonLogs = JSON.parse(log);
+    const labels = [""];
+    var logEvents = [];
+    for (let i = 0; i < jsonLogs.length; i++) {
+      const lineNum = i + 1;
+      const logEntry = jsonLogs[i];
+      if (["AssertionFailure", "StrategyDescription"].includes(logEntry.type))
+        continue;
+      let fields = { ...logEntry.details };
+      fields.logType = logEntry.type;
+      if ("payload" in fields) fields.payload = JSON.stringify(fields.payload);
+      const host = fields.id ?? fields.monitor ?? fields.sender;
+      const clock = fields.clock;
+      delete fields["clock"];
+      logEvents.push(
+        new LogEvent(
+          fields.log,
+          new VectorTimestamp(clock, host),
+          lineNum,
+          fields
+        )
+      );
+    }
+
     labels.forEach(function (label) {
-      var graph = new ModelGraph(parser.getLogEvents(label));
+      // var graph = new ModelGraph(parser.getLogEvents(label));
+      var graph = new ModelGraph(logEvents);
       labelGraph[label] = graph;
 
       hostPermutation.addGraph(graph);
       if (sortType == "order") {
-        hostPermutation.addLogs(parser.getLogEvents(label));
+        // hostPermutation.addLogs(parser.getLogEvents(label));
+        hostPermutation.addLogs(logEvents);
       }
     });
 

@@ -86,6 +86,8 @@ NamedRegExp.prototype.exec = function (string) {
       num[this.names[i - 1]] = nam[i];
     }
 
+  console.log(num);
+
   return num;
 };
 
