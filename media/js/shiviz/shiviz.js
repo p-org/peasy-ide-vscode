@@ -128,6 +128,8 @@ function Shiviz() {
     context.go(2, true, true);
   });
 
+  context.go(2, true, true);
+
   // Listener for regex input changes
   $("#parser").on("input", function () {
     $("#log-parsing.notification_text").hide();
@@ -267,7 +269,6 @@ Shiviz.prototype.visualize = function (
     /*******************
      * Old ShiViz Code *
      *******************/
-
     d3.selectAll("#vizContainer svg").remove();
 
     // delimiterString = delimiterString.trim();
@@ -306,43 +307,69 @@ Shiviz.prototype.visualize = function (
     /********************************************
      * New Code to Accommodate to P JSON Output *
      ********************************************/
+    /**
+     * A function that takes a single iteration of json logs and get the log events in appropriate
+     * representations workable with ShiViz.
+     *
+     * @param {Array.<Object>} singleJsonLogIter - The array of log details for a particular iteration of run.
+     * @returns {Array.<LogEvent>} - Returns an array of LogEvent.
+     */
+    function getLogEvents(singleJsonLogIter) {
+      var logEvents = [];
+      for (let i = 0; i < singleJsonLogIter.length; i++) {
+        const lineNum = i + 1;
+        const logEntry = singleJsonLogIter[i];
+        if (["AssertionFailure", "StrategyDescription"].includes(logEntry.type))
+          continue;
+        let fields = { ...logEntry.details };
+        fields.logType = logEntry.type;
+        if ("payload" in fields)
+          fields.payload = JSON.stringify(fields.payload);
+        const host = fields.id ?? fields.monitor ?? fields.sender;
+        const clock = fields.clock;
+        delete fields["clock"];
+        logEvents.push(
+          new LogEvent(
+            fields.log,
+            new VectorTimestamp(clock, host),
+            lineNum,
+            fields
+          )
+        );
+      }
+      return logEvents;
+    }
 
-    // parse the logs into JSON
+    // Parse the log into JSON
     const jsonLogs = JSON.parse(log);
-    const labels = [""];
-    var logEvents = [];
-    for (let i = 0; i < jsonLogs.length; i++) {
-      const lineNum = i + 1;
-      const logEntry = jsonLogs[i];
-      if (["AssertionFailure", "StrategyDescription"].includes(logEntry.type))
-        continue;
-      let fields = { ...logEntry.details };
-      fields.logType = logEntry.type;
-      if ("payload" in fields) fields.payload = JSON.stringify(fields.payload);
-      const host = fields.id ?? fields.monitor ?? fields.sender;
-      const clock = fields.clock;
-      delete fields["clock"];
-      logEvents.push(
-        new LogEvent(
-          fields.log,
-          new VectorTimestamp(clock, host),
-          lineNum,
-          fields
-        )
-      );
+
+    // Get the labels and its corresponding logEvents.
+    const labels = [];
+    const labelsLogEventsMap = {};
+    if (jsonLogs.length > 0 && Array.isArray(jsonLogs[0]))
+      for (let logIter = 0; logIter < jsonLogs.length; logIter++) {
+        const labelName = `Iteration #${logIter + 1}`;
+        labels.push(labelName);
+        labelsLogEventsMap[labelName] = getLogEvents(jsonLogs[logIter]);
+      }
+    else {
+      labels.push("");
+      labelsLogEventsMap[""] = getLogEvents(jsonLogs);
     }
 
     labels.forEach(function (label) {
       // var graph = new ModelGraph(parser.getLogEvents(label));
-      var graph = new ModelGraph(logEvents);
+      var graph = new ModelGraph(labelsLogEventsMap[label]);
       labelGraph[label] = graph;
 
       hostPermutation.addGraph(graph);
       if (sortType == "order") {
         // hostPermutation.addLogs(parser.getLogEvents(label));
-        hostPermutation.addLogs(logEvents);
+        hostPermutation.addLogs(labelsLogEventsMap[label]);
       }
     });
+
+    console.log(labelGraph);
 
     hostPermutation.update();
 

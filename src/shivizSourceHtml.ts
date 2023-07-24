@@ -2,7 +2,8 @@ import { IShiVizScriptsUri } from "./web/types/shiviz";
 
 const shivizSourceHtml = (
   shivizScriptsUriMap: IShiVizScriptsUri,
-  stylesUriMap: IShiVizScriptsUri
+  stylesUriMap: IShiVizScriptsUri,
+  errorTraceJsonLogsString: string
 ): string => {
   return `<!DOCTYPE html>
               <html>
@@ -20,7 +21,6 @@ const shivizSourceHtml = (
                   <script src="${shivizScriptsUriMap["d3.v4.min"]}"></script>
                   <script src="${shivizScriptsUriMap["jquery-3.2.1.min"]}"></script>
                   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
-
                   <style type="text/css">
                       #vizContainer svg line.hidden-link {
                           stroke-width: 1px;
@@ -339,7 +339,7 @@ const shivizSourceHtml = (
                                     <a class="log-link" href="" data-log="ewd998.log" data-delimiter="^=== (?<trace>.*) ===$" data-parser='^State [0-9]+: <(?<event>\w*) .*>\n\/\\ Host = (?<host>.*)\n\/\\ Clock = "(?<clock>.*)"\n\/\\ active = (?<active>.*)\n\/\\ color = (?<color>.*)\n\/\\ counter = (?<counter>.*)'>EWD998 from TLA+</a>
                                   </div>
                                   
-                                  <textarea id="input" spellcheck="false"></textarea>
+                                  <textarea id="input" spellcheck="false">${errorTraceJsonLogsString}</textarea>
                               </td>
                           </tr>
                       </table>
@@ -558,7 +558,7 @@ const shivizSourceHtml = (
                   <script type="text/javascript" src="${shivizScriptsUriMap.requestResponseFinder}"></script>
                   <script type="text/javascript" src="${shivizScriptsUriMap.textQueryMotifFinder}"></script>
 
-                  <script type="text/javascript" src="${shivizScriptsUriMap.shiviz}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap.shiviz}" jsonLogs=${errorTraceJsonLogsString}></script>
 
                   <script type="text/javascript" src="${shivizScriptsUriMap.transformation}"></script>
                   <script type="text/javascript" src="${shivizScriptsUriMap.collapseSequentialNodesTransformation}"></script>

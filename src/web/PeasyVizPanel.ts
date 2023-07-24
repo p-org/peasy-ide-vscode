@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
-// import { getNonce } from "./getNounce";
 import shivizScripts from "./constants/shivizScripts";
 import { IShiVizScriptsUri } from "./types/shiviz";
 import shivizSourceHtml from "../shivizSourceHtml";
+import visualizerErrorHtml from "../visualizerErrorHtml";
 
 export class PeasyVizPanel {
   /**
@@ -102,35 +102,6 @@ export class PeasyVizPanel {
     this._panel.webview.html = await this._getHtmlForWebview(webview);
     webview.onDidReceiveMessage(async (data) => {
       switch (data.type) {
-        // case "report": {
-        //   const message = await vscode.window.showInputBox({
-        //     placeHolder: "why are you reporting this user?",
-        //   });
-        //   if (message) {
-        //     await mutationNoErr(`/report`, { message, ...data.value });
-        //     webview.postMessage({
-        //       command: "report-done",
-        //       data,
-        //     });
-        //     vscode.window.showInformationMessage("Thank you for reporting!");
-        //   }
-        //   break;
-        // }
-        // case "set-window-info": {
-        //   const { displayName, flair } = data.value;
-        //   this._panel.title = displayName;
-        //   if (flair in flairMap) {
-        //     const both = vscode.Uri.parse(
-        //       `https://flair.benawad.com/` +
-        //         flairMap[flair as keyof typeof flairMap]
-        //     );
-        //     this._panel.iconPath = {
-        //       light: both,
-        //       dark: both,
-        //     };
-        //   }
-        //   break;
-        // }
         case "onInfo": {
           if (!data.value) {
             return;
@@ -145,33 +116,24 @@ export class PeasyVizPanel {
           vscode.window.showErrorMessage(data.value);
           break;
         }
-        // case "tokens": {
-        //   await Util.globalState.update(accessTokenKey, data.accessToken);
-        //   await Util.globalState.update(refreshTokenKey, data.refreshToken);
-        //   break;
-        // }
       }
     });
   }
 
   private async _getHtmlForWebview(webview: vscode.Webview) {
-    // And the uri we use to load this script in the webview
-    // const scriptUri = webview.asWebviewUri(
-    //   vscode.Uri.joinPath(this._extensionUri, "media", "main.js")
-    // );
-
-    // Uri to load styles into webview
+    /**********************************
+     * * Get vscode style scripts URI *
+     **********************************/
     const stylesResetUri = webview.asWebviewUri(
       vscode.Uri.joinPath(this._extensionUri, "media/styles", "reset.css")
     );
     const stylesMainUri = webview.asWebviewUri(
       vscode.Uri.joinPath(this._extensionUri, "media/styles", "vscode.css")
     );
-    // const cssUri = webview.asWebviewUri(
-    //   vscode.Uri.joinPath(this._extensionUri, "out", "compiled/swiper.css")
-    // );
-
-    // console.log(stylesMainUri);
+    const vscodeStylesUri = {
+      stylesResetUri,
+      stylesMainUri,
+    };
 
     /****************************
      * * Get ShiViz scripts URI *
@@ -202,69 +164,58 @@ export class PeasyVizPanel {
       )
     );
 
-    /**************************
-     * * Check if file exists *
-     **************************/
-    // const workspaces = vscode.workspace.workspaceFolders;
-    // if (workspaces === undefined || workspaces.length <= 0) {
-    //   console.log("No workspace found!");
-    // } else {
-    //   let errorTraceLogPathname: string = "";
-    //   const rootDir = workspaces[0].uri.path;
-    //   const dirFiles = await vscode.workspace.fs.readDirectory(
-    //     vscode.Uri.file(`${rootDir}/PCheckerOutput/BugFinding`)
-    //   );
-    //   for (let f = 0; f < dirFiles.length; f++) {
-    //     const filename = dirFiles[f][0];
-    //     const match = filename.match(/\./g);
-    //     if (match && match.length === 1 && filename.endsWith(".txt")) {
-    //       errorTraceLogPathname = `${rootDir}/PCheckerOutput/BugFinding/${filename}`;
-    //       console.log("here");
-    //     }
-    //   }
-    //   const errorTraceLogUint8Array = await vscode.workspace.fs.readFile(
-    //     vscode.Uri.file(errorTraceLogPathname)
-    //   );
-    //   const errorTraceLog = new TextDecoder().decode(errorTraceLogUint8Array);
-    // }
+    /******************************************************
+     * * Check if file exists and render appropriate HTML *
+     ******************************************************/
+    let visualizableErrorTraces: string[] = [];
+    let bugOutputDirPathname: string = "";
+    const workspaces = vscode.workspace.workspaceFolders;
+    // If no workspace is found, show error html template with error message
+    if (workspaces === undefined || workspaces.length <= 0)
+      return visualizerErrorHtml(vscodeStylesUri, "No workspace found!");
+    // Get applicable json error trace filename
+    else {
+      const rootDir = workspaces[0].uri.path;
+      bugOutputDirPathname = `${rootDir}/PCheckerOutput/BugFinding`;
+      const dirFiles = await vscode.workspace.fs.readDirectory(
+        vscode.Uri.file(bugOutputDirPathname)
+      );
+      for (let f = 0; f < dirFiles.length; f++) {
+        const filename = dirFiles[f][0];
+        const match = filename.match(/\./g);
+        // Valid json error trace filenames contain 2 periods and ends with ".trace.json"
+        if (match && match.length === 2 && filename.endsWith(".trace.json")) {
+          visualizableErrorTraces.push(filename.replace(/\.trace\.json$/, ""));
+        }
+      }
+    }
 
-    // Use a nonce to only allow specific scripts to be run
-    // const nonce = getNonce();
+    // If there is no valid json error trace filenames, show error html template with error message
+    if (visualizableErrorTraces.length === 0)
+      return visualizerErrorHtml(vscodeStylesUri, "No error traces found!");
 
-    // return `<!DOCTYPE html>
-    //     <html lang="en">
-    //     <head>
-    //         <meta charset="UTF-8">
-    //         <!--
-    //             Use a content security policy to only allow loading images from https or from our extension directory,
-    //             and only allow scripts that have a specific nonce.
-    //         -->
-    //         <meta http-equiv="Content-Security-Policy" content="img-src https: data:; style-src 'unsafe-inline' ${webview.cspSource}; script-src 'nonce-${nonce}';">
-    //         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    //         <link href="${stylesResetUri}" rel="stylesheet">
-    //         <link href="${stylesMainUri}" rel="stylesheet">
-    //         <script nonce="${nonce}">
-    //         </script>
-    //         <style type="text/css">
-    //           .anchor-tag {
-    //             color: lightblue;
-    //             text-decoration: none;
-    //           }
-    //         </style>
-    //     </head>
-    //     <body>
-    //         <h1>Hello World</h1>
-    //         <input />
-    //         <button>Hello </button>
-    //         <a href="http://en.wikipedia.org/wiki/Directed_acyclic_graph" class="anchor-tag">Testing Anchor Tag</a>
-    //     </body>
-    //     <script src="${scriptUri}" nonce="${nonce}"></script>
-    //     </html>`;
-
-    return shivizSourceHtml(shivizScriptsUriMap, {
-      shivizStylesUri,
-      stylesResetUri,
-      stylesMainUri,
-    });
+    // If there is valid json error trace filenames, prompt user to choose which one to visualize
+    const errorTraceSelected = await vscode.window.showInformationMessage(
+      "Which file do you want to visualize?",
+      ...visualizableErrorTraces
+    );
+    // Read and convert the chosen file into string and render the visualizer html
+    const errorTraceJsonLogsUint8Array: Uint8Array =
+      await vscode.workspace.fs.readFile(
+        vscode.Uri.file(
+          `${bugOutputDirPathname}/${errorTraceSelected}.trace.json`
+        )
+      );
+    const errorTraceJsonLogsString: string = new TextDecoder().decode(
+      errorTraceJsonLogsUint8Array
+    );
+    return shivizSourceHtml(
+      shivizScriptsUriMap,
+      {
+        ...vscodeStylesUri,
+        shivizStylesUri,
+      },
+      errorTraceJsonLogsString
+    );
   }
 }
