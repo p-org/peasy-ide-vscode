@@ -1,78 +1,108 @@
-# peasy-ide-vscode
-Peasy: An Intuitive Development Environment for P
+# Peasy: An Intuitive Development Environment for P
+
+This is the VSCode extension for P. 
 
 
-This is the IDE extension for P specifically geared for VS Code. 
-
-Preliminary instructions to install this extension:
-NOTE: Remove any previous versions of the extension from the extensions folder in .vscode. 
-1. Clone this repository.
-2. cd into the repository.
-3. Run 'vsce package -o ~ '. If the command errors, run 'brew install vsce' and re-run the previous command.
-4. The extension should now be in your user directory. Now, open a P code directory and navigate to the command pallete.
-5. Search and click onto the command "Extensions: Install from VSIX..."
-6. Install the VSIX file you just created.
-You should get a notification saying "Completed installing P Extension extension from VSIX."
-Reload VSCode, and your extension should now be working!
-
-Further P Extension Support:
-1. Compilation: Open any P project repository. Press 'f5' OR Save any file to compile. If there are multiple P projects, choose which project to compile at the top bar. 
-2. Use P's Custom Theme by selecting with the dropdown at Code > Settings > Theme > Color Theme.
-3. P should now support Errors that occur during compilation in the Problems panel. 
-4. Snippets: Typing out the beginning of P data structures and syntactic structures within a P program, such as "machine", "test", and "foreach" will cause snippets to load that have the general structure loaded as well. Pressing tab will allow the user to 'fill in the blank' of each structure.
-5. P's testing framework allows for testing done by clicking a green play button. It automatically runs a p check command. The user can also change the settings of the number of iterations run every time a test is run from the IDE.
 
 
 ## Features
-![Error Reporting](./images/error_reporting.png)
-![Snippets](./images/snippets.png)
-![Syntax Highlighting](./images/syntax_highlighting_1.png)
-![Testing Framework](./images/testing_framework.png)
-![Iteration Settings](./images/Iteration_Settings.png)
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+---
 
-## Requirements
+- **Compile and Run** `.p` files after pressing **f5** and saving files. If there are multiple P projects in the directory, users can toggle between projects by pressing **f4**.
+- **Syntax highlighting** and a **Custom P theme**.
+- **Snippets** to auto-complete P data structures and syntactical structures. 
+- **Error Reporting** to detect errors after compilation.
+- **Testing Framework** to test P files with `p check`
+- **Iteration settings** for `p check` files. 
+- **Error Tracing Visualization** to help debug errors in P project folders.
 
-Dependencies: js-yaml installed inside the package.
+Below are [examples](#examples) of each feature. 
+
+## Shortcuts
+
+| Shortcut                  | Description                                                                             |
+| :------------------------ | :-------------------------------------------------------------------------------------- |
+|`F4`| Show dropdown menu, if there are multiple P projects in the Current Working Directory. |
+| `F5`                      | Compile and run, if there is a P file in the directory.                                 |
+| `F6`                      | Show P visualization of error tracing to help with debugging.                                                                                                         |
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+| Setting  | Description                                                                 | Default  |
+| :-------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------- |
+| `p-vscode.iterations` | Set to the number of iterations you want when `p check` is run inside of the IDE of a P testing folder.                                                                                                      | `1000`                                                         |
+| `p-vscode.trace.server`     |  Set to 'verbose' to see the language server and client interactions in the Debug Console.                                                                                | `verbose`                                                     |
 
-For example:
 
-This extension contributes the following settings:
 
-* `p-vscode.iterations`: Set to the number of iterations you want when p check is run inside of the IDE of a P testing folder.
-* `p-vscode.trace.server`: Set to 'verbose' to see the language server and client interactions in the Debug Console.
+
+## Requirements
+N/A
+
+
+## **Examples**
+---
+Here are examples of each feature in the P extension!
+
+### Compilation 
+---
+Press `f5` or `save` in order to compile the current P project. Use `f4` to toggle between the different P projects in a single directory. 
+<center>
+  <video src="./images/compilation.mp4" alt="Compilation" />
+</center>
+
+### Syntax Highlighting and the P theme
+---
+![Syntax Highlighting](./images/syntax_highlighting_1.png)
+### Snippets 
+---
+Different P data structures and syntax structures can be generated by typing in the beginning. Press `tab` to fill-in-the-blanks of these structures.
+<img src="./images/snippets.gif" alt="Snippets" />
+
+### Error Reporting
+---
+![Error Reporting](./images/error_reporting.png)
+### Testing Framework
+---
+Run P checking tests and navigate to different Test Files through the VSCode Testing tab on the left.
+<center >
+    <video src="./images/testing.mp4" alt="Testing" />
+</center>
+
+### Iterations during  `p check`
+---
+When running automatic tests through P's Testing Framework, users can change the number of iterations run during the `p check` command by changing P extension configurations. 
+<img src="./images/iteration_settings.gif" alt="Snippets" />
+
+### Error Tracing Visualization 
+---
+Press `f6` in order to display a visualization that traces errors back to their source, enabling easier debugging.
+<img src="images/error_tracing.jpeg" alt="Error Tracing"/>
 
 ## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-
-Initial release of Syntax Highlighting, Compilation upon pressing F + 5, a P Theme File, Problem Reporting, Testing Framework, and Snippets
-
-
-
-
 ---
 
-## Working with Markdown
+- Pressing f5 or saving consecutively too fast may cause an error message to appear in VSCode. Feel free to ignore this. 
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
 
-## For more information
+## Install the Extension Locally
+___
+**NOTE**: Remove any previous versions of the extension from the extensions folder in .vscode. 
+1. Clone this repository.
+2. cd into the repository.
+3. Run `vsce package -o ~ `. If the command errors, run `brew install vsce` and re-run the previous command.
+4. The extension should now be in your user directory. Now, open a P code directory and navigate to the command pallete.
+5. Search and click onto the command **Extensions: Install from VSIX...**
+6. Install the VSIX file you just created.
+You should get a notification saying `Completed installing P Extension extension from VSIX....`
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
+**Reload VSCode, and your extension should now be working!**
 **Enjoy!**
+
+
+
+
+
 
 
