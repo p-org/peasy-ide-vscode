@@ -40,52 +40,65 @@
     },
     "taskDefinitions": [
       {
-          "type": "Run_Report"
+        "type": "Run_Report"
       }
     ],
     "problemMatchers": [
       {
         "name": "Type",
-        "fileLocation": ["search", {"include": ["${workspaceFolder}"]}],
+        "fileLocation": [
+          "search",
+          {
+            "include": [
+              "${workspaceFolder}"
+            ]
+          }
+        ],
         "pattern": [
           {
-              "regexp": "(?:\\[Error:\\])"
-          }, 
+            "regexp": "(?:\\[Error:\\])"
+          },
           {
-              "regexp": "\\[([a-zA-Z\\/\\.]+):([0-9]+):([0-9]+)\\](.*)", 
-              "file": 1,
-              "line": 2,
-              "column": 3, 
-              "message": 4
+            "regexp": "\\[([a-zA-Z\\/\\.]+):([0-9]+):([0-9]+)\\](.*)",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "message": 4
           }
-        ], 
+        ],
         "background": {
           "activeOnStart": true,
           "beginsPattern": "Parsing",
           "endsPattern": "~"
         }
-
-      }, 
+      },
       {
         "name": "Parse",
-        "fileLocation": ["search", {"include": ["${workspaceFolder}"]}],
+        "fileLocation": [
+          "search",
+          {
+            "include": [
+              "${workspaceFolder}"
+            ]
+          }
+        ],
         "pattern": [
           {
-              "regexp": "(?:\\[Parser Error:\\])"
-          }, 
+            "regexp": "(?:\\[Parser Error:\\])"
+          },
           {
-              "regexp": "\\[(.*)\\]\\s+(?:parse error:)\\s+(?:line\\s+)([0-9]+)\\:([0-9]+)(.+)", 
-              "file": 1,
-              "line": 2,
-              "column": 3, 
-              "message": 4
+            "regexp": "\\[(.*)\\]\\s+(?:parse error:)\\s+(?:line\\s+)([0-9]+)\\:([0-9]+)(.+)",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "message": 4
           }
-          ], 
-          "background": {
-            "activeOnStart": true,
-            "beginsPattern": "Parsing",
-            "endsPattern": "~"
-          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Parsing",
+          "endsPattern": "~"
+        }
       }
     ],
     "themes": [
@@ -94,35 +107,40 @@
         "uiTheme": "vs-dark",
         "path": "./themes/P Theme-color-theme.json"
       }
-    ], 
+    ],
     "keybindings": [
       {
         "command": "workbench.action.tasks.runTask",
         "args": "p-vscode: Run_Report",
-        "key": "f5", 
+        "key": "f5",
         "mac": "f5"
-      }, 
+      },
       {
         "command": "workbench.files",
         "key": "f4",
         "mac": "f4"
+      }, 
+      {
+        "command": "peasy-visualizer.run", 
+        "key": "f6", 
+        "mac": "f6"
       }
     ],
     "configuration": {
-      "type": "object", 
-      "title": "P Extension configuration", 
+      "type": "object",
+      "title": "P Extension configuration",
       "properties": {
         "p-vscode.trace.server": {
           "scope": "window",
           "type": "string",
           "enum": [
-            "off", 
+            "off",
             "messages",
             "verbose"
           ],
           "default": "verbose",
           "description": "Traces the communication between VS Code and the language server."
-        }, 
+        },
         "p-vscode.iterations": {
           "scope": "window",
           "type": "integer",
@@ -135,22 +153,21 @@
       {
         "command": "p.definition",
         "title": "P: Go to Definition"
-      }, 
+      },
       {
         "command": "workbench.errors",
         "title": "Error"
-      }, 
+      },
       {
         "command": "workbench.files",
         "title": "Files"
-      }, 
+      },
       {
         "command": "peasy-visualizer.run",
         "category": "PeasyViz",
         "title": "Run"
       }
-    ], 
-
+    ],
     "languages": [
       {
         "id": "p",
@@ -159,9 +176,8 @@
           "p"
         ],
         "extensions": [
-          ".p", 
+          ".p",
           ".pproj"
-
         ],
         "configuration": "./language-configuration.json"
       }
