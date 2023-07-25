@@ -496,6 +496,7 @@ const shivizSourceHtml = (
                           <div class="triangle"></div>
                           <div class="name"></div>
                           <table class="info"></table>
+                          <button name="toggle fields" class="show-fields">Show More</button>
                           <button name="hide" class="hide hb">Hide</button>
                           <button name="filter" class="filter hb">Highlight</button>
                           <button name="collapse" class="collapse">Toggle Collapse</button>

@@ -256,26 +256,25 @@ View.prototype.draw = function (viewPosition) {
     view.$hostSVG.attr("overflow", "visible");
 
     var hosts = d3.selectAll(g_hosts);
-    var x_offset = Global.HOST_SIZE / 3;
+    // var x_offset = Global.HOST_SIZE / 3;
+    var x_offset = Global.HOST_SIZE / 6;
+    console.log(x_offset);
     var hostLabels = hosts
       .append("text")
-      .text(function (node) {
-        const label = view.getAbbreviatedHostname(node.getHost());
-        return label;
-      })
+      .text((node) => node.getHost())
       //.attr("text-anchor", "middle")
-      .attr("transform", "rotate(-45)")
-      .attr("x", x_offset)
-      .attr("y", "1em")
+      .attr("transform", "rotate(0)")
+      .attr("x", "-1em")
+      .attr("y", "-1em")
       .attr("font-size", "x-small");
 
-    if (!view.hasAbbreviatedHostnames()) {
-      setTimeout(function () {
-        // Must abbreviate after timeout so that the text elements will have
-        // been drawn. Otherwise they will have no computed text length.
-        abbreviateD3Texts(hostLabels);
-      });
-    }
+    // if (!view.hasAbbreviatedHostnames()) {
+    //   setTimeout(function () {
+    //     // Must abbreviate after timeout so that the text elements will have
+    //     // been drawn. Otherwise they will have no computed text length.
+    //     abbreviateD3Texts(hostLabels);
+    //   });
+    // }
   }
 
   function abbreviateD3Texts(d3Texts) {
