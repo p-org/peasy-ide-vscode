@@ -2,7 +2,8 @@ import { IShiVizScriptsUri } from "./web/types/shiviz";
 
 const shivizSourceHtml = (
   shivizScriptsUriMap: IShiVizScriptsUri,
-  stylesUriMap: IShiVizScriptsUri
+  stylesUriMap: IShiVizScriptsUri,
+  errorTraceJsonLogsString: string
 ): string => {
   return `<!DOCTYPE html>
               <html>
@@ -11,16 +12,15 @@ const shivizSourceHtml = (
                   <link rel="canonical" href="http://bestchai.bitbucket.io/shiviz/">
                   <link rel="shortcut icon" href="images/favico.ico" type="image/x-icon" />
                   <title>ShiViz</title>
-                  <link href="${stylesUriMap.shivizStylesUri}" type="text/css" rel="stylesheet">
-                  <link href="${stylesUriMap.stylesResetUri}" type="text/css" rel="stylesheet">
-                  <link href="${stylesUriMap.stylesMainUri}" type="text/css" rel="stylesheet">
+                  <link href="${stylesUriMap["shivizStylesUri"]}" type="text/css" rel="stylesheet">
+                  <link href="${stylesUriMap["stylesResetUri"]}" type="text/css" rel="stylesheet">
+                  <link href="${stylesUriMap["stylesMainUri"]}" type="text/css" rel="stylesheet">
                   <!-- DEPENDENCIES -->
 
                   <!--<script src="local_scripts/d3.min.js"></script>-->
                   <script src="${shivizScriptsUriMap["d3.v4.min"]}"></script>
                   <script src="${shivizScriptsUriMap["jquery-3.2.1.min"]}"></script>
                   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
-
                   <style type="text/css">
                       #vizContainer svg line.hidden-link {
                           stroke-width: 1px;
@@ -339,7 +339,7 @@ const shivizSourceHtml = (
                                     <a class="log-link" href="" data-log="ewd998.log" data-delimiter="^=== (?<trace>.*) ===$" data-parser='^State [0-9]+: <(?<event>\w*) .*>\n\/\\ Host = (?<host>.*)\n\/\\ Clock = "(?<clock>.*)"\n\/\\ active = (?<active>.*)\n\/\\ color = (?<color>.*)\n\/\\ counter = (?<counter>.*)'>EWD998 from TLA+</a>
                                   </div>
                                   
-                                  <textarea id="input" spellcheck="false"></textarea>
+                                  <textarea id="input" spellcheck="false">${errorTraceJsonLogsString}</textarea>
                               </td>
                           </tr>
                       </table>
@@ -516,75 +516,75 @@ const shivizSourceHtml = (
                   
 
                   <!-- REPLACED DURING DEPLOYMENT: -->
-                  <script type="text/javascript" src="${shivizScriptsUriMap.dev}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["dev"]}"></script>
                   <!-- -->
                   
-                  <script type="text/javascript" src="${shivizScriptsUriMap.searchBar}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.clusterer}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["searchBar"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["clusterer"]}"></script>
 
-                  <script type="text/javascript" src="${shivizScriptsUriMap.graphEvent}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.abstractGraph}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.abstractNode}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.graphTraversal}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.dfsGraphTraversal}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["graphEvent"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["abstractGraph"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["abstractNode"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["graphTraversal"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["dfsGraphTraversal"]}"></script>
                   
-                  <script type="text/javascript" src="${shivizScriptsUriMap.builderGraph}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.builderNode}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.graphBuilder}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.graphBuilderHost}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.graphBuilderNode}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["builderGraph"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["builderNode"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["graphBuilder"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["graphBuilderHost"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["graphBuilderNode"]}"></script>
 
-                  <script type="text/javascript" src="${shivizScriptsUriMap.lemAST}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.lemInterpreter}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.lemParser}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.lemToken}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.lemTokenizer}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.logEventMatcher}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["lemAST"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["lemInterpreter"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["lemParser"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["lemToken"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["lemTokenizer"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["logEventMatcher"]}"></script>
 
-                  <script type="text/javascript" src="${shivizScriptsUriMap.logEvent}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.modelGraph}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.modelNode}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.parser}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.vectorTimestamp}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.vectorTimestampSerializer}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["logEvent"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["modelGraph"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["modelNode"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["parser"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["vectorTimestamp"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["vectorTimestampSerializer"]}"></script>
 
-                  <script type="text/javascript" src="${shivizScriptsUriMap.motif}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.motifFinder}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.motifDrawer}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.broadcastGatherFinder}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.customMotifFinder}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.motifGroup}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.motifNavigator}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.requestResponseFinder}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.textQueryMotifFinder}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["motif"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["motifFinder"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["motifDrawer"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["broadcastGatherFinder"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["customMotifFinder"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["motifGroup"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["motifNavigator"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["requestResponseFinder"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["textQueryMotifFinder"]}"></script>
 
-                  <script type="text/javascript" src="${shivizScriptsUriMap.shiviz}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["shiviz"]}" jsonLogs=${errorTraceJsonLogsString}></script>
 
-                  <script type="text/javascript" src="${shivizScriptsUriMap.transformation}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.collapseSequentialNodesTransformation}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.hideHostTransformation}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.highlightHostTransformation}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.highlightMotifTransformation}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.showDiffTransformation}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.transformer}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["transformation"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["collapseSequentialNodesTransformation"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["hideHostTransformation"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["highlightHostTransformation"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["highlightMotifTransformation"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["showDiffTransformation"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["transformer"]}"></script>
 
-                  <script type="text/javascript" src="${shivizScriptsUriMap.exception}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.regexp}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.util}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["exception"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["regexp"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["util"]}"></script>
 
-                  <script type="text/javascript" src="${shivizScriptsUriMap.generateShiVizCompatibleInput}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.generateVectorClock}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.trexParser}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["generateShiVizCompatibleInput"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["generateVectorClock"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["trexParser"]}"></script>
 
-                  <script type="text/javascript" src="${shivizScriptsUriMap.controller}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.global}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.hostPermutation}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.layout}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.view}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.visualEdge}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.visualGraph}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.visualNode}"></script>
-                  <script type="text/javascript" src="${shivizScriptsUriMap.abbreviation}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["controller"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["global"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["hostPermutation"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["layout"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["view"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["visualEdge"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["visualGraph"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["visualNode"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["abbreviation"]}"></script>
               </body>
               </html>`;
 };

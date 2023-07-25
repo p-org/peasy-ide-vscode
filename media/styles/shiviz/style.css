@@ -533,6 +533,9 @@ section.input .left {
   z-index: 1;
 }
 #searchbar #bar input {
+  /* * Peasy Addition - Make color white by default for contrast to vscode theme */
+  color: inherit !important;
+
   height: 24pt;
   font-size: 12pt;
   margin: 0;
@@ -567,13 +570,17 @@ section.input .left {
   position: absolute;
   margin-top: 1px;
   left: calc(100% - 76pt);
-  background: white;
+  /* * Peasy Change - Make background transparent */
+  background: transparent;
+  /* background: white; */
   cursor: pointer;
 }
 #searchbar #bar .clear div {
   width: 2px;
   height: 14pt;
-  background: #04a;
+  /* * Peasy Change - Make background of clear icon when there is text in input to be vscode themed foreground color */
+  background: var(--vscode-foreground);
+  /* background: #04a; */
   position: absolute;
   overflow: hidden;
   margin-left: 12pt;
@@ -971,6 +978,12 @@ svg {
 }
 
 /* Sidebar */
+#sidebar .field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5em;
+}
+
 #sidebar .fields,
 .dialog .info {
   font-size: 10pt;
@@ -1025,7 +1038,9 @@ svg {
   margin-bottom: 1em;
 }
 #sidebar .info {
-  height: 12em;
+  /* * PeasyViz Change - Make the sidebar info section auto adjust height based on content */
+  height: auto;
+  /* height: 12em; */
   overflow: auto;
 }
 #sidebar .event {
@@ -1070,6 +1085,14 @@ svg#defs {
   color: white;
   word-break: break-all;
 }
+
+/* * Peasy Change - Make dialog field vertical display */
+.dialog .info .field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5em;
+}
+
 .dialog .triangle {
   position: absolute;
   width: 0;
