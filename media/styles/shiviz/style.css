@@ -997,7 +997,8 @@ svg {
 .dialog .info .title {
   text-align: left;
   vertical-align: top;
-  padding-right: 1em;
+  /* * Peasy Change - Remove padding right */ 
+  /* padding-right: 1em; */
   white-space: nowrap;
 }
 
@@ -1006,6 +1007,7 @@ svg {
   /*word-break: break-all;*/
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: pre-line;
 }
 
 #sidebar {

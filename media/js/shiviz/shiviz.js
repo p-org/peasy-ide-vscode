@@ -307,6 +307,22 @@ Shiviz.prototype.visualize = function (
     /********************************************
      * New Code to Accommodate to P JSON Output *
      ********************************************/
+    function dictHasItems(dict) {
+      return dict && Object.keys(dict).length > 0;
+    }
+    function parsePayloadToString(payload) {
+      let parsedPayloadStr = "";
+      let payloadKeys = Object.keys(payload);
+      for (let k = 0; k < payloadKeys.length; k++) {
+        let key = payloadKeys[k];
+        let value = payload[key];
+        parsedPayloadStr += `${key} = ${value}${
+          k !== payloadKeys.length - 1 ? "\n" : ""
+        }`;
+      }
+      // console.log(parsedPayloadStr);
+      return parsedPayloadStr;
+    }
     /**
      * A function that takes a single iteration of json logs and get the log events in appropriate
      * representations workable with ShiViz.
@@ -323,18 +339,25 @@ Shiviz.prototype.visualize = function (
           continue;
         let fields = { ...logEntry.details };
         fields.logType = logEntry.type;
-        if ("payload" in fields)
-          fields.payload = JSON.stringify(fields.payload);
+
+        if ("payload" in fields) {
+          if (!dictHasItems(fields.payload)) delete fields["payload"];
+          else fields.payload = parsePayloadToString(fields.payload);
+        }
+
+        if ("opGroupId" in fields) delete fields["opGroupId"];
+
+        Object.assign(fields, { action: fields.logType });
+        delete fields["logType"];
+
+        const event = fields.log;
+        delete fields.log;
+
         const host = fields.id ?? fields.monitor ?? fields.sender;
         const clock = fields.clock;
         delete fields["clock"];
         logEvents.push(
-          new LogEvent(
-            fields.log,
-            new VectorTimestamp(clock, host),
-            lineNum,
-            fields
-          )
+          new LogEvent(event, new VectorTimestamp(clock, host), lineNum, fields)
         );
       }
       return logEvents;
@@ -368,8 +391,6 @@ Shiviz.prototype.visualize = function (
         hostPermutation.addLogs(labelsLogEventsMap[label]);
       }
     });
-
-    console.log(labelGraph);
 
     hostPermutation.update();
 
