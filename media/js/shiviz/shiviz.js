@@ -297,9 +297,6 @@ Shiviz.prototype.visualize = function (
     }
 
     var labelGraph = {};
-
-    // var labels = parser.getLabels();
-
     /***********************
      * End Old ShiViz Code *
      ***********************/
@@ -307,20 +304,36 @@ Shiviz.prototype.visualize = function (
     /********************************************
      * New Code to Accommodate to P JSON Output *
      ********************************************/
+    /**
+     * A function that checks whether a dictionary contains items.
+     *
+     * @param {Object} dict - The dictionary input
+     * @returns {Boolean} - True if there are items in the dictionary.
+     */
     function dictHasItems(dict) {
       return dict && Object.keys(dict).length > 0;
     }
+
+    /**
+     * A function returns a parsed string representation of the dictionary in the following format
+     * key = value
+     * key2 = value2
+     * etc...
+     *
+     * @param {Object} dict - Dictionary input
+     * @returns {String} - String output of the parsed dictionary
+     */
     function parsePayloadToString(payload) {
       let parsedPayloadStr = "";
       let payloadKeys = Object.keys(payload);
       for (let k = 0; k < payloadKeys.length; k++) {
         let key = payloadKeys[k];
         let value = payload[key];
-        parsedPayloadStr += `${key} = ${value}${
+        parsedPayloadStr += `${key}=${value}${
           k !== payloadKeys.length - 1 ? "\n" : ""
         }`;
       }
-      // console.log(parsedPayloadStr);
+
       return parsedPayloadStr;
     }
     /**
@@ -335,29 +348,53 @@ Shiviz.prototype.visualize = function (
       for (let i = 0; i < singleJsonLogIter.length; i++) {
         const lineNum = i + 1;
         const logEntry = singleJsonLogIter[i];
+
+        // Don't include AssertionFailure and StrategyDescription
         if (["AssertionFailure", "StrategyDescription"].includes(logEntry.type))
           continue;
-        let fields = { ...logEntry.details };
-        fields.logType = logEntry.type;
 
+        // Create the fields dictionary
+        let fields = { ...logEntry.details };
+
+        // Set the action to the field to the log type of entry
+        fields.action = logEntry.type;
+
+        // If empty dictionary for payload, delete it in fields
+        // Else, parse it into string format
         if ("payload" in fields) {
-          if (!dictHasItems(fields.payload)) delete fields["payload"];
-          else fields.payload = parsePayloadToString(fields.payload);
+          if (!dictHasItems(fields.payload)) {
+            delete fields["payload"];
+          } else {
+            fields.payload = parsePayloadToString(fields.payload);
+          }
         }
 
+        // Get the machine name and assign it to fields
+        const host = fields.id ?? fields.monitor ?? fields.sender;
+        fields["machine"] = host;
+
+        // Get the event and clock necessary for initializing a new LogEvent instance
+        const event = fields.log;
+        const clock = fields.clock;
+
+        // Remove opGroupId
         if ("opGroupId" in fields) delete fields["opGroupId"];
 
-        Object.assign(fields, { action: fields.logType });
-        delete fields["logType"];
-
-        const event = fields.log;
-        delete fields.log;
-
-        const host = fields.id ?? fields.monitor ?? fields.sender;
-        const clock = fields.clock;
+        // Remove clock key from fields
         delete fields["clock"];
+
+        // Get the fields dict keys in sorter manner
+        const sortedFieldsKeys = Object.keys(fields).sort();
+
         logEvents.push(
-          new LogEvent(event, new VectorTimestamp(clock, host), lineNum, fields)
+          new LogEvent(
+            event,
+            new VectorTimestamp(clock, host),
+            lineNum,
+            Object.fromEntries(
+              sortedFieldsKeys.map((key) => [key, fields[key]])
+            )
+          )
         );
       }
       return logEvents;
@@ -381,13 +418,11 @@ Shiviz.prototype.visualize = function (
     }
 
     labels.forEach(function (label) {
-      // var graph = new ModelGraph(parser.getLogEvents(label));
       var graph = new ModelGraph(labelsLogEventsMap[label]);
       labelGraph[label] = graph;
 
       hostPermutation.addGraph(graph);
       if (sortType == "order") {
-        // hostPermutation.addLogs(parser.getLogEvents(label));
         hostPermutation.addLogs(labelsLogEventsMap[label]);
       }
     });

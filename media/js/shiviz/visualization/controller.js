@@ -500,18 +500,20 @@ Controller.prototype.bindNodes = function (nodes) {
       if (!e.isCollapsed()) {
         var fields = e.getNode().getLogEvents()[0].getFields();
         for (var i in fields) {
-          var $f = $("<tr>", {
-            class: "field",
-          });
-          var $t = $("<th>", {
-            class: "title",
-          }).text(i + ":");
-          var $v = $("<td>", {
-            class: "value",
-          }).text(fields[i]);
+          if (!["log", "id", "monitor", "sender"].includes(i)) {
+            var $f = $("<tr>", {
+              class: "field",
+            });
+            var $t = $("<th>", {
+              class: "title",
+            }).text(i + ":");
+            var $v = $("<td>", {
+              class: "value",
+            }).text(fields[i]);
 
-          $f.append($t).append($v);
-          $(".fields").append($f);
+            $f.append($t).append($v);
+            $(".fields").append($f);
+          }
         }
       }
 
@@ -828,18 +830,20 @@ Controller.prototype.showDialog = function (e, type, elem) {
     // Add fields, if normal node
     var fields = e.getNode().getLogEvents()[0].getFields();
     for (var i in fields) {
-      var $f = $("<tr>", {
-        class: "field",
-      });
-      var $t = $("<th>", {
-        class: "title",
-      }).text(i + ":");
-      var $v = $("<td>", {
-        class: "value",
-      }).text(fields[i]);
+      if (!["log", "id", "monitor", "sender", "machine"].includes(i)) {
+        var $f = $("<tr>", {
+          class: "field",
+        });
+        var $t = $("<th>", {
+          class: "title",
+        }).text(i + ":");
+        var $v = $("<td>", {
+          class: "value",
+        }).text(fields[i]);
 
-      $f.append($t).append($v);
-      $dialog.find(".info").append($f);
+        $f.append($t).append($v);
+        $dialog.find(".info").append($f);
+      }
     }
 
     // Hide the show-fields button if no fields, else show the button with Show More text

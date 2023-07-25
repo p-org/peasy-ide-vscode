@@ -134,7 +134,7 @@ LEMInterpreter.prototype.visitIdentifier = function (ast, env) {
     // throw new Exception("Unbound identifier: " + name);
   }
 
-  return new LEMInterpreterValue(LEMInterpreterValue.STRING, env[name]);
+  return new LEMInterpreterValue(LEMInterpreterValue.STRING, env[name].toString());
 };
 
 /**
@@ -209,17 +209,8 @@ LEMInterpreter.prototype.visitRegexLiteral = function (ast, env) {
 LEMInterpreter.prototype.visitImplicitSearch = function (ast, env) {
   const astText = ast.getText();
 
-  console.log(astText);
-
-  // if implicit search is referencing whether a field is true. i.e. isEntry, etc...
-  if (astText in env && env[astText] === true)
-    return new LEMInterpreterValue(LEMInterpreterValue.BOOLEAN, true);
-
   for (var key in env)
-    if (
-      typeof env[key] === "string" &&
-      env[key].toLowerCase().indexOf(astText.toLowerCase()) >= 0
-    )
+    if (env[key].toString().toLowerCase().indexOf(astText.toLowerCase()) >= 0)
       return new LEMInterpreterValue(LEMInterpreterValue.BOOLEAN, true);
 
   return new LEMInterpreterValue(LEMInterpreterValue.BOOLEAN, false);
