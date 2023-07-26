@@ -92,8 +92,48 @@ https://github.com/suesther/peasy-esther/assets/135176059/dbfe9502-9617-4539-812
 
 ### Error Tracing Visualization 
 
-Press `F6` in order to display a visualization that traces errors back to their source, enabling easier debugging.
+Press `F6` and choose JSON file prompted in the bottom right of VS Code in order to display a visualization that traces errors back to their source, enabling easier debugging.
 <img src="images/error_tracing.jpeg" alt="Error Tracing"/>
+
+#### Visualizer Breakdown
+- Left panel: 
+    - Log lines
+    - Motif/pattern finding
+- Center panel: 
+    - Search bar for filtering
+    - Machine and action/log visualizations
+- Right panel: 
+    - Details of an action/log
+
+#### Features
+- Fundamentals
+    - Hovering over a log line highlights the corresponding node in the main panel and vice versa
+    - A series of individual nodes are collapsible for compactness in UI
+    - Machines are toggleable so users can see show/hide a machine
+    - Filtering a machine will remove all machines that has not direct connection to the current machine
+        - In the example, we first filtered machine "Coordinator(6)", which hid all machines that has no direct connections to "Coordinator(6)". We then filtered machine "Client(9)" as well which removed all other machines as none of them were connected to both "Coordinator(6)" and "Client(9)"
+    - Clicking on an individual node will have the log by default and a "Show More" button if it has any fields. Clicking on the "Show More" will show details regarding the log
+- Motifs for pattern highlighting
+    - Pre-built options
+        - Selecting one of the default motif options will highlights paths in the visualization that matches the motif pattren
+        - In the example, paths in the main panel that matches Motif 1 (a simple sending request pattern, one machine sents to another machine) are highlighted
+    - Building custom motifs
+        - You can build your own custom motif pattern in the search bar under the "Structured Search" tab
+            - Slingle click creates a node in a machine
+            - Click and drag connects one machine's node to another machine's node
+            - Double clicking a node deletes it
+        - In the example, the custom motif searches for pattern where machine 1 sends something to machine 2, and then later sends something to machie 3, and lastly sends something to machine 4
+- Search bar
+    - Fields filtering
+        - Filtering by field using "="
+            - i.e. `isEntry=true` looks for logs that has a field of isEntry and its value is true
+        - Supports multiple conditions
+            - i.e. `action=DequeueEvent && state=WaitForPrepareResponses` looks for logs that are DequeueEvent and the machine is in state `WaitForPrepareResponses`
+    - Text filtering
+        - Filtering by text highlights a node if the log contains the text or the log's fields contains the text
+            - i.e. `true` looks for logs that either contains the the word "true" or the log's fields contain the word "true"
+            - if the text contains any nonalphanumeric characters, i.e. `"status=0"`, surround the text with quotes. This example will look for logs that contains the text "status=0" or the log's fields contains the text "status=0"
+
 
 ## Known Issues
 - Error Tracing Visualization is a Work in Progress.
