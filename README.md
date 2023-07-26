@@ -89,6 +89,7 @@ When running automatic tests through P's Testing Framework, users can change the
 https://github.com/suesther/peasy-esther/assets/135176059/dbfe9502-9617-4539-8123-0e709284e19e
 
 
+
 ### Error Tracing Visualization 
 
 Press `F6` and choose JSON file prompted in the bottom right of VS Code in order to display a visualization that traces errors back to their source, enabling easier debugging.
