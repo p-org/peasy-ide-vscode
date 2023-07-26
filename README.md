@@ -109,30 +109,30 @@ Press `F6` and choose JSON file prompted in the bottom right of VS Code in order
 ##### Basics
 **1**. Hovering over a log line highlights the corresponding node in the main panel and vice versa.
 
-https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/92aeda6a-a14b-4c31-b492-d23649826006
+https://github.com/p-org/peasy-ide-vscode/assets/137958518/3c7a1246-a3d7-4b6c-893f-1a0492aa30f0
 
 **2**. A series of individual nodes are collapsible for compactness in UI.
 
-https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/9baab3f1-97b0-4abf-b68c-f1667a9b59d6
+https://github.com/p-org/peasy-ide-vscode/assets/137958518/236a2926-a177-4381-894f-92ce38d86ca8
 
 **3**. Machines are toggleable so users can show/hide a machine.
 
-https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/57bde9e0-a239-482c-be20-c40eb6f35368
+https://github.com/p-org/peasy-ide-vscode/assets/137958518/4d1c24aa-89d0-4713-9dbf-174ef9cd746d
 
 **4**. Filtering a machine will remove all machines that has not direct connection to the current machine.  
 In this example, we first filtered machine "Coordinator(6)", which hid all machines that has no direct connections to "Coordinator(6)". We then filtered machine "Client(9)" as well which removed all other machines as none of them were connected to both "Coordinator(6)" and "Client(9)".
 
-https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/37b7958f-9006-4365-aabd-6f75af85da53
+https://github.com/p-org/peasy-ide-vscode/assets/137958518/cf74af1c-bc1c-4c01-b2ae-0a8a0166e28c
 
 **5**. Clicking on an individual node will open a dialog box and it will have the log text by default and a "Show More" button if it has any fields. Clicking on the "Show More" will show details regarding the log.
 
-https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/282ce375-caa8-4c3b-9212-e01fce2f6687
+https://github.com/p-org/peasy-ide-vscode/assets/137958518/13bfcbfa-6b57-49b4-87fa-929800b6b7a3
 
 ##### Motifs for pattern highlighting
 **1**. Pre-built options  
 Selecting one of the default motif options will highlights paths in the visualization that matches the motif pattren. In the example, paths in the main panel that matches Motif 1 (a simple sending request pattern, one machine sents to another machine) are highlighted.
 
-https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/aa66741f-c956-451c-9774-953167571147
+https://github.com/p-org/peasy-ide-vscode/assets/137958518/5ebf79af-af52-4c4c-8e63-42d1ae75b5fe
 
 2. Building custom motifs  
 You can build your own custom motif pattern in the search bar under the "Structured Search" tab. In the example, the custom motif searches for pattern where machine 1 sends something to machine 2, and then later sends something to machie 3, and lastly sends something to machine 4.
@@ -140,20 +140,20 @@ You can build your own custom motif pattern in the search bar under the "Structu
     2. Click and drag connects one machine's node to another machine's node  
     3. Double clicking a node deletes it  
 
-https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/5a8e63a2-6e7d-409e-8476-8d1e0ec02f3a
+https://github.com/p-org/peasy-ide-vscode/assets/137958518/8123613c-7cec-4aac-ac52-6de02d2cca21
 
 ##### Search bar
 **1**. Fields filtering using "=". For example, typing `isEntry=true` in the search bar will look for logs that has a field of isEntry and its value is true. This supports multiple conditions. I.e. `action=DequeueEvent && state=WaitForPrepareResponses` will look for logs that are of action DequeueEvent and the machine is in state `WaitForPrepareResponses`
 
-https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/6ca450db-4185-43e1-9d5d-ba02b42ff4f6
+https://github.com/p-org/peasy-ide-vscode/assets/137958518/1ebf50f6-1e30-4d28-ac43-81d517237ad8
 
 **2**. Text filtering. Filtering by text highlights a node if the log contains the text or the log's fields contains the text. I.e. typing `true` in search bar will look for logs that either contains the the word "true" or the log has fields that contain the word "true"
 
-https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/b286f8ba-2d82-4377-85bc-54121f4ddd2d
+https://github.com/p-org/peasy-ide-vscode/assets/137958518/5d1f6d71-9851-4218-bae4-a144f8824853
 
 **3**. Nonalphanumeric text filtering. If the text contains any nonalphanumeric characters, i.e. `"status=0"` ("=" being the nonalphnuermic character), surround the text with quotes. This example will look for logs that contains the text "status=0" or the log's fields contains the text "status=0"
 
-https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/3432576d-5f3e-410b-b63a-1607c46876e9
+https://github.com/p-org/peasy-ide-vscode/assets/137958518/1d5387ab-43d5-43d0-9e08-3ed30bdfcc93
 
 ## Known Issues
 - Error Tracing Visualization is a Work in Progress.
