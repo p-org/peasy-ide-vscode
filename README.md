@@ -106,34 +106,54 @@ Press `F6` and choose JSON file prompted in the bottom right of VS Code in order
     - Details of an action/log
 
 #### Features
-- Fundamentals
-    - Hovering over a log line highlights the corresponding node in the main panel and vice versa
-    - A series of individual nodes are collapsible for compactness in UI
-    - Machines are toggleable so users can see show/hide a machine
-    - Filtering a machine will remove all machines that has not direct connection to the current machine
-        - In the example, we first filtered machine "Coordinator(6)", which hid all machines that has no direct connections to "Coordinator(6)". We then filtered machine "Client(9)" as well which removed all other machines as none of them were connected to both "Coordinator(6)" and "Client(9)"
-    - Clicking on an individual node will have the log by default and a "Show More" button if it has any fields. Clicking on the "Show More" will show details regarding the log
-- Motifs for pattern highlighting
-    - Pre-built options
-        - Selecting one of the default motif options will highlights paths in the visualization that matches the motif pattren
-        - In the example, paths in the main panel that matches Motif 1 (a simple sending request pattern, one machine sents to another machine) are highlighted
-    - Building custom motifs
-        - You can build your own custom motif pattern in the search bar under the "Structured Search" tab
-            - Slingle click creates a node in a machine
-            - Click and drag connects one machine's node to another machine's node
-            - Double clicking a node deletes it
-        - In the example, the custom motif searches for pattern where machine 1 sends something to machine 2, and then later sends something to machie 3, and lastly sends something to machine 4
-- Search bar
-    - Fields filtering
-        - Filtering by field using "="
-            - i.e. `isEntry=true` looks for logs that has a field of isEntry and its value is true
-        - Supports multiple conditions
-            - i.e. `action=DequeueEvent && state=WaitForPrepareResponses` looks for logs that are DequeueEvent and the machine is in state `WaitForPrepareResponses`
-    - Text filtering
-        - Filtering by text highlights a node if the log contains the text or the log's fields contains the text
-            - i.e. `true` looks for logs that either contains the the word "true" or the log's fields contain the word "true"
-            - if the text contains any nonalphanumeric characters, i.e. `"status=0"`, surround the text with quotes. This example will look for logs that contains the text "status=0" or the log's fields contains the text "status=0"
+##### Basics
+**1**. Hovering over a log line highlights the corresponding node in the main panel and vice versa.
 
+https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/92aeda6a-a14b-4c31-b492-d23649826006
+
+**2**. A series of individual nodes are collapsible for compactness in UI.
+
+https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/9baab3f1-97b0-4abf-b68c-f1667a9b59d6
+
+**3**. Machines are toggleable so users can show/hide a machine.
+
+https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/57bde9e0-a239-482c-be20-c40eb6f35368
+
+**4**. Filtering a machine will remove all machines that has not direct connection to the current machine.  
+In this example, we first filtered machine "Coordinator(6)", which hid all machines that has no direct connections to "Coordinator(6)". We then filtered machine "Client(9)" as well which removed all other machines as none of them were connected to both "Coordinator(6)" and "Client(9)".
+
+https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/37b7958f-9006-4365-aabd-6f75af85da53
+
+**5**. Clicking on an individual node will open a dialog box and it will have the log text by default and a "Show More" button if it has any fields. Clicking on the "Show More" will show details regarding the log.
+
+https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/282ce375-caa8-4c3b-9212-e01fce2f6687
+
+##### Motifs for pattern highlighting
+**1**. Pre-built options  
+Selecting one of the default motif options will highlights paths in the visualization that matches the motif pattren. In the example, paths in the main panel that matches Motif 1 (a simple sending request pattern, one machine sents to another machine) are highlighted.
+
+https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/aa66741f-c956-451c-9774-953167571147
+
+2. Building custom motifs  
+You can build your own custom motif pattern in the search bar under the "Structured Search" tab. In the example, the custom motif searches for pattern where machine 1 sends something to machine 2, and then later sends something to machie 3, and lastly sends something to machine 4.
+    1. Slingle click creates a node in a machine  
+    2. Click and drag connects one machine's node to another machine's node  
+    3. Double clicking a node deletes it  
+
+https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/5a8e63a2-6e7d-409e-8476-8d1e0ec02f3a
+
+##### Search bar
+**1**. Fields filtering using "=". For example, typing `isEntry=true` in the search bar will look for logs that has a field of isEntry and its value is true. This supports multiple conditions. I.e. `action=DequeueEvent && state=WaitForPrepareResponses` will look for logs that are of action DequeueEvent and the machine is in state `WaitForPrepareResponses`
+
+https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/6ca450db-4185-43e1-9d5d-ba02b42ff4f6
+
+**2**. Text filtering. Filtering by text highlights a node if the log contains the text or the log's fields contains the text. I.e. typing `true` in search bar will look for logs that either contains the the word "true" or the log has fields that contain the word "true"
+
+https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/b286f8ba-2d82-4377-85bc-54121f4ddd2d
+
+**3**. Nonalphanumeric text filtering. If the text contains any nonalphanumeric characters, i.e. `"status=0"` ("=" being the nonalphnuermic character), surround the text with quotes. This example will look for logs that contains the text "status=0" or the log's fields contains the text "status=0"
+
+https://github.com/haoran-wen/peasy-ide-vscode/assets/137958518/3432576d-5f3e-410b-b63a-1607c46876e9
 
 ## Known Issues
 - Error Tracing Visualization is a Work in Progress.
