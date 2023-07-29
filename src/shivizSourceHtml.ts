@@ -556,10 +556,11 @@ const shivizSourceHtml = (
                   <script type="text/javascript" src="${shivizScriptsUriMap["customMotifFinder"]}"></script>
                   <script type="text/javascript" src="${shivizScriptsUriMap["motifGroup"]}"></script>
                   <script type="text/javascript" src="${shivizScriptsUriMap["motifNavigator"]}"></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["pGeneralMotifFinder"]}"></script>
                   <script type="text/javascript" src="${shivizScriptsUriMap["requestResponseFinder"]}"></script>
                   <script type="text/javascript" src="${shivizScriptsUriMap["textQueryMotifFinder"]}"></script>
 
-                  <script type="text/javascript" src="${shivizScriptsUriMap["shiviz"]}" jsonLogs=${errorTraceJsonLogsString}></script>
+                  <script type="text/javascript" src="${shivizScriptsUriMap["shiviz"]}"></script>
 
                   <script type="text/javascript" src="${shivizScriptsUriMap["transformation"]}"></script>
                   <script type="text/javascript" src="${shivizScriptsUriMap["collapseSequentialNodesTransformation"]}"></script>
