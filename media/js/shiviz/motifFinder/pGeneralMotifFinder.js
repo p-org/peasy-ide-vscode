@@ -4,7 +4,52 @@
  * <p>
  * This class is responsible for finding P motifs.
  * </p>
+ * 
+ * <p>
+ * The p general motif finder combines the built-in ShiViz search functionality
+ * with specific send-receive patterns useful when debugging a P error trace. The general
+ * idea is looking for P send-receive patterns that matches some sequence of constraints in
+ * some order.
+ * </p>
+ * 
+ * <p>
+ * More formally, given a squence of constraints c_1, c_2, c_n..., where each constraint is some
+ * ShiViz text search query, and between each query is either ">" or ">>", indicating the bahavior
+ * of constraint order between c_n and c_n+1, this P general motif finder will look for patterns 
+ * matching the specific order of constraints in the behavior indicated.
+ * </p>
+ * 
+ * <p>
+ * The input format to the search bar is as follows
+ * #pmotif=({c1...}>{c2...}>>{c3...}...)
+ * #pmotif= - This is used to indicate that we are performing a P motif pattern search.
+ * () - Things inside the parenthesis is the send-receive pattern we are searching for.
+ * {} - Each ShiViz query constraint must be surrounded by curly brackets.
+ * > or >> - This is used to indicate the search behavior after a constraint is satisfied.
+ * </p>
+ * 
+ * <p>
+ * ">" indicates a bahavior of an immediate search after a constraint has been satisfied. 
+ * I.e., given 
+ * pQueries = [
+ *    "c1", 
+ *    ">", 
+ *    "c2"
+ * ]
+ * Constraint "c2" is a send event that happens immediately following constraint "c1".
+ * </p>
  *
+ * <p>
+ * ">>" indicates a behavior of anytime search after a constraint has been satisfied.
+ * I.e., given
+ * pQueries = [
+ *    "c1",
+ *    ">>",
+ *    "c2",
+ * ]
+ * Constraint "c2" is a send event that can happen anytime following constraint "c1".
+ * </p>
+ * 
  * @constructor
  * @extends MotifFinder
  */
@@ -21,13 +66,13 @@ class PGeneralMotifFinder {
    * 		"shiviz filtering constraint",
    * ]
    *
-   * ">" is a search type that indicates that the constraint following can happen anytime
-   * after the previous constraint. For example, the constraint at pQueries[2] can happen
-   * anytime after constraint at pQueries[0] has been satisfied.
-   *
-   * ">>" is a search type that indicates that the constraint following happens immediately
-   * after the previous constraint. For example, the constraint at pQueries[5] happens immediately
+   * ">" is a search type that indicates that the constraint following happens immediately 
+   * after the previous constraint. For example, the constraint at pQueries[4] happens immediately
    * after constraint at pQueries[2] has been satisfied.
+   *
+   * ">>" is a search type that indicates that the constraint following can happen anytime
+   * after the previous constraint. For example, the constraint at pQueries[2] can happen anytime
+   * after constraint at pQueries[0] has been satisfied.
    */
   constructor(pQueries) {
     /**
@@ -84,6 +129,9 @@ class PGeneralMotifFinder {
     /**
      * Recursive inner helper function to help search through the graph at a node to see if the paths
      * steming from this node satifies the specified constraints order.
+     * 
+     * Using arrow function declaration to automatically bind this keyword to access helper function 
+     * defined above.
      *
      * @param {ModelNode} currNode - The current node we are traversing
      * @param {ModelNode[]} currMotifTrail - The current path of nodes we've traversed
@@ -103,8 +151,6 @@ class PGeneralMotifFinder {
         return;
       }
 
-			console.log(isPastFirstSend, this.matchesPMotifAtIndex(currNode, currPQueryIndex));
-
       // Add the currNode to currMotifTrail
       currMotifTrail.push(currNode);
 
@@ -116,8 +162,6 @@ class PGeneralMotifFinder {
         // If currNode matches the constraints at the current query index, add the node to currMotifTrail
         // Else, keep on searching based on the search type to reach to the next constraint
         if (this.matchesPMotifAtIndex(currNode, currPQueryIndex)) {
-					console.log("Found a match!", currNode, currPQueryIndex, isPastFirstSend);
-
           // Get the search type for this constraint, which is only applicable if we are past the first constraint, or
           // equally the first SendEvent action
           let pMotifSearchType = null;
@@ -125,17 +169,16 @@ class PGeneralMotifFinder {
             pMotifSearchType = this._pQueries[currPQueryIndex - 1];
             // Sanity check to make sure the index is returning a search type, for development purposes
             if (![">", ">>"].includes(pMotifSearchType)) {
-							console.log(currNode, currPQueryIndex);
-							console.log(pMotifSearchType);
               throw new Error("Wrong index to get the pMotif search type!");
             }
           }
 
           // If we satisfied the last constraint...
           if (this.isLastPQueryIndex(currPQueryIndex)) {
+            
             // If the search type to get to this last constraint was ">" (i.e. anytime after the contraint
             // before the one we just satisfied), we have to keep searching on the currNode's next node
-            if (isPastFirstSend && pMotifSearchType === ">") {
+            if (isPastFirstSend && pMotifSearchType === ">>") {
               pMotifSearch(
                 currNode.getNext(),
                 currMotifTrail.slice(),
@@ -158,8 +201,8 @@ class PGeneralMotifFinder {
             // If the constraint we satisfied is not last, keep on searching based on the indicated search type to
             // reach to the next constraint
           } else {
+            
             // Regardless of which search type type, we want to search onwards on the children onto the next constraint
-						console.log("Testing!");
             currNodeChildren.forEach((currNodeChild) => {
               pMotifSearch(
                 currNodeChild,
@@ -171,7 +214,7 @@ class PGeneralMotifFinder {
 
             // If search type is anytime after the constraint we just satisfied, we also want to search onwards on the
             // currNode's next node.
-            if (isPastFirstSend && pMotifSearchType === ">") {
+            if (isPastFirstSend && pMotifSearchType === ">>") {
               pMotifSearch(
                 currNode.getNext(),
                 currMotifTrail.slice(),
@@ -192,18 +235,20 @@ class PGeneralMotifFinder {
         }
 
         // If the currNode doesn't have children and it's just an individual node, just add it to currMotifTrail
-				// and search onwards based on the currNode's next node
+        // and search onwards based on the currNode's next node. 
+        // ONLY add if we are past the first send because otherwise it's not apart of any suitable path
       } else {
-        pMotifSearch(
-          currNode.getNext(),
-          currMotifTrail.slice(),
-          currPQueryIndex,
-          isPastFirstSend
-        );
+        isPastFirstSend && 
+          pMotifSearch(
+            currNode.getNext(),
+            currMotifTrail.slice(),
+            currPQueryIndex,
+            isPastFirstSend
+          );
       }
     };
 
-		/************************************************************************************************************/
+    /************************************************************************************************************/
     // Check to make sure it's not an empty graph
     let firstNode = null;
     if (nodes.length === 0) {
@@ -217,12 +262,11 @@ class PGeneralMotifFinder {
 
       // Only start searching if it has child. I.e., it's sending to another machine
       if (currNode.hasChildren()) {
-				console.log("Starting to search on node!", currNode);
         pMotifSearch(currNode, new Array(), 0, false);
       }
     }
 
-		// return the motif group
+    // return the motif group
     return motifGroup;
   }
 }

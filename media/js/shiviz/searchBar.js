@@ -550,8 +550,6 @@ SearchBar.prototype.query = function () {
           }
         })
 
-        console.log("P Motif Queries", pQueries);
-
         var finder = new PGeneralMotifFinder(pQueries);
 
         this.global.getController().highlightMotif(finder);
