@@ -160,7 +160,8 @@ class PGeneralMotifFinder {
         let currNodeChildren = currNode.getChildren();
 
         // If currNode matches the constraints at the current query index, add the node to currMotifTrail
-        // Else, keep on searching based on the search type to reach to the next constraint
+        // Else, keep on searching based on the search type to reach to the next constraint. Any search past
+        // this point, we set isPastFirstSend to be true
         if (this.matchesPMotifAtIndex(currNode, currPQueryIndex)) {
           // Get the search type for this constraint, which is only applicable if we are past the first constraint, or
           // equally the first SendEvent action
