@@ -103,6 +103,8 @@ class PGeneralMotifFinder {
         return;
       }
 
+			console.log(isPastFirstSend, this.matchesPMotifAtIndex(currNode, currPQueryIndex));
+
       // Add the currNode to currMotifTrail
       currMotifTrail.push(currNode);
 
@@ -114,6 +116,8 @@ class PGeneralMotifFinder {
         // If currNode matches the constraints at the current query index, add the node to currMotifTrail
         // Else, keep on searching based on the search type to reach to the next constraint
         if (this.matchesPMotifAtIndex(currNode, currPQueryIndex)) {
+					console.log("Found a match!", currNode, currPQueryIndex, isPastFirstSend);
+
           // Get the search type for this constraint, which is only applicable if we are past the first constraint, or
           // equally the first SendEvent action
           let pMotifSearchType = null;
@@ -121,6 +125,8 @@ class PGeneralMotifFinder {
             pMotifSearchType = this._pQueries[currPQueryIndex - 1];
             // Sanity check to make sure the index is returning a search type, for development purposes
             if (![">", ">>"].includes(pMotifSearchType)) {
+							console.log(currNode, currPQueryIndex);
+							console.log(pMotifSearchType);
               throw new Error("Wrong index to get the pMotif search type!");
             }
           }
@@ -153,6 +159,7 @@ class PGeneralMotifFinder {
             // reach to the next constraint
           } else {
             // Regardless of which search type type, we want to search onwards on the children onto the next constraint
+						console.log("Testing!");
             currNodeChildren.forEach((currNodeChild) => {
               pMotifSearch(
                 currNodeChild,
@@ -180,7 +187,7 @@ class PGeneralMotifFinder {
             currNode.getNext(),
             currMotifTrail.slice(),
             currPQueryIndex,
-            true
+            isPastFirstSend
           );
         }
 
@@ -191,7 +198,7 @@ class PGeneralMotifFinder {
           currNode.getNext(),
           currMotifTrail.slice(),
           currPQueryIndex,
-          true
+          isPastFirstSend
         );
       }
     };
@@ -210,6 +217,7 @@ class PGeneralMotifFinder {
 
       // Only start searching if it has child. I.e., it's sending to another machine
       if (currNode.hasChildren()) {
+				console.log("Starting to search on node!", currNode);
         pMotifSearch(currNode, new Array(), 0, false);
       }
     }
