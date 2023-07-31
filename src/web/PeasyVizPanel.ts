@@ -171,28 +171,39 @@ export class PeasyVizPanel {
     let bugOutputDirPathname: string = "";
     const workspaces = vscode.workspace.workspaceFolders;
     // If no workspace is found, show error html template with error message
-    if (workspaces === undefined || workspaces.length <= 0)
-      return visualizerErrorHtml(vscodeStylesUri, "No workspace found!");
+    if (workspaces === undefined || workspaces.length <= 0) {
+      await vscode.window.showWarningMessage("No workspace found.");
+      return "";
+    }
     // Get applicable json error trace filename
     else {
       const rootDir = workspaces[0].uri.path;
       bugOutputDirPathname = `${rootDir}/PCheckerOutput/BugFinding`;
-      const dirFiles = await vscode.workspace.fs.readDirectory(
-        vscode.Uri.file(bugOutputDirPathname)
-      );
-      for (let f = 0; f < dirFiles.length; f++) {
-        const filename = dirFiles[f][0];
-        const match = filename.match(/\./g);
-        // Valid json error trace filenames contain 2 periods and ends with ".trace.json"
-        if (match && match.length === 2 && filename.endsWith(".trace.json")) {
-          visualizableErrorTraces.push(filename.replace(/\.trace\.json$/, ""));
+      try {
+        const dirFiles = await vscode.workspace.fs.readDirectory(
+          vscode.Uri.file(bugOutputDirPathname)
+        );
+        for (let f = 0; f < dirFiles.length; f++) {
+          const filename = dirFiles[f][0];
+          const match = filename.match(/\./g);
+          // Valid json error trace filenames contain 2 periods and ends with ".trace.json"
+          if (match && match.length === 2 && filename.endsWith(".trace.json")) {
+            visualizableErrorTraces.push(
+              filename.replace(/\.trace\.json$/, "")
+            );
+          }
         }
+      } catch (error) {
+        await vscode.window.showWarningMessage(`${error}`);
+        return "";
       }
     }
 
     // If there is no valid json error trace filenames, show error html template with error message
-    if (visualizableErrorTraces.length === 0)
-      return visualizerErrorHtml(vscodeStylesUri, "No error traces found!");
+    if (visualizableErrorTraces.length === 0) {
+      await vscode.window.showWarningMessage("No json error traces found.");
+      return "";
+    }
 
     // If there is valid json error trace filenames, prompt user to choose which one to visualize
     const errorTraceSelected = await vscode.window.showInformationMessage(
