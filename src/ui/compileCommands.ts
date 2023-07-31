@@ -70,8 +70,12 @@ async function createCompileTask() {
     async provideTasks(token?: vscode.CancellationToken) 
     {
       var msg = CompileCommands.command;
+      //the command
+
       var execution = new vscode.ShellExecution(msg);
+
       var problemMatchers = ["$Parse", "$Type"];
+      //matches errors
       return [
           new vscode.Task({type: type}, vscode.TaskScope.Workspace,
           "Run_Report", "p-vscode", execution, problemMatchers)

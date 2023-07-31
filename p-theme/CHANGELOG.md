@@ -1,9 +1,9 @@
-# Change Log
-
-All notable changes to the "p-theme" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
-
-- Initial release
+# Release Notes
+## 0.0.1
+Beta release
+* Syntax Highlighting
+* Automatic Compilation
+* Snippets
+* Error Reporting
+* Testing Framework
+* Error Tracing Visualization (Work In Progress)

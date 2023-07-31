@@ -1,0 +1,88 @@
+site_name: "P"
+site_url: http://p-org.github.io/Peasy/
+site_description: "Peasy: An Intuitive Development Environment for P"
+site_author: "Esther Sue"
+
+repo_url: https://github.com/p-org/peasy-ide-vscode
+repo_name: Peasy-ide-vscode
+edit_uri: ""
+
+theme:
+  language: en
+  name: material
+  palette:
+    scheme: default
+    primary: black
+    accent: deep orange
+  logo: images/p-icon.png
+  favicon: images/p-icon.png
+  icon:
+    repo: fontawesome/brands/github
+    admonition:
+      note: octicons/tag-16
+      abstract: octicons/checklist-16
+      info: octicons/info-16
+      tip: octicons/squirrel-16
+      success: octicons/check-16
+      question: octicons/question-16
+      warning: octicons/alert-16
+      failure: octicons/x-circle-16
+      danger: octicons/zap-16
+      bug: octicons/bug-16
+      example: octicons/beaker-16
+      quote: octicons/quote-16
+  features:
+    - navigation.instant
+    - navigation.indexes
+    - navigation.expand
+    - navigation.top
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+
+# This should be renamed to nav for mkdocs 1.0+
+nav:
+  - Home: index.md
+  - Features: 
+    - Syntax Highlighting: ./features/syntax_highlighting.md
+    - Automatic Compilation: ./features/compilation.md
+    - Snippets: ./features/snippets.md
+    - Error Reporting: ./features/error_reporting.md
+    - Testing Framework: ./features/testing.md
+    - Error Tracing Visualization: ./features/error_tracing.md
+  - Contributing to the P Extension: contribute.md
+  - The Motivation Behind Peasy: motivations.md
+  
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.tabbed
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.critic
+  - attr_list
+  - footnotes
+  - attr_list 
+  - md_in_html
+  - pymdownx.keys
+
+  - toc:
+      toc_depth: 4
+
+plugins:
+  - search:
+      separator: '[\s\-\.]+'
+
+extra:
+  social:
+    - icon: fontawesome/solid/paper-plane
+      link: mailto:ankushdesai@gmail.com
+      name: Contact P Team
+  analytics:
+    provider: google
+    property: G-0WWG87T6BN
+extra_css:
+  - "css/extra.css"
+
+copyright: Copyright &copy; 2023 P Developers
