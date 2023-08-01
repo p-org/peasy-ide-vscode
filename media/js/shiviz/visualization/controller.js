@@ -533,14 +533,17 @@ Controller.prototype.bindNodes = function (nodes) {
       // Only highlight log lines on the Log Lines tab
 
       if ($(".leftTabLinks li").first().hasClass("default")) {
-        $line
-          .addClass("focus")
-          .css({
-            background: "transparent",
-            color: "white",
-            width: "calc(" + $line.width() + "px - 1em)",
-          })
-          .data("fill", e.getFillColor());
+        
+        // Only focus to expand if it is highlighted, i.e. opacity of log line is 1
+        e.getOpacity() === 1 &&
+          $line
+            .addClass("focus")
+            .css({
+              background: "transparent",
+              color: "white",
+              width: "calc(" + $line.width() + "px - 1em)",
+            })
+            .data("fill", e.getFillColor());
 
         $(".highlight").css({
           width: $line.width(),
