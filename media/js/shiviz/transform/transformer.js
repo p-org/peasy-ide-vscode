@@ -238,10 +238,15 @@ Transformer.prototype.toggleCollapseNode = function (node) {
  * @param {Boolean} ignoreEdges edges will not be highlighted if true
  * @see {@link HighlightMotifTransformation}
  */
-Transformer.prototype.highlightMotif = function (motifFinder, ignoreEdges) {
+Transformer.prototype.highlightMotif = function (
+  motifFinder,
+  ignoreEdges,
+  pMotifHighlight = false
+) {
   this.highlightMotifTransformation = new HighlightMotifTransformation(
     motifFinder,
-    ignoreEdges
+    ignoreEdges,
+    (pMotifHighlight = pMotifHighlight)
   );
 };
 

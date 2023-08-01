@@ -552,7 +552,7 @@ SearchBar.prototype.query = function () {
 
         var finder = new PGeneralMotifFinder(pQueries);
 
-        this.global.getController().highlightMotif(finder);
+        this.global.getController().highlightMotif(finder, pMotifHighlight = true);
         break;
 
       case SearchBar.MODE_PREDEFINED:
