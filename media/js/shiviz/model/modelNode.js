@@ -17,6 +17,18 @@ function ModelNode(logEvents) {
 
     /** @private */
     this.logEvents = logEvents.slice();
+
+    /** @private */
+    this._isAssertionFailure = false;
+
+    // Set boolean for whether modelNode is for AssertionFailure
+    let firstLogEvent = this.getFirstLogEvent();
+
+    // Using try catch to avoid getting errors when accessing "action" attribute in a node that does not contain fields.
+    // I.e., the last node of a machine line does not have fields.
+    try {
+        this._isAssertionFailure = firstLogEvent.getFields().action === "AssertionFailure";
+    } catch (e) {}
 }
 
 // ModelNode extends AbstractNode
@@ -64,3 +76,12 @@ ModelNode.prototype.getFirstLogEvent = function() {
 ModelNode.prototype.getLogEventCount = function() {
     return this.logEvents.length;
 };
+
+/**
+ * Public get method to get boolean of whether node is for AssertionFailure.
+ * 
+ * @returns {Boolean} True if node is for AssertionFailure, false otherwise.
+ */
+ModelNode.prototype.isAssertionFailure = function() {
+	return this._isAssertionFailure;
+}

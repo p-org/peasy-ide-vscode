@@ -70,9 +70,19 @@ function VisualGraph(graph, layout, hostPermutation) {
     for (var i = 0; i < nodes.length; i++) {
         var node = nodes[i];
         if (!node.isTail()) {
+            // Get boolean of whether node is for AssertionFailure
+            let nodeIsAssertionFailure = node.isAssertionFailure();
+
             var visualNode = new VisualNode(node);
             this.nodeIdToVisualNode[node.getId()] = visualNode;
-            visualNode.setFillColor(this.hostPermutation.getHostColor(visualNode.getHost()));
+
+            // If node is for AssertionFailure, color it red. Else, whatever color
+            // the associated machine host is.
+            if (nodeIsAssertionFailure) {
+                visualNode.setFillColor("#F46055");
+            } else {
+                visualNode.setFillColor(this.hostPermutation.getHostColor(visualNode.getHost()));
+            }
         }
     }
 
