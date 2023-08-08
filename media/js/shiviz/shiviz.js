@@ -305,16 +305,6 @@ Shiviz.prototype.visualize = function (
      * New Code to Accommodate to P JSON Output *
      ********************************************/
     /**
-     * A function that checks whether a dictionary contains items.
-     *
-     * @param {Object} dict - The dictionary input
-     * @returns {Boolean} - True if there are items in the dictionary.
-     */
-    function dictHasItems(dict) {
-      return dict && Object.keys(dict).length > 0;
-    }
-
-    /**
      * A function returns a parsed string representation of the dictionary in the following format
      * key = value
      * key2 = value2
@@ -324,17 +314,36 @@ Shiviz.prototype.visualize = function (
      * @returns {String} - String output of the parsed dictionary
      */
     function parsePayloadToString(payload) {
-      let parsedPayloadStr = "";
-      let payloadKeys = Object.keys(payload);
-      for (let k = 0; k < payloadKeys.length; k++) {
-        let key = payloadKeys[k];
-        let value = payload[key];
-        parsedPayloadStr += `${key}=${value}${
-          k !== payloadKeys.length - 1 ? "\n" : ""
-        }`;
+      console.log(payload);
+      if (payload.constructor === Object) {
+        let temp = "";
+
+        for (const [key, value] of Object.entries(payload)) {
+          temp += `${key}: ${parsePayloadToString(value)}, `;
+        }
+
+        if (temp.length >= 2) {
+          temp = temp.slice(0, -2);
+        }
+
+        return `{ ${temp} }`;
       }
 
-      return parsedPayloadStr;
+      if (Array.isArray(payload)) {
+        let temp = "";
+
+        for (const item of payload) {
+          temp += `${parsePayloadToString(item)}, `;
+        }
+
+        if (temp.length >= 2) {
+          temp = temp.slice(0, -2);
+        }
+
+        return `[ ${temp} ]`;
+      }
+
+      return payload.toString();
     }
 
     /**
@@ -372,11 +381,7 @@ Shiviz.prototype.visualize = function (
         // If empty dictionary for payload, delete it in fields
         // Else, parse it into string format
         if ("payload" in fields) {
-          if (!dictHasItems(fields.payload)) {
-            delete fields["payload"];
-          } else {
-            fields.payload = parsePayloadToString(fields.payload);
-          }
+          fields.payload = parsePayloadToString(fields.payload);
         }
 
         // Get the machine name and assign it to fields

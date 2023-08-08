@@ -258,7 +258,6 @@ View.prototype.draw = function (viewPosition) {
     var hosts = d3.selectAll(g_hosts);
     // var x_offset = Global.HOST_SIZE / 3;
     var x_offset = Global.HOST_SIZE / 6;
-    console.log(x_offset);
     var hostLabels = hosts
       .append("text")
       .text((node) => node.getHost())
