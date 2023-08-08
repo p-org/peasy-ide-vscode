@@ -48,8 +48,6 @@ function LogParser(rawString, delimiter, regexp) {
 
   var names = this.regexp.getNames();
 
-  console.log({ names });
-
   if (
     names.indexOf("clock") < 0 ||
     names.indexOf("host") < 0 ||
@@ -153,8 +151,6 @@ function ExecutionParser(rawString, label, regexp) {
   while ((match = regexp.exec(rawString))) {
     var newlines = rawString.substr(0, match.index).match(/\n/g);
     var ln = newlines ? newlines.length + 1 : 1;
-
-    console.log({ newlines, ln });
 
     var clock = match.clock;
     var host = match.host;

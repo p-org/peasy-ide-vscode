@@ -54,6 +54,7 @@ const shivizScripts: IShiVizScripts = {
       "motifFinder",
       "motifGroup",
       "motifNavigator",
+      "pGeneralMotifFinder",
       "requestResponseFinder",
       "textQueryMotifFinder",
     ],

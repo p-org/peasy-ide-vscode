@@ -219,6 +219,12 @@ SearchBar.MODE_PREDEFINED = 3;
 SearchBar.MODE_MOTIF = 4;
 
 /**
+ * @static
+ * @const
+ */
+SearchBar.MODE_PMOTIF = 5;
+
+/**
  * @private
  * @static
  */
@@ -293,6 +299,8 @@ SearchBar.prototype.updateMode = function () {
     this.mode = SearchBar.MODE_CUSTOM;
   } else if (value.slice(0, 7) == "#motif") {
     this.mode = SearchBar.MODE_MOTIF;
+  } else if (value.slice(0, 7) === "#pmotif") {
+    this.mode = SearchBar.MODE_PMOTIF;
   } else {
     this.mode = SearchBar.MODE_PREDEFINED;
   }
@@ -342,6 +350,11 @@ SearchBar.prototype.update = function () {
         this.clearStructure();
         $("#searchbar #bar input").css("color", "red");
       }
+      break;
+
+    // P Motif
+    case SearchBar.MODE_PMOTIF:
+      this.clearStructure();
       break;
 
     // Predefined Structure
@@ -521,6 +534,25 @@ SearchBar.prototype.query = function () {
           $("#searchbar #bar input").css("color", "red");
           return;
         }
+        break;
+
+      case SearchBar.MODE_PMOTIF:
+        var pMotif = this.getValue();
+        var pMotifCleaned = pMotif.slice(9, pMotif.length - 1);
+        const pMotifRegex = /\{(.*?)\}|>>|>/g;
+        const pMotifMatches = pMotifCleaned.match(pMotifRegex);
+
+        const pQueries = pMotifMatches.map((pMotifMatch) => {
+          if (['>>', '>'].includes(pMotifMatch)) {
+            return pMotifMatch;
+          } else {
+            return pMotifMatch.substring(1, pMotifMatch.length - 1);
+          }
+        })
+
+        var finder = new PGeneralMotifFinder(pQueries);
+
+        this.global.getController().highlightMotif(finder, pMotifHighlight = true);
         break;
 
       case SearchBar.MODE_PREDEFINED:
