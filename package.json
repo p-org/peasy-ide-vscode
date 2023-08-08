@@ -2,7 +2,7 @@
   "name": "p-extension",
   "displayName": "P Extension",
   "description": "P Extension provides compilation support, a custom theme, syntax highlighting, a testing framework",
-  "publisher": "P_Team",
+  "publisher": "PLanguage",
   "version": "0.0.1",
   "icon": "p-icon.png",
   "engines": {
