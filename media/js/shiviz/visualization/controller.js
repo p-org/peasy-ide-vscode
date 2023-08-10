@@ -505,7 +505,7 @@ Controller.prototype.bindNodes = function (nodes) {
       if (!e.isCollapsed()) {
         var fields = e.getNode().getLogEvents()[0].getFields();
         for (var i in fields) {
-          if (!["log", "id", "monitor", "sender"].includes(i)) {
+          if (!["log", "id", "monitor", "sender", "error"].includes(i)) {
             var $f = $("<tr>", {
               class: "field",
             });
@@ -838,7 +838,7 @@ Controller.prototype.showDialog = function (e, type, elem) {
     // Add fields, if normal node
     var fields = e.getNode().getLogEvents()[0].getFields();
     for (var i in fields) {
-      if (!["log", "id", "monitor", "sender", "machine"].includes(i)) {
+      if (!["log", "id", "monitor", "sender", "machine", "error"].includes(i)) {
         var $f = $("<tr>", {
           class: "field",
         });

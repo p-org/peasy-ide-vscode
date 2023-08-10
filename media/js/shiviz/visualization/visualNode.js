@@ -14,6 +14,9 @@
  */
 function VisualNode(node) {
     
+
+    let isAssertionFailure = node.isAssertionFailure();
+
     /** @private */
     this.id = VisualNode.id++;
 
@@ -44,13 +47,17 @@ function VisualNode(node) {
 
     /** @private */
     this.y = 0;
-    
+
     this.setX(0);
     this.setY(0);
 
     /** @private */
     this.radius = 0;
-    this.setRadius(5);
+    if (isAssertionFailure) {
+      this.setRadius(15);
+    } else {
+      this.setRadius(5);
+    }
 	
     /** @private */
     this.points = [0,0,0,0,0,0,0,0];
@@ -73,7 +80,7 @@ function VisualNode(node) {
 
     /** @private */
     this.label = "";
-    this.setLabel("");
+	this.setLabel("");
 
     /** @private */
     this.hasHiddenParentInner = false;
@@ -127,6 +134,10 @@ function VisualNode(node) {
             "x1": 0,
             "y1": 0
         });
+    }
+
+	if (isAssertionFailure) {
+        this.setLabel("🐞");
     }
 }
 
@@ -402,14 +413,18 @@ VisualNode.prototype.getLabel = function() {
  */
 VisualNode.prototype.setLabel = function(newLabel) {
     newLabel += "";
-    if(this.label.trim() == "" && newLabel.trim() != "") {
+    if (this.label.trim() == "" && newLabel.trim() != "") {
         this.$svg.append(this.$text);
     }
-    if(this.label.trim() != "" && newLabel.trim() == "") {
+    if (this.label.trim() != "" && newLabel.trim() == "") {
         this.$text.remove();
     }
     this.label = newLabel;
     this.$text.text(newLabel);
+
+	if (newLabel === "🐞") {
+		this.$text.css("font-size", "16px");   
+	}
 };
 
 /**

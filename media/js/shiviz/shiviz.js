@@ -345,6 +345,7 @@ Shiviz.prototype.visualize = function (
 
       return payload.toString();
     }
+
     /**
      * A function that takes a single iteration of json logs and get the log events in appropriate
      * representations workable with ShiViz.
@@ -358,9 +359,18 @@ Shiviz.prototype.visualize = function (
         const lineNum = i + 1;
         const logEntry = singleJsonLogIter[i];
 
-        // Don't include AssertionFailure and StrategyDescription
-        if (["AssertionFailure", "StrategyDescription"].includes(logEntry.type))
+        // Don't include StrategyDescription
+        if (logEntry.type === "StrategyDescription") {
           continue;
+          // Process AssertionFilure logEntry details before adding the AssertionFailure node to ShiViz graph.
+        } else if (logEntry.type === "AssertionFailure") {
+          // Find the log entry prior to AssertionFailure and append the machine name and clock details so the visualizer
+          // will append the assertion failure will connect to the last log prior to the entry
+          let prevLogEntry = singleJsonLogIter[i - 1];
+          logEntry.details["id"] = prevLogEntry.details.id ?? prevLogEntry.details.monitor ?? prevLogEntry.details.sender;
+          logEntry.details["clock"] = prevLogEntry.details.clock;
+          logEntry.details.clock[logEntry.details.id] += 1;
+        }
 
         // Create the fields dictionary
         let fields = { ...logEntry.details };
