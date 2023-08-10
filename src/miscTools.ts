@@ -31,7 +31,7 @@ export async function checkPInstalled(): Promise<boolean> {
       //turn arrays into JSON to check if the P executable exists inside of the file directory
       var jsonFiles = JSON.stringify(files);
       var jsonPFile = JSON.stringify(["p", vscode.FileType.File]);
-      if (jsonPFile.indexOf(jsonFiles) !== -1) {
+      if (jsonFiles.indexOf(jsonPFile) !== -1) {
         return true;
       }
     } catch (e) {

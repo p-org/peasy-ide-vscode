@@ -113,6 +113,22 @@
     ],
     "keybindings": [
       {
+        "key": "f3",
+        "command": "runCommands",
+        "args": {
+          "commands": [
+            {
+              "command": "workbench.action.tasks.terminate",
+                "args": "terminateAll"
+            },
+            {
+              "command": "workbench.action.tasks.runTask",
+              "args": "p-vscode: Run_Report"
+            }
+          ]
+        }
+      },
+      {
         "command": "workbench.action.tasks.runTask",
         "args": "p-vscode: Run_Report",
         "key": "f5",
