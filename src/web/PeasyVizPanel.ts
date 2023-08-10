@@ -167,9 +167,10 @@ export class PeasyVizPanel {
     /******************************************************
      * * Check if file exists and render appropriate HTML *
      ******************************************************/
-    let visualizableErrorTraces: string[] = [];
-    let bugOutputDirPathname: string = "";
     const workspaces = vscode.workspace.workspaceFolders;
+    
+    let errorTraces: any[] = [];
+
     // If no workspace is found, show error html template with error message
     if (workspaces === undefined || workspaces.length <= 0) {
       await vscode.window.showWarningMessage("No workspace found.");
@@ -178,55 +179,52 @@ export class PeasyVizPanel {
     // Get applicable json error trace filename
     else {
       const rootDir = workspaces[0].uri.path;
-      bugOutputDirPathname = `${rootDir}/PCheckerOutput/BugFinding`;
+      const pCheckerOutputDirUri = vscode.Uri.file(`${rootDir}/PCheckerOutput`);
+
       try {
-        const dirFiles = await vscode.workspace.fs.readDirectory(
-          vscode.Uri.file(bugOutputDirPathname)
-        );
-        for (let f = 0; f < dirFiles.length; f++) {
-          const filename = dirFiles[f][0];
-          const match = filename.match(/\./g);
-          // Valid json error trace filenames contain 2 periods and ends with ".trace.json"
-          if (match && match.length === 2 && filename.endsWith(".trace.json")) {
-            visualizableErrorTraces.push(
-              filename.replace(/\.trace\.json$/, "")
-            );
-          }
-        }
+        vscode.workspace.fs.readDirectory(pCheckerOutputDirUri);
       } catch (error) {
-        await vscode.window.showWarningMessage(`${error}`);
+        await vscode.window.showWarningMessage(
+          "No P checker output folder found!"
+        );
+      }
+
+      const openDialogOptions: vscode.OpenDialogOptions = {
+        canSelectFiles: true,
+        canSelectMany: true,
+        defaultUri: pCheckerOutputDirUri,
+        openLabel: "Open JSON",
+      };
+
+      const files = await vscode.window.showOpenDialog(openDialogOptions);
+
+      if (files?.length === 0) {
+        await vscode.window.showInformationMessage("No JSON error trace(s) selected!");
         return "";
+      }
+      
+      for (const file of files || []) {
+        const errorTraceJsonLogsUint8Array: Uint8Array =
+          await vscode.workspace.fs.readFile(file);
+        const errorTrace: any[] = JSON.parse(
+          new TextDecoder().decode(errorTraceJsonLogsUint8Array)
+        );
+        errorTraces.push(errorTrace);
       }
     }
 
-    // If there is no valid json error trace filenames, show error html template with error message
-    if (visualizableErrorTraces.length === 0) {
-      await vscode.window.showWarningMessage("No json error traces found.");
-      return "";
+    if (errorTraces.length === 1) {
+      errorTraces = errorTraces[0];
     }
 
-    // If there is valid json error trace filenames, prompt user to choose which one to visualize
-    const errorTraceSelected = await vscode.window.showInformationMessage(
-      "Which file do you want to visualize?",
-      ...visualizableErrorTraces
-    );
     // Read and convert the chosen file into string and render the visualizer html
-    const errorTraceJsonLogsUint8Array: Uint8Array =
-      await vscode.workspace.fs.readFile(
-        vscode.Uri.file(
-          `${bugOutputDirPathname}/${errorTraceSelected}.trace.json`
-        )
-      );
-    const errorTraceJsonLogsString: string = new TextDecoder().decode(
-      errorTraceJsonLogsUint8Array
-    );
     return shivizSourceHtml(
       shivizScriptsUriMap,
       {
         ...vscodeStylesUri,
         shivizStylesUri,
       },
-      errorTraceJsonLogsString
+      JSON.stringify(errorTraces)
     );
   }
 }
