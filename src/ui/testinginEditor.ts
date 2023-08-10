@@ -4,8 +4,9 @@ import {
   LanguageConstants,
   TestResults,
 } from "../constants";
+import * as messages from "./messages";
 import RelatedErrorView from "./relatedErrorView";
-import { searchDirectory } from "../miscTools";
+import { checkPInstalled, searchDirectory } from "../miscTools";
 import { PCommands } from "../commands";
 import * as child_process from "child_process";
 import { SpawnSyncReturns } from "child_process";
@@ -232,29 +233,36 @@ async function checkResult(
 }
 
 //Runs p check in a child process and returns the stdout or result.
-function runCheckCommand(
+async function runCheckCommand(
   terminal: vscode.Terminal,
   tc: vscode.TestItem,
   outputDirectory: string,
   projectDirectory: string
-): string {
+): Promise<string> {
   //number of p checker iterations that are run
+
   const numIterations: String =
     vscode.workspace.getConfiguration("p-vscode").get("iterations") ?? "1000";
   //The p check command depends on if the terminal is bash or zsh.
   var command;
 
-  command =
-    "cd " +
-    projectDirectory +
-    " && p compile && p check -tc " +
-    tc.label +
-    " -i " +
-    numIterations;
+  if (!(await checkPInstalled())) {
+    command = 'echo -e "\\e[1;31m ' + messages.Messages.Installation.noP + '"';
+  } else {
+    command =
+      "cd " +
+      projectDirectory +
+      " && p compile && p check -tc " +
+      tc.label +
+      " -i " +
+      numIterations;
+  }
+  //Runs Command in Terminal
   terminal.sendText(command);
   var contents: string;
+  //Runs command in separate shell that finds the test contents
   try {
-    let stdOut = child_process.execSync(command, { shell: "/bin/sh" });
+    let stdOut = child_process.execSync(command, { shell: "/bin/zsh" });
     return stdOut.toString();
   } catch (e) {
     const val: SpawnSyncReturns<Buffer> = e as SpawnSyncReturns<Buffer>;

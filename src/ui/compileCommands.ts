@@ -4,7 +4,7 @@ import * as vscode from "vscode";
 import * as messages from "./messages";
 
 import { ExtensionConstants } from "../constants";
-import { searchDirectory } from "../miscTools";
+import { checkPInstalled, searchDirectory } from "../miscTools";
 import { PCommands } from "../commands";
 
 // const OutputPathArg = '--output';
@@ -65,34 +65,6 @@ async function changeCompilationCommand(item: vscode.QuickPickItem) {
   CompileCommands.command = "cd " + item.description + " && p compile";
 }
 
-//Check if P is installed by searching in .dotnet/tools directory
-async function checkPInstalled(): Promise<boolean> {
-  var workspaceFile = await vscode.workspace.workspaceFolders
-    ?.at(0)
-    ?.uri.fsPath.split("/")
-    .filter((obj) => {
-      return obj !== "";
-    });
-  if (workspaceFile?.at(0) !== undefined && workspaceFile.at(1) !== undefined) {
-    var filePath = workspaceFile[0] + "/" + workspaceFile[1] + "/.dotnet/tools";
-    var uri: vscode.Uri = vscode.Uri.file(filePath);
-    try {
-      var files: [string, vscode.FileType][] =
-        await vscode.workspace.fs.readDirectory(uri);
-      //turn arrays into JSON to check if the P executable exists inside of the file directory
-      var jsonFiles = JSON.stringify(files);
-      var jsonPFile = JSON.stringify(["p", vscode.FileType.File]);
-      if (jsonPFile.indexOf(jsonFiles) !== -1) {
-        return true;
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  return false;
-}
-
 // Runs p compile in the terminal.
 async function createCompileTask() {
   var type = PCommands.RunTask;
@@ -105,9 +77,7 @@ async function createCompileTask() {
     vscode.tasks.registerTaskProvider(type, {
       async provideTasks(token?: vscode.CancellationToken) {
         var msg =
-          "echo ${(%):-%F{red}}" +
-          messages.Messages.Installation.noP +
-          "${(%):-%f}";
+          'echo -e "\\e[1;31m ' + messages.Messages.Installation.noP + '"';
         var execution = new vscode.ShellExecution(msg);
 
         //var problemMatchers = ["$Parse", "$Type"];

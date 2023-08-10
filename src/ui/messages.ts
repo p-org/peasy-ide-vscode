@@ -13,8 +13,11 @@ export namespace Messages {
   }
 
   export namespace Installation {
-    export const noP =
-      "P LANGUAGE is not installed on your computer! Automatic Compilation and P testing capabilities will not work. Download P at https://p-org.github.io/P/getstarted/install/. Then, reload VSCode!";
+    export const noP = `
+      P LANGUAGE is not installed on your computer! 
+      Automatic Compilation and P testing capabilities will not work. 
+      Download P at https://p-org.github.io/P/getstarted/install/. 
+      Then, reload VSCode.`;
     export const Start = "Starting P installation";
     export const Error = "An error occurred during the installation of P.";
     export const Completed = "P installation completed";
