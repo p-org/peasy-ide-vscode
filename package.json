@@ -139,8 +139,6 @@
             },
             {
               "command": "workbench.files",
-              "key": "f4",
-              "mac": "f4"
             }
           ]
         }
