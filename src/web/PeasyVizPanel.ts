@@ -164,45 +164,59 @@ export class PeasyVizPanel {
       )
     );
 
-    /******************************************************
-     * * Check if file exists and render appropriate HTML *
-     ******************************************************/
+    /******************************************************************
+     * * Let user select json error trace and render appropriate HTML *
+     ******************************************************************/
+    // Find users opened workspaces
     const workspaces = vscode.workspace.workspaceFolders;
-    
+
+    // Variable holding the error traces
     let errorTraces: any[] = [];
 
-    // If no workspace is found, show error html template with error message
+    // If no workspace is found, show warning
     if (workspaces === undefined || workspaces.length <= 0) {
       await vscode.window.showWarningMessage("No workspace found.");
       return "";
     }
     // Get applicable json error trace filename
     else {
+      // Get PCheckerOutput directory
       const rootDir = workspaces[0].uri.path;
       const pCheckerOutputDirUri = vscode.Uri.file(`${rootDir}/PCheckerOutput`);
 
+      // Check if user has generated a PCheckerOutput, if not, show warning 
       try {
         vscode.workspace.fs.readDirectory(pCheckerOutputDirUri);
       } catch (error) {
         await vscode.window.showWarningMessage(
           "No P checker output folder found!"
         );
+        return "";
       }
 
+      // options for users to select files
       const openDialogOptions: vscode.OpenDialogOptions = {
         canSelectFiles: true,
         canSelectMany: true,
         defaultUri: pCheckerOutputDirUri,
         openLabel: "Open JSON",
+        filters: {
+          "Error Traces": ["json"],
+        },
       };
 
+      // Prompt to open the file window and wait for user to select JSON files
       const files = await vscode.window.showOpenDialog(openDialogOptions);
 
+      // If no files selected, prompt warning message
       if (files?.length === 0) {
-        await vscode.window.showInformationMessage("No JSON error trace(s) selected!");
+        await vscode.window.showInformationMessage(
+          "No JSON error trace(s) selected!"
+        );
         return "";
       }
-      
+
+      // Read files selected and convert to actual JSON
       for (const file of files || []) {
         const errorTraceJsonLogsUint8Array: Uint8Array =
           await vscode.workspace.fs.readFile(file);
@@ -213,6 +227,7 @@ export class PeasyVizPanel {
       }
     }
 
+    // If just one error trace log, just make the errorTraces the one error trace selected
     if (errorTraces.length === 1) {
       errorTraces = errorTraces[0];
     }
