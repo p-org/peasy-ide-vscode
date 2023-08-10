@@ -554,7 +554,7 @@ Global.prototype.resize = function () {
     if (sel.getX() > $svg.width() / 2)
       $dialog
         .css({
-          left: sel.getX() + $svg.offset().left + 40,
+          left: sel.getX() + $svg.offset().left + 30,
         })
         .removeClass("right")
         .addClass("left")
@@ -562,7 +562,7 @@ Global.prototype.resize = function () {
     else
       $dialog
         .css({
-          left: sel.getX() + $svg.offset().left - $dialog.width() - 40,
+          left: sel.getX() + $svg.offset().left - $dialog.width() - 30,
         })
         .removeClass("left")
         .addClass("right")

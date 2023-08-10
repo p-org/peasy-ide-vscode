@@ -60,6 +60,18 @@ function View(model, hostPermutation, label) {
    * @private
    */
   this.hostNodes = new Map();
+
+  // Expand all node by default when the visualizer first launches.
+  // Get all visual nodes
+  let nodes = this.visualGraph.getVisualNodes();
+  nodes.forEach((visualNode) => {
+    // If the visual node is expandable, expand/uncollapse it
+    let node = visualNode.getNode();
+    let nodeIsExpandable = CollapseSequentialNodesTransformation.isCollapseable(node, 2);
+    if (nodeIsExpandable) {
+      this.transformer.uncollapseNode(node);
+    }
+  })
 }
 
 /**
