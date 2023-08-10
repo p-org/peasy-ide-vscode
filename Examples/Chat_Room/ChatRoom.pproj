@@ -1,0 +1,11 @@
+<!-- P Project file for the Failure Detector example -->
+<Project>
+<ProjectName>ChatRoom</ProjectName>
+<InputFiles>
+	<PFile>./PSrc/</PFile>
+	<PFile>./PSpec/</PFile>
+	<PFile>./PTst/</PFile>
+</InputFiles>
+<OutputDir>./PGenerated/</OutputDir>
+
+</Project>

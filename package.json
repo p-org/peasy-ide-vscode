@@ -4,7 +4,7 @@
   "description": "P Extension provides compilation support, a custom theme, syntax highlighting, a testing framework",
   "publisher": "PLanguage",
   "version": "0.0.1",
-  "icon": "p-icon.png",
+  "icon": "Docs/docs/images/p-icon.png",
   "engines": {
     "vscode": "^1.78.0"
   },
@@ -99,6 +99,9 @@
           "beginsPattern": "Parsing",
           "endsPattern": "~"
         }
+      }, 
+      {
+        "name": "Install_P"
       }
     ],
     "themes": [

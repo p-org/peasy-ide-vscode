@@ -5,18 +5,21 @@ import RelatedErrorView from "./relatedErrorView";
 import TestingEditor from "./testinginEditor";
 import Visualizer from "./visualizer";
 
-export default async function createAndRegisterPIntegration(installer: PInstaller): Promise<void> {
-    await CompileCommands.createAndRegister(installer.context);
-    //Compiles and Runs P folders
+export default async function createAndRegisterPIntegration(
+  installer: PInstaller
+): Promise<void> {
+  await CompileCommands.createAndRegister(installer.context);
+  //Compiles and Runs P folders
 
-    RelatedErrorView.createAndRegister(installer.context);
-    //Error Panel
+  RelatedErrorView.createAndRegister(installer.context);
+  //Error Panel
 
-    TestingEditor.createAndRegister(installer.context);
-    //Testing Framework
+  TestingEditor.createAndRegister(installer.context);
+  //Testing Framework
 
-    AutoFormatting.createAndRegister();
-    
-    Visualizer.createAndRegister(installer.context);
-    //Trace Visualization
+  //Auto Formatting
+  AutoFormatting.createAndRegister();
+
+  //Trace Visualization
+  Visualizer.createAndRegister(installer.context);
 }
