@@ -7,3 +7,7 @@ node_modules/
 !/dist/.gitkeep
 /.history
 *.vsix
+*/PGenerated/*
+*/coverage/*
+coverage
+PGenerated
