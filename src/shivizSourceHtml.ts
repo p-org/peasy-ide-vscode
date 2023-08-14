@@ -493,7 +493,7 @@ const shivizSourceHtml = (
                       </div>
 
                       <div class="dialog">
-                          <div class="triangle"></div>
+                          <!-- <div class="triangle"></div> -->
                           <div class="name"></div>
                           <table class="info"></table>
                           <button name="toggle fields" class="show-fields">Show More</button>

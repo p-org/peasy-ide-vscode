@@ -997,7 +997,7 @@ svg {
 .dialog .info .title {
   text-align: left;
   vertical-align: top;
-  /* * Peasy Change - Remove padding right */ 
+  /* * Peasy Change - Remove padding right */
   /* padding-right: 1em; */
   white-space: nowrap;
 }
@@ -1065,12 +1065,13 @@ svg#defs {
 
 /* Popup dialog */
 .dialog {
-  width: 200px;
+  width: 250px;
   background: #eee;
   font-family: sans-serif;
   position: absolute;
   z-index: 2;
   display: none;
+  border-radius: 0.5rem;
 }
 .dialog.host {
   position: fixed;
@@ -1122,6 +1123,8 @@ svg#defs {
 .dialog button {
   margin: 0;
   background: rgba(0, 0, 0, 0.1);
+  text-transform: capitalize;
+  transition: all ease-in-out 100ms;
 }
 .dialog button:hover {
   margin: 0;

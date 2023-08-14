@@ -314,7 +314,6 @@ Shiviz.prototype.visualize = function (
      * @returns {String} - String output of the parsed dictionary
      */
     function parsePayloadToString(payload) {
-      console.log(payload);
       if (payload.constructor === Object) {
         let temp = "";
 

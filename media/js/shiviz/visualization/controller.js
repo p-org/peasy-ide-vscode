@@ -771,7 +771,7 @@ Controller.prototype.showDialog = function (e, type, elem) {
   if (type == 2)
     $dialog
       .css({
-        left: $rect.offset().left - $dialog.width() - 40,
+        left: $rect.offset().left - $dialog.width() - 30,
       })
       .removeClass("left")
       .addClass("right")
@@ -779,7 +779,7 @@ Controller.prototype.showDialog = function (e, type, elem) {
   else if (e.getX() - $(window).scrollLeft() > $graph.width() / 2)
     $dialog
       .css({
-        left: e.getX() + $svg.offset().left - $dialog.width() - 40,
+        left: e.getX() + $svg.offset().left - $dialog.width() - 30,
         "margin-left": type ? -$(window).scrollLeft() : 0,
       })
       .removeClass("left")
@@ -788,7 +788,7 @@ Controller.prototype.showDialog = function (e, type, elem) {
   else
     $dialog
       .css({
-        left: e.getX() + $svg.offset().left + 40,
+        left: e.getX() + $svg.offset().left + 30,
         "margin-left": type ? -$(window).scrollLeft() : 0,
       })
       .removeClass("right")
