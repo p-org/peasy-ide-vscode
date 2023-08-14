@@ -113,7 +113,7 @@ function parsePTestFile(
         new vscode.Position(lineNo, 0),
         new vscode.Position(lineNo, line.length)
       );
-      const words = line.split("test ")[1].split(/ |[^A-Za-z_]/);
+      const words = line.split("test ")[1].split(/ |[^A-Za-z_0-9]/);
       events.onTest(words[0], range);
       continue;
     }
