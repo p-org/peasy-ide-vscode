@@ -3,7 +3,7 @@
   "displayName": "P Extension",
   "description": "P Extension provides compilation support, a custom theme, syntax highlighting, a testing framework",
   "publisher": "PLanguage",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "Docs/docs/images/p-icon.png",
   "engines": {
     "vscode": "^1.78.0"
@@ -123,7 +123,7 @@
             },
             {
               "command": "workbench.action.tasks.runTask",
-              "args": "p-vscode: Run_Report"
+              "args": "p-vscode: Compile"
             }
           ]
         }
@@ -148,6 +148,22 @@
         "command": "peasy-visualizer.run", 
         "key": "f6", 
         "mac": "f6"
+      }, 
+      {
+        "command": "runCommands", 
+        "key": "f7",
+        "args": {
+          "commands": [
+            {
+              "command": "workbench.action.tasks.terminate",
+                "args": "terminateAll"
+            },
+            {
+              "command": "workbench.action.tasks.runTask",
+              "args": "p-vscode: Stately"
+            }
+          ]
+        }
       }
     ],
     "configuration": {

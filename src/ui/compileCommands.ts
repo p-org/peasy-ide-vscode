@@ -26,6 +26,7 @@ export default class CompileCommands {
   ): CompileCommands {
     generateProjects();
     createCompileTask();
+    // createStatelyTask();
     vscode.commands.registerCommand("workbench.files", async () => showFiles());
 
     context.subscriptions.push(
@@ -67,10 +68,9 @@ async function changeCompilationCommand(item: vscode.QuickPickItem) {
 
 // Runs p compile in the terminal.
 async function createCompileTask() {
-  var type = PCommands.RunTask;
-
   //Check if P is installed on computer
   var p_installed = await checkPInstalled();
+  var type = PCommands.RunTask;
   if (!p_installed) {
     vscode.window.showErrorMessage(messages.Messages.Installation.noP);
 
@@ -98,23 +98,36 @@ async function createCompileTask() {
       },
     });
   } else {
+    //normal p compile task
+
     vscode.tasks.registerTaskProvider(type, {
       async provideTasks(token?: vscode.CancellationToken) {
         var msg = CompileCommands.command;
         //the command
 
-        var execution = new vscode.ShellExecution(msg);
-
+        var compile_execution = new vscode.ShellExecution(msg);
+        var stately_execution = new vscode.ShellExecution(
+          msg + " --mode stately"
+        );
         var problemMatchers = ["$Parse", "$Type"];
         //matches errors
         return [
           new vscode.Task(
             { type: type },
             vscode.TaskScope.Workspace,
-            "Run_Report",
+            "Compile",
             "p-vscode",
-            execution,
+            compile_execution,
             problemMatchers
+          ),
+
+          new vscode.Task(
+            { type: type },
+            vscode.TaskScope.Workspace,
+            "Stately",
+            "p-vscode",
+            stately_execution
+            //problemMatchers
           ),
         ];
       },
@@ -124,6 +137,81 @@ async function createCompileTask() {
     });
   }
 }
+
+// Runs p compile in the terminal.
+// async function createStatelyTask() {
+//   //Check if P is installed on computer
+//   var p_installed = await checkPInstalled();
+//   var type = PCommands.RunTask;
+//   if (!p_installed) {
+//     vscode.window.showErrorMessage(messages.Messages.Installation.noP);
+
+//     vscode.tasks.registerTaskProvider(type, {
+//       async provideTasks(token?: vscode.CancellationToken) {
+//         var msg =
+//           'echo -e "\\e[1;31m ' + messages.Messages.Installation.noP + '"';
+//         var execution = new vscode.ShellExecution(msg);
+
+//         //var problemMatchers = ["$Parse", "$Type"];
+//         //matches errors
+//         return [
+//           new vscode.Task(
+//             { type: type },
+//             vscode.TaskScope.Workspace,
+//             "Compile",
+//             "p-vscode",
+//             execution
+//             //problemMatchers
+//           ),
+
+//           new vscode.Task(
+//             { type: type },
+//             vscode.TaskScope.Workspace,
+//             type,
+//             "p-vscode",
+//             execution,
+//             problemMatchers
+//           ),
+//         ];
+//       },
+//       resolveTask(task: vscode.Task, token?: vscode.CancellationToken) {
+//         return task;
+//       },
+//     });
+//   } else {
+//     //generate visualization task
+//     type = PCommands.StatelyTask;
+//     vscode.tasks.registerTaskProvider(type, {
+//       async provideTasks(token?: vscode.CancellationToken) {
+//         var msg = CompileCommands.command + " --mode stately";
+//         // msg =
+//         //   msg +
+//         //   ' && echo -e "\\e[1;31m ' +
+//         //   messages.Messages.Installation.noP +
+//         //   '"';
+//         //the command
+
+//         var execution = new vscode.ShellExecution(msg);
+
+//         var problemMatchers = ["$Parse", "$Type"];
+//         //matches errors
+//         return [
+//           new vscode.Task(
+//             { type: type },
+//             vscode.TaskScope.Workspace,
+//             type,
+//             "p-vscode",
+//             execution,
+//             problemMatchers
+//           ),
+//         ];
+//       },
+//       resolveTask(task: vscode.Task, token?: vscode.CancellationToken) {
+//         return task;
+//       },
+//     });
+//   }
+// }
 
 /*
 Choose file to compile.

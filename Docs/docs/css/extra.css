@@ -15,16 +15,16 @@
   display: block;
   width: 50%;
   border: none;
-  background-color: #008CBA;
+  background-color: rgba(51,53,65,255);
   padding: 14px 28px;
   font-size: 32px;
   cursor: pointer;
   text-align: center;
   position: relative;
   left: 25%;
+  border-radius: 10px;
 }
 
 #hover:hover {
-  background-color: rgb(37, 37, 138);
-  color: white;
+  color: rgb(156,156,164)
 }
