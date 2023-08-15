@@ -1,0 +1,30 @@
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+
+.block {
+  display: block;
+  width: 50%;
+  border: none;
+  background-color: rgba(51,53,65,255);
+  padding: 14px 28px;
+  font-size: 32px;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  left: 25%;
+  border-radius: 10px;
+}
+
+#hover:hover {
+  color: rgb(156,156,164)
+}
