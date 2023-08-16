@@ -15,17 +15,17 @@
         <link rel="canonical" href="http://p-org.github.io/Peasy/features/testing/">
       
       
-        <link rel="prev" href="../error_reporting/">
+        <link rel="prev" href="../compilation/error_reporting/">
       
       
-        <link rel="next" href="../error_tracing/">
+        <link rel="next" href="../visualizations/">
       
       <link rel="icon" href="../../images/p-icon.png">
       <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.1.21">
     
     
       
-        <title>Testing Framework - P</title>
+        <title>How to Run P Test Cases - P</title>
       
     
     
@@ -157,7 +157,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Testing Framework
+              How to Run P Test Cases
             
           </span>
         </div>
@@ -343,8 +343,45 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+          Compilation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Compilation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../compilation/" class="md-nav__link">
+      <a href="../compilation/basic/" class="md-nav__link">
         Automatic Compilation
       </a>
     </li>
@@ -358,8 +395,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippets/" class="md-nav__link">
-        Snippets
+      <a href="../compilation/multiple/" class="md-nav__link">
+        Multiple Projects
       </a>
     </li>
   
@@ -372,13 +409,53 @@
   
   
     <li class="md-nav__item">
-      <a href="../error_reporting/" class="md-nav__link">
+      <a href="../compilation/error_reporting/" class="md-nav__link">
         Error Reporting
       </a>
     </li>
   
 
             
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+      
+      
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+          Testing Framework
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Testing Framework
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
             
               
@@ -394,9 +471,44 @@
       
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Testing Framework
+        How to Run P Test Cases
       </a>
       
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../visualizations/" class="md-nav__link">
+        State Machine Visualizations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippets/" class="md-nav__link">
+        Snippets
+      </a>
     </li>
   
 
@@ -431,7 +543,7 @@
   
     <li class="md-nav__item">
       <a href="../../contribute/" class="md-nav__link">
-        Contributing to the P Extension
+        Contributing to the Peasy Extension
       </a>
     </li>
   
@@ -467,7 +579,7 @@
                   
 
 
-  <h1>Testing Framework</h1>
+  <h1>How to Run P Test Cases</h1>
 
 <style>
   .md-typeset h1,
@@ -478,11 +590,12 @@
 </style>
 
 <div align="center">
-  <h2>Testing Framework in P</h2>
+  <h2>How to Run P Test Cases</h2>
 </div>
 
-<p>Testing in P is made easy with this modification to the P extension!</p>
-<p>Navigate to the Testing Section of a P directory, and users will find names of P testing folders with P test cases under them. The Testing tab allows users to easily run test cases from anywhere in a P project.</p>
+<p>Testing in P is made easy with this modification to the Peasy extension!</p>
+<p>Navigate to the Testing Panel in VSCode, and users will find names of P testing folders with P test cases under them. The Testing Panel allows users to easily run test cases from anywhere in a P project directory by clicking the play button.</p>
+<p>Users can also navigate to the testing folders by pressing the icon to the right of the play button. If an user navigates to a testing file, they can also click a green play button to run P test cases there too!</p>
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
     <source src="../../videos/test_framework.mov" type="video/mp4">
