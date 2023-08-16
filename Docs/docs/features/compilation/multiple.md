@@ -13,7 +13,7 @@ When working in a P project directory with a single project, the Peasy extension
 
 **But what if there are multiple projects within a single directory?**
 
-To select another project that compiles after pressing `F5` and `Save`, press `F4`. This will trigger a pop-up that shows all the available P projects available to compile in your current working directory. Simply click or select the project you wish to compile automatically, and change the selected project later as needed!
+To select another project that compiles after pressing ++f5++ and `Save`, press ++f4++. This will trigger a pop-up that shows all the available P projects available to compile in your current working directory. Simply click or select the project you wish to compile automatically, and change the selected project later as needed!
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
