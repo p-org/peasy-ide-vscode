@@ -1,30 +1,61 @@
-.button {
+.button1 {
   border: none;
   color: white;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 
-.block {
+.block1 {
   display: block;
-  width: 50%;
+  width: 40%;
   border: none;
   background-color: rgba(51,53,65,255);
   padding: 14px 28px;
-  font-size: 32px;
+  font-size: 20px;
   cursor: pointer;
   text-align: center;
-  position: relative;
-  left: 25%;
+  position:relative;
+
   border-radius: 10px;
+  margin: 10px;
+
 }
 
 #hover:hover {
   color: rgb(156,156,164)
 }
+
+
+.button2 {
+  color: rgba(51,53,65,255);
+
+  text-align: center;
+  text-decoration: none;
+
+  cursor: pointer;
+  left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+}
+
+.block2 {
+    display: block;
+  width: 40%;
+
+
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+  position:relative;
+
+
+  margin: 10px;
+}
+
+

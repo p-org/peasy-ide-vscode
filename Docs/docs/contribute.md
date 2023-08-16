@@ -7,12 +7,12 @@
 </style>
 
 <div align="center">
-  <h2>Contribute to the P Extension!</h2>
+  <h2>Contribute to the Peasy Extension!</h2>
 </div>
 
-If you would like to contribute or add to the current state of the P extension, here are the steps to do so:
+If you would like to contribute or add to the current state of the Peasy extension, here are the steps to do so:
 
-1.  **Clone** the [P extension repository](https://github.com/p-org/peasy-ide-vscode).
+1.  **Clone** the [Peasy extension repository](https://github.com/p-org/peasy-ide-vscode).
 
 2.  **Navigate** into the directory of the extension on your Terminal or on a coding editor. Run the following command on the command line.
 
@@ -22,7 +22,7 @@ If you would like to contribute or add to the current state of the P extension, 
 
 3.  **Build** the repository to convert Typescript code into Javascript code.
 
-    !!! note "How to Build the P Extension Repository"
+    !!! note "How to Build the Peasy Extension Repository"
 
         * Mac: ++cmd+shift+b++
         * Windows: ++ctrl+shift+b++

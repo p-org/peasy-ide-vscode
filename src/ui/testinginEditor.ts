@@ -139,22 +139,25 @@ async function runHandler(
 
     await handlePTestCase(run, test);
   }
-  run.end();
 }
 
 /*
 Compiles the P directory.
 If the Test Item is a file: run its children. Else: Run the test case.
 */
-async function handlePTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
-  //await RelatedErrorView.refreshRelatedErrors();
-
+async function handlePTestCase(
+  run: vscode.TestRun,
+  tc: vscode.TestItem
+): Promise<boolean> {
   if (tc.parent == undefined) {
     tc.children.forEach((item) => run.enqueued(item));
-    tc.children.forEach(async (item) => await runPTestCase(run, item));
+    tc.children.forEach(async (item) => runPTestCase(run, item));
+
+    run.passed(tc);
   } else {
     await runPTestCase(run, tc);
   }
+  return true;
 }
 
 //Always runs a SINGLE P Test Case.
@@ -245,14 +248,14 @@ async function runCheckCommand(
     vscode.workspace.getConfiguration("p-vscode").get("iterations") ?? "1000";
   //The p check command depends on if the terminal is bash or zsh.
   var command;
-
+  terminal.sendText("cd " + projectDirectory + " && p compile");
   if (!(await checkPInstalled())) {
     command = 'echo -e "\\e[1;31m ' + messages.Messages.Installation.noP + '"';
   } else {
     command =
       "cd " +
       projectDirectory +
-      " && p compile && p check -tc " +
+      " && p check -tc " +
       tc.label +
       " -i " +
       numIterations;

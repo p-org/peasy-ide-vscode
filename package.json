@@ -1,7 +1,7 @@
 {
-  "name": "p-extension",
-  "displayName": "P Extension",
-  "description": "P Extension provides compilation support, a custom theme, syntax highlighting, a testing framework",
+  "name": "peasy-extension",
+  "displayName": "Peasy Extension",
+  "description": "Peasy Extension provides compilation support, a custom theme, syntax highlighting, a testing framework",
   "publisher": "PLanguage",
   "version": "0.0.2",
   "icon": "Docs/docs/images/p-icon.png",
@@ -168,7 +168,7 @@
     ],
     "configuration": {
       "type": "object",
-      "title": "P Extension configuration",
+      "title": "Peasy Extension configuration",
       "properties": {
         "p-vscode.trace.server": {
           "scope": "window",
