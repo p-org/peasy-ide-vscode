@@ -43,7 +43,7 @@ Peasy achieves this by providing a VS code language extension for editing P prog
 **Testing Framework**
 [Learn more.](./features/testing.md)
 
-**Error Tracing Visualization**
+**Trace Visualizer**
 [Learn more.](./features/error_tracing.md)
 
 <div align="left">
@@ -54,5 +54,5 @@ Peasy achieves this by providing a VS code language extension for editing P prog
 | -------- | ----------------------------------------------------------------------------- |
 | ++f4++   | Shows a dropdown menu of all the P projects in the current directory          |
 | ++f5++   | Compiles the Currently Selected P Project                                     |
-| ++f6++   | Opens the Peasy Error Trace Visualizer Webview                                |
+| ++f6++   | Opens the Peasy Trace Visualizer Webview                                      |
 | ++f7++   | Generates code to visualize the currently selected P project's state machines |
