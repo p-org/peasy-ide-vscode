@@ -274,9 +274,9 @@ View.prototype.draw = function (viewPosition) {
       .append("text")
       .text((node) => node.getHost())
       //.attr("text-anchor", "middle")
-      .attr("transform", "rotate(0)")
-      .attr("x", "-1em")
-      .attr("y", "-1em")
+      .attr("transform", "rotate(-45)")
+      .attr("x", "0.5em")
+      .attr("y", "-0.5em")
       .attr("font-size", "x-small");
 
     // if (!view.hasAbbreviatedHostnames()) {

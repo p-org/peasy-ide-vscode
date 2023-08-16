@@ -345,7 +345,7 @@ section.input .left {
   left: var(--container-padding);
 }
 .visualization .left .leftTabLinks li:last-child {
-  left: 9.3em;
+  left: 15.3em;
 }
 .visualization .left .leftTabLinks li.default {
   opacity: 1;
@@ -470,14 +470,16 @@ section.input .left {
 .visualization .log .logLabelR {
   width: inherit;
   position: fixed;
-  margin-top: 2.5em;
-  color: black;
-  margin-bottom: 1em;
+  /* margin-top: 1em; */
+  color: white;
+  /* margin-bottom: 1em; */
   white-space: pre-wrap;
   font-family: sans-serif;
   font-size: 11pt;
-  opacity: 0.8;
+  padding: 20px 0;
+  /* opacity: 0.8; */
   z-index: 4;
+  background-color: var(--vscode-editor-background);
 }
 
 .visualization .highlight {
@@ -511,6 +513,7 @@ section.input .left {
 
 .visualization #graph {
   margin-left: 264pt;
+  width: calc(100% - 240px - 264pt + var(--container-padding));
 }
 
 /* Searchbar */
@@ -868,6 +871,7 @@ svg {
   font-family: sans-serif;
   opacity: 0.8;
   margin-right: 0.5em;
+  margin-bottom: 14px;
 }
 
 #viewLabelR {
@@ -884,7 +888,8 @@ svg {
   padding: 0.15em;
   font-family: sans-serif;
   opacity: 0.8;
-  margin-left: 1.5em;
+  /* margin-left: 1.5em; */
+  bottom: 1.5em;
 }
 
 #viewSelectR {
@@ -898,9 +903,10 @@ svg {
 
 #viewSeparator {
   display: inline-block;
-  border-right: 2px dotted rgba(3, 3, 3, 0.24);
+  border-right: 1px solid rgba(3, 3, 3, 0.24);
   position: relative;
   z-index: 2;
+  background-color: var(--vscode-editor-foreground);
   /* make this div sit on top of the hostBar div */
 }
 
