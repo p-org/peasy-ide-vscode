@@ -47,7 +47,7 @@ Peasy achieves this by providing a VS code language extension for editing P prog
 [Learn more.](./features/error_tracing.md)
 
 <div align="left">
-  <h2>Peasy Extension Shortcut</h2>
+  <h2>Peasy Extension's Shortcuts</h2>
 </div>
 
 | Keypress | Description                                                                   |

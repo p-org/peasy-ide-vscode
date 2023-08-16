@@ -42,8 +42,6 @@ Stately's website contains four tabs:
 - **Events Tab**: This tab logs all of the events that have occured so far among all machines.
 - **Actors Tab**: Users can switch between different machines' visualizations in this tab.
 
-The state WaitForTransaction is outlined in blue
-
 <div align="center">
   <h2>State Machine Visualization Tool Tutorial</h2>
 </div>
