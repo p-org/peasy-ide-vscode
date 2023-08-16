@@ -7,5 +7,5 @@
 </style>
 
 <div align="center">
-  <h2>Error Tracing Visualizations in P</h2>
+  <h2>Error Tracing Visualizations in Peasy</h2>
 </div>
