@@ -10,7 +10,7 @@
   <h2>Peasy State Machine Visualizations</h2>
 </div>
 
-Many P users wanted a way of creating visualizations of state machines in P to help supplement design documents, visualize P code, and help to better understand the way P state machines worked. With the help of the open source tool Stately's State Machine Visualization, that dream is now realized.
+Many P users wanted a method of creating visualizations of P state machines and their transitions, states, and events to help supplement design documents, visualize P code, and help to better understand the way P state machines worked. With the help of the open source tool Stately's State Machine Visualization, that dream is now realized.
 
 In order to create visualizations of P state machines, follow these steps or scroll down to watch the tutorial:
 
