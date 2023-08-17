@@ -9,11 +9,9 @@
 <div align="center">
   <h2>Automatic Compilation in Peasy</h2>
 </div>
-Compiling in P is made easy with this addition to our extension!
+Compiling P programs is now super easy with Peasy!
 
-Simple press ++f5++ or `Save` in your VSCode terminal and your project will automatically compile the current P project folder with the `p compile` command.
-
-The Peasy extension also handles cases where there are multiple P project files in the current working directory. Press ++f4++ and a pop-up will appear, displaying all the P projects inside of the folder. Select the project you want to work on at the moment, and that project will compile every time you press ++f5++.
+Simply press ++f5++ or `Save` in VS Code and your project will automatically compile the current P project with the `p compile` command.
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
