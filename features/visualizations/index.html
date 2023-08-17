@@ -21,7 +21,7 @@
         <link rel="next" href="../snippets/">
       
       <link rel="icon" href="../../images/p-icon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.19">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.1.21">
     
     
       
@@ -395,8 +395,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../compilation/multiple/" class="md-nav__link">
-        Multiple Projects
+      <a href="../compilation/error_reporting/" class="md-nav__link">
+        Error Reporting
       </a>
     </li>
   
@@ -409,8 +409,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../compilation/error_reporting/" class="md-nav__link">
-        Error Reporting
+      <a href="../compilation/multiple/" class="md-nav__link">
+        Multiple Projects
       </a>
     </li>
   
@@ -543,7 +543,7 @@
   
     <li class="md-nav__item">
       <a href="../../contribute/" class="md-nav__link">
-        Contributing to the Peasy Extension
+        Contributing to Peasy
       </a>
     </li>
   
@@ -593,16 +593,15 @@
   <h2>Peasy State Machine Visualizations</h2>
 </div>
 
-<p>Many P users wanted a method of creating visualizations of P state machines and their transitions, states, and events to help supplement design documents, visualize P code, and help to better understand the way P state machines worked. With the help of the open source tool Stately's State Machine Visualization, that dream is now realized.</p>
-<p>In order to create visualizations of P state machines, follow these steps or scroll down to watch the tutorial:</p>
+<p>Many P users wanted a method of creating visualizations of P state machines and their transitions, states, and events to help supplement design documents, visualize P code, and help to better understand the way P state machines worked. With the help of the open-source tool <a href="https://stately.ai/viz">Stately</a>, that dream is now realized.</p>
+<p>In order to create visualizations of P state machines, follow these steps or scroll down to watch a demo:</p>
 <ol>
-<li>First, select the P project you want to work with. (If you are already working in a directory with just one P project, then skip this step.) Otherwise, press <span class="keys"><kbd class="key-f6">F6</kbd></span> and select the project you would like to visualize.</li>
-<li>Now, press <span class="keys"><kbd class="key-f7">F7</kbd></span> to run the command <code>p compile --mode stately</code> in the terminal. Your visualization code is generated! A message in red should be sent through the terminal.
+<li>Press <span class="keys"><kbd class="key-f7">F7</kbd></span> to run the command <code>p compile --mode stately</code> in the terminal. Your visualization code is generated! A message in red should be sent through the terminal.
    <img alt="Syntax Highlighting" src="../../images/code_generation_text.png" /></li>
 <li>Navigate to the file using <span class="keys"><kbd class="key-control">Ctrl</kbd></span> <code>Click</code> or <span class="keys"><kbd class="key-command">Cmd</kbd></span> <code>Click</code>. Copy-and-paste the file contents into https://stately.ai/viz.</li>
 <li>Click the Visualize button on the bottom left!</li>
 </ol>
-<p>Voila! Here is an example visualization using the P Tutorial's Two Phase Commit Project.
+<p>Voila! Here is an example visualization using the P Tutorial's Two Phase Commit project.
 <img alt="Visualization" src="../../images/visualization.png" /></p>
 <div align="center">
   <h2>How to Navigate Stately's Open Source Visualization Website</h2>
@@ -611,13 +610,13 @@
 <p>Every visualization contains exactly one state machine. The name of the machine is at the top left; in this case, the machine is called <code>Coordinator</code>. All the shapes and arrows inside are part of the state machine <code>Coordinator</code>.</p>
 <p>States are represented with squares, and events are represented with ovals.The beginning state is pointed to with an arrow. In the above case, the beginning state is <code>Init</code>.</p>
 <p>The state WaitForTransaction is outlined in blue because the machine always travelled from the <code>Init</code> State to the WaitForTransaction state. The event <code>eTransReq</code> is colored in light blue because the state machine <code>Coordinator</code> is waiting for that one event to happen. Click <code>eWhileTransReq</code>, and the three other events will light up because the <code>Coordinator</code> machine is now waiting for one of the other three events to happen.</p>
-<p>This way, P users can interact with these P state machine visualizations too!</p>
+<p>This way, you can interact with these P state machine visualizations too!</p>
 <p>Stately's website contains four tabs:</p>
 <ul>
-<li><strong>Code Tab</strong>: Users use this tab to copy-and-paste code to visualize state machines.</li>
+<li><strong>Code Tab</strong>: Use this tab to copy-and-paste code to visualize state machines.</li>
 <li><strong>State Tab</strong>: This tab provides information on the state the user is currently at in the machine.</li>
-<li><strong>Events Tab</strong>: This tab logs all of the events that have occured so far among all machines.</li>
-<li><strong>Actors Tab</strong>: Users can switch between different machines' visualizations in this tab.</li>
+<li><strong>Events Tab</strong>: This tab logs all events that have occurred so far among all machines.</li>
+<li><strong>Actors Tab</strong>: Use this tab to switch to different P state machines in the visualization.</li>
 </ul>
 <div align="center">
   <h2>State Machine Visualization Tool Tutorial</h2>
