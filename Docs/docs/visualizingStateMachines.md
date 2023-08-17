@@ -46,6 +46,6 @@ Stately's website contains four tabs:
 </div>
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
-    <source src="../../videos/visualization.mov" type="video/mp4">
+    <source src="../videos/visualization.mov" type="video/mp4">
   </video>
 </figure>

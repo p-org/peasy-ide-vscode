@@ -19,6 +19,6 @@ In this panel, click the :material-play-outline: button to run test cases or jum
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
-    <source src="../../videos/test_framework.mov" type="video/mp4">
+    <source src="../videos/test_framework.mov" type="video/mp4">
   </video>
 </figure>
