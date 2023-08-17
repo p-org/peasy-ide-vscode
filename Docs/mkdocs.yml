@@ -47,9 +47,9 @@ nav:
     - Syntax Highlighting: ./features/syntax_highlighting.md
     - Compilation: 
       - Automatic Compilation:  ./features/compilation/basic.md
-      - Multiple Projects: ./features/compilation/multiple.md
       - Error Reporting: ./features/compilation/error_reporting.md
-    - Testing Framework: 
+      - Multiple Projects: ./features/compilation/multiple.md
+    - Testing Framework:
       - How to Run P Test Cases: ./features/testing.md
     - State Machine Visualizations: ./features/visualizations.md
     - Snippets: ./features/snippets.md
@@ -76,6 +76,10 @@ markdown_extensions:
   - attr_list 
   - md_in_html
   - pymdownx.keys
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
 
   - toc:
       toc_depth: 4

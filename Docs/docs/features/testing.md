@@ -10,11 +10,12 @@
   <h2>How to Run P Test Cases</h2>
 </div>
 
-Testing in P is made easy with this modification to the Peasy extension!
+Testing P programs is also super easy with Peasy!
 
-Navigate to the Testing Panel in VSCode, and users will find names of P testing folders with P test cases under them. The Testing Panel allows users to easily run test cases from anywhere in a P project directory by clicking the play button.
+Simply click the :material-play-outline: button next to a test case to run it.
 
-Users can also navigate to the testing folders by pressing the icon to the right of the play button. If an user navigates to a testing file, they can also click a green play button to run P test cases there too!
+The Testing Panel in VS Code lists all P test cases.
+In this panel, click the :material-play-outline: button to run test cases or jump to the corresponding test case in the P program by pressing the icon right next to :material-play-outline: button. 
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >

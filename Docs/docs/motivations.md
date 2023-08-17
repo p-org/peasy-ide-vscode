@@ -7,7 +7,7 @@
 </style>
 
 <div align="center">
-  <h2>The Motivation Behind the Peasy Extension</h2>
+  <h2>The Motivation Behind Peasy</h2>
 </div>
 
 Peasy brings the full power of an Intuitive Development Environment, including an editor, visualizer, checker, reviewer to P users.

@@ -9,14 +9,14 @@
 <div align="center">
   <h2>Multiple Projects: Automatic Compilation</h2>
 </div>
-When working in a P project directory with a single project, the Peasy extension handles which project is compiled for you!
+When working in a directory with a single P project, Peasy automatically identifies the P project.
 
-**But what if there are multiple projects within a single directory?**
+**But what if there are multiple P projects in the same directory?**
 
-To select another project that compiles after pressing ++f5++ and `Save`, press ++f4++. This will trigger a pop-up that shows all the available P projects available to compile in your current working directory. Simply click or select the project you wish to compile automatically, and change the selected project later as needed!
+To select another P project, press ++f4++. This will trigger a pop-up that shows all the available P projects in your current working directory. Simply click or select one of them to change the current P project!
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
-    <source src="../../../videos/compilation.mov" type="video/mp4">
+    <source src="../../../videos/mult_compilation.mov" type="video/mp4">
   </video>
 </figure>

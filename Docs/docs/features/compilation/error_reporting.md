@@ -10,9 +10,9 @@
   <h2>Error Reporting in Peasy</h2>
 </div>
 
-The Peasy extension automatically detects errors in P. There are two types of errors in P: Parse Errors and Type Errors.
+Peasy automatically detects compilation errors in your P project. There are two types of compile-time errors in P: Parse Errors and Type Errors.
 
-If compiling a P project with ++f5++ triggers errors, the user may simply open the `Problems` panel in VSCode to view all the errors within their project. Then, users can navigate to the location of the error by simply clicking the error.
+If compiling a P project with ++f5++ triggers errors, you can simply open the `Problems` panel in VS Code to view all compilation errors in the current P project. Then, you can jump to the error location by simply clicking the error.
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
