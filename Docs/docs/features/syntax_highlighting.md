@@ -9,7 +9,9 @@
 <h2>Syntax Highlighting in Peasy</h2>
 </div>
 
-Syntax highlighting in P makes developing programs in P easier, faster, and more enjoyable.
+Syntax highlighting in P makes developing P programs easier, faster, and more enjoyable.
 
-We created a Custom P theme that the P team prefers to develop in P, but feel free to change the theme to whatever you would like!
+We created a Custom P theme that we suggest, but feel free to change the theme to whatever you like!
+
+Here is a sample of syntax highlighting for the [Two Phase Commit](https://github.com/p-org/P/tree/master/Tutorial/2_TwoPhaseCommit) protocol from the P tutorial. 
 ![Syntax Highlighting](../images/syntax_highlighting.png)
