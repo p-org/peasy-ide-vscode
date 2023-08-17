@@ -1,9 +1,9 @@
 # Peasy: An Intuitive Development Environment for P
 
-This is the VSCode extension **Peasy** made by the P team for the language called P. Its features include syntax highlighting, automatic compilation and error reporting, a testing framework, snippets, state machine visualization support, and an error tracing visualization tool.
+[P](https://p-org.github.io/P/) is a state machine based programming language for formal modeling and analysis of distributed systems. Peasy is a step towards making application of formal methods in practice *easy-peasy* 😃. 
 
-Navigate to the [official Peasy webpage](https://p-org.github.io/peasy-ide-vscode/) for in-depth descriptions and tutorials of all the features and tools of the Peasy extension.
+**Peasy** is a VSCode language extension for the P language. Peasy supports syntax highlighting, compilation and error reporting, unit testing, state machine visualization, and error tracing visualization. Navigate to the [Peasy webpage](https://p-org.github.io/peasy-ide-vscode/) for in-depth description and demo videos of all these features of the Peasy extension.
 
 <p align="left">
-With ❤️ from the P Team
+With ❤️ from the P Team.
 </p>
