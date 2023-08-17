@@ -17,6 +17,6 @@ To select another P project, press ++f4++. This will trigger a pop-up that shows
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
-    <source src="../../../videos/compilation.mov" type="video/mp4">
+    <source src="../../../videos/mult_compilation.mov" type="video/mp4">
   </video>
 </figure>
