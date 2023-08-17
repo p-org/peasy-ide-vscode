@@ -15,6 +15,6 @@ Simply press ++f5++ or `Save` in VS Code and your project will automatically com
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
-    <source src="../../../videos/compilation.mov" type="video/mp4">
+    <source src="../../../videos/basic_compilation.mov" type="video/mp4">
   </video>
 </figure>
