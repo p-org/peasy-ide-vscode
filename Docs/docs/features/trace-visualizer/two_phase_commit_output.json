@@ -1,0 +1,2981 @@
+[
+  {
+    "type": "CreateMonitor",
+    "details": {
+      "log": "AtomicityInvariant was created.",
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 1
+      }
+    }
+  },
+  {
+    "type": "MonitorStateTransition",
+    "details": {
+      "log": "AtomicityInvariant enters state \u0027Init\u0027.",
+      "state": "Init",
+      "isEntry": true,
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 2
+      }
+    }
+  },
+  {
+    "type": "CreateMonitor",
+    "details": {
+      "log": "Progress was created.",
+      "monitor": "Progress",
+      "clock": {
+        "Progress": 1
+      }
+    }
+  },
+  {
+    "type": "MonitorStateTransition",
+    "details": {
+      "log": "Progress enters state \u0027Init\u0027.",
+      "state": "Init",
+      "isEntry": true,
+      "monitor": "Progress",
+      "clock": {
+        "Progress": 2
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "MultipleClientsNoFailure(2) enters state \u0027Init\u0027.",
+      "id": "MultipleClientsNoFailure(2)",
+      "state": "Init",
+      "isEntry": true,
+      "clock": {
+        "MultipleClientsNoFailure(2)": 1
+      }
+    }
+  },
+  {
+    "type": "CreateStateMachine",
+    "details": {
+      "log": "Participant(3) was created by MultipleClientsNoFailure(2).",
+      "id": "Participant(3)",
+      "creatorName": "MultipleClientsNoFailure(2)",
+      "creatorType": "MultipleClientsNoFailure",
+      "clock": {
+        "Participant(3)": 1
+      }
+    }
+  },
+  {
+    "type": "CreateStateMachine",
+    "details": {
+      "log": "Participant(4) was created by MultipleClientsNoFailure(2).",
+      "id": "Participant(4)",
+      "creatorName": "MultipleClientsNoFailure(2)",
+      "creatorType": "MultipleClientsNoFailure",
+      "clock": {
+        "Participant(4)": 1
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Participant(4) enters state \u0027Init\u0027.",
+      "id": "Participant(4)",
+      "state": "Init",
+      "isEntry": true,
+      "clock": {
+        "Participant(4)": 2
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Participant(3) enters state \u0027Init\u0027.",
+      "id": "Participant(3)",
+      "state": "Init",
+      "isEntry": true,
+      "clock": {
+        "Participant(3)": 2
+      }
+    }
+  },
+  {
+    "type": "CreateStateMachine",
+    "details": {
+      "log": "Participant(5) was created by MultipleClientsNoFailure(2).",
+      "id": "Participant(5)",
+      "creatorName": "MultipleClientsNoFailure(2)",
+      "creatorType": "MultipleClientsNoFailure",
+      "clock": {
+        "Participant(5)": 1
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "AtomicityInvariant is processing event \u0027eMonitor_AtomicityInitialize with payload (3)\u0027 in state \u0027Init\u0027.",
+      "event": "eMonitor_AtomicityInitialize",
+      "state": "Init",
+      "payload": 3,
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 3
+      }
+    }
+  },
+  {
+    "type": "MonitorStateTransition",
+    "details": {
+      "log": "AtomicityInvariant exits state \u0027Init\u0027.",
+      "state": "Init",
+      "isEntry": false,
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 4
+      }
+    }
+  },
+  {
+    "type": "MonitorStateTransition",
+    "details": {
+      "log": "AtomicityInvariant enters state \u0027WaitForEvents\u0027.",
+      "state": "WaitForEvents",
+      "isEntry": true,
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 5
+      }
+    }
+  },
+  {
+    "type": "CreateStateMachine",
+    "details": {
+      "log": "Coordinator(6) was created by MultipleClientsNoFailure(2).",
+      "id": "Coordinator(6)",
+      "creatorName": "MultipleClientsNoFailure(2)",
+      "creatorType": "MultipleClientsNoFailure",
+      "clock": {
+        "Coordinator(6)": 1
+      }
+    }
+  },
+  {
+    "type": "CreateStateMachine",
+    "details": {
+      "log": "Client(7) was created by MultipleClientsNoFailure(2).",
+      "id": "Client(7)",
+      "creatorName": "MultipleClientsNoFailure(2)",
+      "creatorType": "MultipleClientsNoFailure",
+      "clock": {
+        "Client(7)": 1
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Client(7) enters state \u0027Init\u0027.",
+      "id": "Client(7)",
+      "state": "Init",
+      "isEntry": true,
+      "clock": {
+        "Client(7)": 2
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Client(7) is transitioning from state \u0027Init\u0027 to state \u0027SendWriteTransaction\u0027.",
+      "id": "Client(7)",
+      "startState": "Init",
+      "endState": "SendWriteTransaction",
+      "clock": {
+        "Client(7)": 3
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Client(7) exits state \u0027Init\u0027.",
+      "id": "Client(7)",
+      "state": "Init",
+      "isEntry": false,
+      "clock": {
+        "Client(7)": 4
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Client(7) enters state \u0027SendWriteTransaction\u0027.",
+      "id": "Client(7)",
+      "state": "SendWriteTransaction",
+      "isEntry": true,
+      "clock": {
+        "Client(7)": 5
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "Progress is processing event \u0027eWriteTransReq with payload (\u003Cclient:Client(7), trans:\u003Ckey:\u00225\u0022, val:7, transId:102, \u003E, \u003E)\u0027 in state \u0027Init\u0027.",
+      "event": "eWriteTransReq",
+      "state": "Init",
+      "payload": {
+        "client": "Client(7)",
+        "trans": {
+          "key": "5",
+          "val": 7,
+          "transId": 102
+        }
+      },
+      "monitor": "Progress",
+      "clock": {
+        "Progress": 3
+      }
+    }
+  },
+  {
+    "type": "MonitorStateTransition",
+    "details": {
+      "log": "Progress exits state \u0027Init\u0027.",
+      "state": "Init",
+      "isEntry": false,
+      "monitor": "Progress",
+      "clock": {
+        "Progress": 4
+      }
+    }
+  },
+  {
+    "type": "MonitorStateTransition",
+    "details": {
+      "log": "Progress enters hot state \u0027WaitForResponses\u0027.",
+      "state": "WaitForResponses",
+      "isEntry": true,
+      "isInHotState": true,
+      "monitor": "Progress",
+      "clock": {
+        "Progress": 5
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Participant(5) enters state \u0027Init\u0027.",
+      "id": "Participant(5)",
+      "state": "Init",
+      "isEntry": true,
+      "clock": {
+        "Participant(5)": 2
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Client(7)\u0027 in state \u0027SendWriteTransaction\u0027 sent event \u0027eWriteTransReq with payload (\u003Cclient:Client(7), trans:\u003Ckey:\u00225\u0022, val:7, transId:102, \u003E, \u003E)\u0027 to \u0027Coordinator(6)\u0027.",
+      "event": "eWriteTransReq",
+      "state": "SendWriteTransaction",
+      "payload": {
+        "client": "Client(7)",
+        "trans": {
+          "key": "5",
+          "val": 7,
+          "transId": 102
+        }
+      },
+      "sender": "Client(7)",
+      "target": "Coordinator(6)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "CreateStateMachine",
+    "details": {
+      "log": "Client(8) was created by MultipleClientsNoFailure(2).",
+      "id": "Client(8)",
+      "creatorName": "MultipleClientsNoFailure(2)",
+      "creatorType": "MultipleClientsNoFailure",
+      "clock": {
+        "Client(8)": 1
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Coordinator(6) enters state \u0027Init\u0027.",
+      "id": "Coordinator(6)",
+      "state": "Init",
+      "isEntry": true,
+      "clock": {
+        "Coordinator(6)": 2
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Client(8) enters state \u0027Init\u0027.",
+      "id": "Client(8)",
+      "state": "Init",
+      "isEntry": true,
+      "clock": {
+        "Client(8)": 2
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Client(8) is transitioning from state \u0027Init\u0027 to state \u0027SendWriteTransaction\u0027.",
+      "id": "Client(8)",
+      "startState": "Init",
+      "endState": "SendWriteTransaction",
+      "clock": {
+        "Client(8)": 3
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Client(8) exits state \u0027Init\u0027.",
+      "id": "Client(8)",
+      "state": "Init",
+      "isEntry": false,
+      "clock": {
+        "Client(8)": 4
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Client(8) enters state \u0027SendWriteTransaction\u0027.",
+      "id": "Client(8)",
+      "state": "SendWriteTransaction",
+      "isEntry": true,
+      "clock": {
+        "Client(8)": 5
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "Progress is processing event \u0027eWriteTransReq with payload (\u003Cclient:Client(8), trans:\u003Ckey:\u00225\u0022, val:6, transId:202, \u003E, \u003E)\u0027 in state \u0027WaitForResponses\u0027.",
+      "event": "eWriteTransReq",
+      "state": "WaitForResponses",
+      "payload": {
+        "client": "Client(8)",
+        "trans": {
+          "key": "5",
+          "val": 6,
+          "transId": 202
+        }
+      },
+      "monitor": "Progress",
+      "clock": {
+        "Progress": 6
+      }
+    }
+  },
+  {
+    "type": "CreateStateMachine",
+    "details": {
+      "log": "Timer(9) was created by Coordinator(6).",
+      "id": "Timer(9)",
+      "creatorName": "Coordinator(6)",
+      "creatorType": "Coordinator",
+      "clock": {
+        "Timer(9)": 1
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Client(8)\u0027 in state \u0027SendWriteTransaction\u0027 sent event \u0027eWriteTransReq with payload (\u003Cclient:Client(8), trans:\u003Ckey:\u00225\u0022, val:6, transId:202, \u003E, \u003E)\u0027 to \u0027Coordinator(6)\u0027.",
+      "event": "eWriteTransReq",
+      "state": "SendWriteTransaction",
+      "payload": {
+        "client": "Client(8)",
+        "trans": {
+          "key": "5",
+          "val": 6,
+          "transId": 202
+        }
+      },
+      "sender": "Client(8)",
+      "target": "Coordinator(6)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) enters state \u0027Init\u0027.",
+      "id": "Timer(9)",
+      "state": "Init",
+      "isEntry": true,
+      "clock": {
+        "Timer(9)": 2
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Timer(9) is transitioning from state \u0027Init\u0027 to state \u0027WaitForTimerRequests\u0027.",
+      "id": "Timer(9)",
+      "startState": "Init",
+      "endState": "WaitForTimerRequests",
+      "clock": {
+        "Timer(9)": 3
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) exits state \u0027Init\u0027.",
+      "id": "Timer(9)",
+      "state": "Init",
+      "isEntry": false,
+      "clock": {
+        "Timer(9)": 4
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) enters state \u0027WaitForTimerRequests\u0027.",
+      "id": "Timer(9)",
+      "state": "WaitForTimerRequests",
+      "isEntry": true,
+      "clock": {
+        "Timer(9)": 5
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027Init\u0027 sent event \u0027eInformCoordinator with payload (Coordinator(6))\u0027 to \u0027Participant(3)\u0027.",
+      "event": "eInformCoordinator",
+      "state": "Init",
+      "payload": "Coordinator(6)",
+      "sender": "Coordinator(6)",
+      "target": "Participant(3)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 3
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(3)\u0027 dequeued event \u0027eInformCoordinator with payload (Coordinator(6))\u0027 in state \u0027Init\u0027.",
+      "id": "Participant(3)",
+      "event": "eInformCoordinator",
+      "state": "Init",
+      "payload": "Coordinator(6)",
+      "clock": {
+        "Participant(3)": 3,
+        "Coordinator(6)": 3
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Participant(3) is transitioning from state \u0027Init\u0027 to state \u0027WaitForRequests\u0027.",
+      "id": "Participant(3)",
+      "startState": "Init",
+      "endState": "WaitForRequests",
+      "clock": {
+        "Participant(3)": 4,
+        "Coordinator(6)": 3
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Participant(3) exits state \u0027Init\u0027.",
+      "id": "Participant(3)",
+      "state": "Init",
+      "isEntry": false,
+      "clock": {
+        "Participant(3)": 5,
+        "Coordinator(6)": 3
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Participant(3) enters state \u0027WaitForRequests\u0027.",
+      "id": "Participant(3)",
+      "state": "WaitForRequests",
+      "isEntry": true,
+      "clock": {
+        "Participant(3)": 6,
+        "Coordinator(6)": 3
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027Init\u0027 sent event \u0027eInformCoordinator with payload (Coordinator(6))\u0027 to \u0027Participant(4)\u0027.",
+      "event": "eInformCoordinator",
+      "state": "Init",
+      "payload": "Coordinator(6)",
+      "sender": "Coordinator(6)",
+      "target": "Participant(4)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 4
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027Init\u0027 sent event \u0027eInformCoordinator with payload (Coordinator(6))\u0027 to \u0027Participant(5)\u0027.",
+      "event": "eInformCoordinator",
+      "state": "Init",
+      "payload": "Coordinator(6)",
+      "sender": "Coordinator(6)",
+      "target": "Participant(5)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 5
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Coordinator(6) is transitioning from state \u0027Init\u0027 to state \u0027WaitForTransactions\u0027.",
+      "id": "Coordinator(6)",
+      "startState": "Init",
+      "endState": "WaitForTransactions",
+      "clock": {
+        "Coordinator(6)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Coordinator(6) exits state \u0027Init\u0027.",
+      "id": "Coordinator(6)",
+      "state": "Init",
+      "isEntry": false,
+      "clock": {
+        "Coordinator(6)": 7
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Coordinator(6) enters state \u0027WaitForTransactions\u0027.",
+      "id": "Coordinator(6)",
+      "state": "WaitForTransactions",
+      "isEntry": true,
+      "clock": {
+        "Coordinator(6)": 8
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(4)\u0027 dequeued event \u0027eInformCoordinator with payload (Coordinator(6))\u0027 in state \u0027Init\u0027.",
+      "id": "Participant(4)",
+      "event": "eInformCoordinator",
+      "state": "Init",
+      "payload": "Coordinator(6)",
+      "clock": {
+        "Participant(4)": 3,
+        "Coordinator(6)": 4
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Participant(4) is transitioning from state \u0027Init\u0027 to state \u0027WaitForRequests\u0027.",
+      "id": "Participant(4)",
+      "startState": "Init",
+      "endState": "WaitForRequests",
+      "clock": {
+        "Participant(4)": 4,
+        "Coordinator(6)": 4
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Participant(4) exits state \u0027Init\u0027.",
+      "id": "Participant(4)",
+      "state": "Init",
+      "isEntry": false,
+      "clock": {
+        "Participant(4)": 5,
+        "Coordinator(6)": 4
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Participant(4) enters state \u0027WaitForRequests\u0027.",
+      "id": "Participant(4)",
+      "state": "WaitForRequests",
+      "isEntry": true,
+      "clock": {
+        "Participant(4)": 6,
+        "Coordinator(6)": 4
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 dequeued event \u0027eWriteTransReq with payload (\u003Cclient:Client(7), trans:\u003Ckey:\u00225\u0022, val:7, transId:102, \u003E, \u003E)\u0027 in state \u0027WaitForTransactions\u0027.",
+      "id": "Coordinator(6)",
+      "event": "eWriteTransReq",
+      "state": "WaitForTransactions",
+      "payload": {
+        "client": "Client(7)",
+        "trans": {
+          "key": "5",
+          "val": 7,
+          "transId": 102
+        }
+      },
+      "clock": {
+        "Coordinator(6)": 9,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(5)\u0027 dequeued event \u0027eInformCoordinator with payload (Coordinator(6))\u0027 in state \u0027Init\u0027.",
+      "id": "Participant(5)",
+      "event": "eInformCoordinator",
+      "state": "Init",
+      "payload": "Coordinator(6)",
+      "clock": {
+        "Participant(5)": 3,
+        "Coordinator(6)": 5
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Participant(5) is transitioning from state \u0027Init\u0027 to state \u0027WaitForRequests\u0027.",
+      "id": "Participant(5)",
+      "startState": "Init",
+      "endState": "WaitForRequests",
+      "clock": {
+        "Participant(5)": 4,
+        "Coordinator(6)": 5
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Participant(5) exits state \u0027Init\u0027.",
+      "id": "Participant(5)",
+      "state": "Init",
+      "isEntry": false,
+      "clock": {
+        "Participant(5)": 5,
+        "Coordinator(6)": 5
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Participant(5) enters state \u0027WaitForRequests\u0027.",
+      "id": "Participant(5)",
+      "state": "WaitForRequests",
+      "isEntry": true,
+      "clock": {
+        "Participant(5)": 6,
+        "Coordinator(6)": 5
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForTransactions\u0027 sent event \u0027ePrepareReq with payload (\u003Ckey:\u00225\u0022, val:7, transId:102, \u003E)\u0027 to \u0027Participant(3)\u0027.",
+      "event": "ePrepareReq",
+      "state": "WaitForTransactions",
+      "payload": {
+        "key": "5",
+        "val": 7,
+        "transId": 102
+      },
+      "sender": "Coordinator(6)",
+      "target": "Participant(3)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 10,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForTransactions\u0027 sent event \u0027ePrepareReq with payload (\u003Ckey:\u00225\u0022, val:7, transId:102, \u003E)\u0027 to \u0027Participant(4)\u0027.",
+      "event": "ePrepareReq",
+      "state": "WaitForTransactions",
+      "payload": {
+        "key": "5",
+        "val": 7,
+        "transId": 102
+      },
+      "sender": "Coordinator(6)",
+      "target": "Participant(4)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 11,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForTransactions\u0027 sent event \u0027ePrepareReq with payload (\u003Ckey:\u00225\u0022, val:7, transId:102, \u003E)\u0027 to \u0027Participant(5)\u0027.",
+      "event": "ePrepareReq",
+      "state": "WaitForTransactions",
+      "payload": {
+        "key": "5",
+        "val": 7,
+        "transId": 102
+      },
+      "sender": "Coordinator(6)",
+      "target": "Participant(5)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 12,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(4)\u0027 dequeued event \u0027ePrepareReq with payload (\u003Ckey:\u00225\u0022, val:7, transId:102, \u003E)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(4)",
+      "event": "ePrepareReq",
+      "state": "WaitForRequests",
+      "payload": {
+        "key": "5",
+        "val": 7,
+        "transId": 102
+      },
+      "clock": {
+        "Participant(4)": 7,
+        "Coordinator(6)": 11,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "AtomicityInvariant is processing event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(4), transId:102, status:0, \u003E)\u0027 in state \u0027WaitForEvents\u0027.",
+      "event": "ePrepareResp",
+      "state": "WaitForEvents",
+      "payload": {
+        "participant": "Participant(4)",
+        "transId": 102,
+        "status": 0
+      },
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(3)\u0027 dequeued event \u0027ePrepareReq with payload (\u003Ckey:\u00225\u0022, val:7, transId:102, \u003E)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(3)",
+      "event": "ePrepareReq",
+      "state": "WaitForRequests",
+      "payload": {
+        "key": "5",
+        "val": 7,
+        "transId": 102
+      },
+      "clock": {
+        "Participant(3)": 7,
+        "Coordinator(6)": 10,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "AtomicityInvariant is processing event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(3), transId:102, status:0, \u003E)\u0027 in state \u0027WaitForEvents\u0027.",
+      "event": "ePrepareResp",
+      "state": "WaitForEvents",
+      "payload": {
+        "participant": "Participant(3)",
+        "transId": 102,
+        "status": 0
+      },
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 7
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(5)\u0027 dequeued event \u0027ePrepareReq with payload (\u003Ckey:\u00225\u0022, val:7, transId:102, \u003E)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(5)",
+      "event": "ePrepareReq",
+      "state": "WaitForRequests",
+      "payload": {
+        "key": "5",
+        "val": 7,
+        "transId": 102
+      },
+      "clock": {
+        "Participant(5)": 7,
+        "Coordinator(6)": 12,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "AtomicityInvariant is processing event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(5), transId:102, status:0, \u003E)\u0027 in state \u0027WaitForEvents\u0027.",
+      "event": "ePrepareResp",
+      "state": "WaitForEvents",
+      "payload": {
+        "participant": "Participant(5)",
+        "transId": 102,
+        "status": 0
+      },
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 8
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Participant(4)\u0027 in state \u0027WaitForRequests\u0027 sent event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(4), transId:102, status:0, \u003E)\u0027 to \u0027Coordinator(6)\u0027.",
+      "event": "ePrepareResp",
+      "state": "WaitForRequests",
+      "payload": {
+        "participant": "Participant(4)",
+        "transId": 102,
+        "status": 0
+      },
+      "sender": "Participant(4)",
+      "target": "Coordinator(6)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Participant(4)": 8,
+        "Coordinator(6)": 11,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForTransactions\u0027 sent event \u0027eStartTimer\u0027 to \u0027Timer(9)\u0027.",
+      "event": "eStartTimer",
+      "state": "WaitForTransactions",
+      "sender": "Coordinator(6)",
+      "target": "Timer(9)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 13,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Coordinator(6) is transitioning from state \u0027WaitForTransactions\u0027 to state \u0027WaitForPrepareResponses\u0027.",
+      "id": "Coordinator(6)",
+      "startState": "WaitForTransactions",
+      "endState": "WaitForPrepareResponses",
+      "clock": {
+        "Coordinator(6)": 14,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Coordinator(6) exits state \u0027WaitForTransactions\u0027.",
+      "id": "Coordinator(6)",
+      "state": "WaitForTransactions",
+      "isEntry": false,
+      "clock": {
+        "Coordinator(6)": 15,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Coordinator(6) enters state \u0027WaitForPrepareResponses\u0027.",
+      "id": "Coordinator(6)",
+      "state": "WaitForPrepareResponses",
+      "isEntry": true,
+      "clock": {
+        "Coordinator(6)": 16,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Timer(9)\u0027 dequeued event \u0027eStartTimer\u0027 in state \u0027WaitForTimerRequests\u0027.",
+      "id": "Timer(9)",
+      "event": "eStartTimer",
+      "state": "WaitForTimerRequests",
+      "clock": {
+        "Timer(9)": 6,
+        "Coordinator(6)": 13,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Timer(9) is transitioning from state \u0027WaitForTimerRequests\u0027 to state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "startState": "WaitForTimerRequests",
+      "endState": "TimerStarted",
+      "clock": {
+        "Timer(9)": 7,
+        "Coordinator(6)": 13,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) exits state \u0027WaitForTimerRequests\u0027.",
+      "id": "Timer(9)",
+      "state": "WaitForTimerRequests",
+      "isEntry": false,
+      "clock": {
+        "Timer(9)": 8,
+        "Coordinator(6)": 13,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) enters state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "state": "TimerStarted",
+      "isEntry": true,
+      "clock": {
+        "Timer(9)": 9,
+        "Coordinator(6)": 13,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Participant(5)\u0027 in state \u0027WaitForRequests\u0027 sent event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(5), transId:102, status:0, \u003E)\u0027 to \u0027Coordinator(6)\u0027.",
+      "event": "ePrepareResp",
+      "state": "WaitForRequests",
+      "payload": {
+        "participant": "Participant(5)",
+        "transId": 102,
+        "status": 0
+      },
+      "sender": "Participant(5)",
+      "target": "Coordinator(6)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Participant(5)": 8,
+        "Coordinator(6)": 12,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 dequeued event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(4), transId:102, status:0, \u003E)\u0027 in state \u0027WaitForPrepareResponses\u0027.",
+      "id": "Coordinator(6)",
+      "event": "ePrepareResp",
+      "state": "WaitForPrepareResponses",
+      "payload": {
+        "participant": "Participant(4)",
+        "transId": 102,
+        "status": 0
+      },
+      "clock": {
+        "Coordinator(6)": 17,
+        "Client(7)": 6,
+        "Participant(4)": 8
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Participant(3)\u0027 in state \u0027WaitForRequests\u0027 sent event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(3), transId:102, status:0, \u003E)\u0027 to \u0027Coordinator(6)\u0027.",
+      "event": "ePrepareResp",
+      "state": "WaitForRequests",
+      "payload": {
+        "participant": "Participant(3)",
+        "transId": 102,
+        "status": 0
+      },
+      "sender": "Participant(3)",
+      "target": "Coordinator(6)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Participant(3)": 8,
+        "Coordinator(6)": 10,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Timer(9)\u0027 in state \u0027TimerStarted\u0027 sent event \u0027eDelayedTimeOut\u0027 to \u0027Timer(9)\u0027.",
+      "event": "eDelayedTimeOut",
+      "state": "TimerStarted",
+      "sender": "Timer(9)",
+      "target": "Timer(9)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Timer(9)": 10,
+        "Coordinator(6)": 13,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 dequeued event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(5), transId:102, status:0, \u003E)\u0027 in state \u0027WaitForPrepareResponses\u0027.",
+      "id": "Coordinator(6)",
+      "event": "ePrepareResp",
+      "state": "WaitForPrepareResponses",
+      "payload": {
+        "participant": "Participant(5)",
+        "transId": 102,
+        "status": 0
+      },
+      "clock": {
+        "Coordinator(6)": 18,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 dequeued event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(3), transId:102, status:0, \u003E)\u0027 in state \u0027WaitForPrepareResponses\u0027.",
+      "id": "Coordinator(6)",
+      "event": "ePrepareResp",
+      "state": "WaitForPrepareResponses",
+      "payload": {
+        "participant": "Participant(3)",
+        "transId": 102,
+        "status": 0
+      },
+      "clock": {
+        "Coordinator(6)": 19,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForPrepareResponses\u0027 sent event \u0027eCommitTrans with payload (102)\u0027 to \u0027Participant(3)\u0027.",
+      "event": "eCommitTrans",
+      "state": "WaitForPrepareResponses",
+      "payload": 102,
+      "sender": "Coordinator(6)",
+      "target": "Participant(3)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 20,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(3)\u0027 dequeued event \u0027eCommitTrans with payload (102)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(3)",
+      "event": "eCommitTrans",
+      "state": "WaitForRequests",
+      "payload": 102,
+      "clock": {
+        "Participant(3)": 9,
+        "Coordinator(6)": 20,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForPrepareResponses\u0027 sent event \u0027eCommitTrans with payload (102)\u0027 to \u0027Participant(4)\u0027.",
+      "event": "eCommitTrans",
+      "state": "WaitForPrepareResponses",
+      "payload": 102,
+      "sender": "Coordinator(6)",
+      "target": "Participant(4)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 21,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForPrepareResponses\u0027 sent event \u0027eCommitTrans with payload (102)\u0027 to \u0027Participant(5)\u0027.",
+      "event": "eCommitTrans",
+      "state": "WaitForPrepareResponses",
+      "payload": 102,
+      "sender": "Coordinator(6)",
+      "target": "Participant(5)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 22,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "AtomicityInvariant is processing event \u0027eWriteTransResp with payload (\u003CtransId:102, status:0, \u003E)\u0027 in state \u0027WaitForEvents\u0027.",
+      "event": "eWriteTransResp",
+      "state": "WaitForEvents",
+      "payload": {
+        "transId": 102,
+        "status": 0
+      },
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 9
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "Progress is processing event \u0027eWriteTransResp with payload (\u003CtransId:102, status:0, \u003E)\u0027 in state \u0027WaitForResponses\u0027.",
+      "event": "eWriteTransResp",
+      "state": "WaitForResponses",
+      "payload": {
+        "transId": 102,
+        "status": 0
+      },
+      "monitor": "Progress",
+      "clock": {
+        "Progress": 7
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(5)\u0027 dequeued event \u0027eCommitTrans with payload (102)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(5)",
+      "event": "eCommitTrans",
+      "state": "WaitForRequests",
+      "payload": 102,
+      "clock": {
+        "Participant(5)": 9,
+        "Coordinator(6)": 22,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Timer(9)\u0027 dequeued event \u0027eDelayedTimeOut\u0027 in state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "event": "eDelayedTimeOut",
+      "state": "TimerStarted",
+      "clock": {
+        "Timer(9)": 11,
+        "Coordinator(6)": 13,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Timer(9) is transitioning from state \u0027TimerStarted\u0027 to state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "startState": "TimerStarted",
+      "endState": "TimerStarted",
+      "clock": {
+        "Timer(9)": 12,
+        "Coordinator(6)": 13,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) exits state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "state": "TimerStarted",
+      "isEntry": false,
+      "clock": {
+        "Timer(9)": 13,
+        "Coordinator(6)": 13,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) enters state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "state": "TimerStarted",
+      "isEntry": true,
+      "clock": {
+        "Timer(9)": 14,
+        "Coordinator(6)": 13,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForPrepareResponses\u0027 sent event \u0027eWriteTransResp with payload (\u003CtransId:102, status:0, \u003E)\u0027 to \u0027Client(7)\u0027.",
+      "event": "eWriteTransResp",
+      "state": "WaitForPrepareResponses",
+      "payload": {
+        "transId": 102,
+        "status": 0
+      },
+      "sender": "Coordinator(6)",
+      "target": "Client(7)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 23,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForPrepareResponses\u0027 sent event \u0027eCancelTimer\u0027 to \u0027Timer(9)\u0027.",
+      "event": "eCancelTimer",
+      "state": "WaitForPrepareResponses",
+      "sender": "Coordinator(6)",
+      "target": "Timer(9)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 24,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Coordinator(6) is transitioning from state \u0027WaitForPrepareResponses\u0027 to state \u0027WaitForTransactions\u0027.",
+      "id": "Coordinator(6)",
+      "startState": "WaitForPrepareResponses",
+      "endState": "WaitForTransactions",
+      "clock": {
+        "Coordinator(6)": 25,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Coordinator(6) exits state \u0027WaitForPrepareResponses\u0027.",
+      "id": "Coordinator(6)",
+      "state": "WaitForPrepareResponses",
+      "isEntry": false,
+      "clock": {
+        "Coordinator(6)": 26,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Coordinator(6) enters state \u0027WaitForTransactions\u0027.",
+      "id": "Coordinator(6)",
+      "state": "WaitForTransactions",
+      "isEntry": true,
+      "clock": {
+        "Coordinator(6)": 27,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(4)\u0027 dequeued event \u0027eCommitTrans with payload (102)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(4)",
+      "event": "eCommitTrans",
+      "state": "WaitForRequests",
+      "payload": 102,
+      "clock": {
+        "Participant(4)": 9,
+        "Coordinator(6)": 21,
+        "Client(7)": 6,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 dequeued event \u0027eWriteTransReq with payload (\u003Cclient:Client(8), trans:\u003Ckey:\u00225\u0022, val:6, transId:202, \u003E, \u003E)\u0027 in state \u0027WaitForTransactions\u0027.",
+      "id": "Coordinator(6)",
+      "event": "eWriteTransReq",
+      "state": "WaitForTransactions",
+      "payload": {
+        "client": "Client(8)",
+        "trans": {
+          "key": "5",
+          "val": 6,
+          "transId": 202
+        }
+      },
+      "clock": {
+        "Coordinator(6)": 28,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Timer(9)\u0027 in state \u0027TimerStarted\u0027 sent event \u0027eDelayedTimeOut\u0027 to \u0027Timer(9)\u0027.",
+      "event": "eDelayedTimeOut",
+      "state": "TimerStarted",
+      "sender": "Timer(9)",
+      "target": "Timer(9)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Timer(9)": 15,
+        "Coordinator(6)": 13,
+        "Client(7)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForTransactions\u0027 sent event \u0027ePrepareReq with payload (\u003Ckey:\u00225\u0022, val:6, transId:202, \u003E)\u0027 to \u0027Participant(3)\u0027.",
+      "event": "ePrepareReq",
+      "state": "WaitForTransactions",
+      "payload": {
+        "key": "5",
+        "val": 6,
+        "transId": 202
+      },
+      "sender": "Coordinator(6)",
+      "target": "Participant(3)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 29,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForTransactions\u0027 sent event \u0027ePrepareReq with payload (\u003Ckey:\u00225\u0022, val:6, transId:202, \u003E)\u0027 to \u0027Participant(4)\u0027.",
+      "event": "ePrepareReq",
+      "state": "WaitForTransactions",
+      "payload": {
+        "key": "5",
+        "val": 6,
+        "transId": 202
+      },
+      "sender": "Coordinator(6)",
+      "target": "Participant(4)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 30,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(3)\u0027 dequeued event \u0027ePrepareReq with payload (\u003Ckey:\u00225\u0022, val:6, transId:202, \u003E)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(3)",
+      "event": "ePrepareReq",
+      "state": "WaitForRequests",
+      "payload": {
+        "key": "5",
+        "val": 6,
+        "transId": 202
+      },
+      "clock": {
+        "Participant(3)": 10,
+        "Coordinator(6)": 29,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "AtomicityInvariant is processing event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(3), transId:202, status:0, \u003E)\u0027 in state \u0027WaitForEvents\u0027.",
+      "event": "ePrepareResp",
+      "state": "WaitForEvents",
+      "payload": {
+        "participant": "Participant(3)",
+        "transId": 202,
+        "status": 0
+      },
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 10
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Timer(9)\u0027 dequeued event \u0027eCancelTimer\u0027 in state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "event": "eCancelTimer",
+      "state": "TimerStarted",
+      "clock": {
+        "Timer(9)": 16,
+        "Coordinator(6)": 24,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Timer(9) is transitioning from state \u0027TimerStarted\u0027 to state \u0027WaitForTimerRequests\u0027.",
+      "id": "Timer(9)",
+      "startState": "TimerStarted",
+      "endState": "WaitForTimerRequests",
+      "clock": {
+        "Timer(9)": 17,
+        "Coordinator(6)": 24,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) exits state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "state": "TimerStarted",
+      "isEntry": false,
+      "clock": {
+        "Timer(9)": 18,
+        "Coordinator(6)": 24,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) enters state \u0027WaitForTimerRequests\u0027.",
+      "id": "Timer(9)",
+      "state": "WaitForTimerRequests",
+      "isEntry": true,
+      "clock": {
+        "Timer(9)": 19,
+        "Coordinator(6)": 24,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Participant(3)\u0027 in state \u0027WaitForRequests\u0027 sent event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(3), transId:202, status:0, \u003E)\u0027 to \u0027Coordinator(6)\u0027.",
+      "event": "ePrepareResp",
+      "state": "WaitForRequests",
+      "payload": {
+        "participant": "Participant(3)",
+        "transId": 202,
+        "status": 0
+      },
+      "sender": "Participant(3)",
+      "target": "Coordinator(6)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Participant(3)": 11,
+        "Coordinator(6)": 29,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForTransactions\u0027 sent event \u0027ePrepareReq with payload (\u003Ckey:\u00225\u0022, val:6, transId:202, \u003E)\u0027 to \u0027Participant(5)\u0027.",
+      "event": "ePrepareReq",
+      "state": "WaitForTransactions",
+      "payload": {
+        "key": "5",
+        "val": 6,
+        "transId": 202
+      },
+      "sender": "Coordinator(6)",
+      "target": "Participant(5)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 31,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Client(7)\u0027 dequeued event \u0027eWriteTransResp with payload (\u003CtransId:102, status:0, \u003E)\u0027 in state \u0027SendWriteTransaction\u0027.",
+      "id": "Client(7)",
+      "event": "eWriteTransResp",
+      "state": "SendWriteTransaction",
+      "payload": {
+        "transId": 102,
+        "status": 0
+      },
+      "clock": {
+        "Client(7)": 7,
+        "Coordinator(6)": 23,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Client(7) is transitioning from state \u0027SendWriteTransaction\u0027 to state \u0027ConfirmTransaction\u0027.",
+      "id": "Client(7)",
+      "startState": "SendWriteTransaction",
+      "endState": "ConfirmTransaction",
+      "clock": {
+        "Client(7)": 8,
+        "Coordinator(6)": 23,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Client(7) exits state \u0027SendWriteTransaction\u0027.",
+      "id": "Client(7)",
+      "state": "SendWriteTransaction",
+      "isEntry": false,
+      "clock": {
+        "Client(7)": 9,
+        "Coordinator(6)": 23,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Client(7) enters state \u0027ConfirmTransaction\u0027.",
+      "id": "Client(7)",
+      "state": "ConfirmTransaction",
+      "isEntry": true,
+      "clock": {
+        "Client(7)": 10,
+        "Coordinator(6)": 23,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(4)\u0027 dequeued event \u0027ePrepareReq with payload (\u003Ckey:\u00225\u0022, val:6, transId:202, \u003E)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(4)",
+      "event": "ePrepareReq",
+      "state": "WaitForRequests",
+      "payload": {
+        "key": "5",
+        "val": 6,
+        "transId": 202
+      },
+      "clock": {
+        "Participant(4)": 10,
+        "Coordinator(6)": 30,
+        "Client(7)": 6,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "AtomicityInvariant is processing event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(4), transId:202, status:0, \u003E)\u0027 in state \u0027WaitForEvents\u0027.",
+      "event": "ePrepareResp",
+      "state": "WaitForEvents",
+      "payload": {
+        "participant": "Participant(4)",
+        "transId": 202,
+        "status": 0
+      },
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 11
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForTransactions\u0027 sent event \u0027eStartTimer\u0027 to \u0027Timer(9)\u0027.",
+      "event": "eStartTimer",
+      "state": "WaitForTransactions",
+      "sender": "Coordinator(6)",
+      "target": "Timer(9)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 32,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Coordinator(6) is transitioning from state \u0027WaitForTransactions\u0027 to state \u0027WaitForPrepareResponses\u0027.",
+      "id": "Coordinator(6)",
+      "startState": "WaitForTransactions",
+      "endState": "WaitForPrepareResponses",
+      "clock": {
+        "Coordinator(6)": 33,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Coordinator(6) exits state \u0027WaitForTransactions\u0027.",
+      "id": "Coordinator(6)",
+      "state": "WaitForTransactions",
+      "isEntry": false,
+      "clock": {
+        "Coordinator(6)": 34,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Coordinator(6) enters state \u0027WaitForPrepareResponses\u0027.",
+      "id": "Coordinator(6)",
+      "state": "WaitForPrepareResponses",
+      "isEntry": true,
+      "clock": {
+        "Coordinator(6)": 35,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(5)\u0027 dequeued event \u0027ePrepareReq with payload (\u003Ckey:\u00225\u0022, val:6, transId:202, \u003E)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(5)",
+      "event": "ePrepareReq",
+      "state": "WaitForRequests",
+      "payload": {
+        "key": "5",
+        "val": 6,
+        "transId": 202
+      },
+      "clock": {
+        "Participant(5)": 10,
+        "Coordinator(6)": 31,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "AtomicityInvariant is processing event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(5), transId:202, status:0, \u003E)\u0027 in state \u0027WaitForEvents\u0027.",
+      "event": "ePrepareResp",
+      "state": "WaitForEvents",
+      "payload": {
+        "participant": "Participant(5)",
+        "transId": 202,
+        "status": 0
+      },
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 12
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Participant(4)\u0027 in state \u0027WaitForRequests\u0027 sent event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(4), transId:202, status:0, \u003E)\u0027 to \u0027Coordinator(6)\u0027.",
+      "event": "ePrepareResp",
+      "state": "WaitForRequests",
+      "payload": {
+        "participant": "Participant(4)",
+        "transId": 202,
+        "status": 0
+      },
+      "sender": "Participant(4)",
+      "target": "Coordinator(6)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Participant(4)": 11,
+        "Coordinator(6)": 30,
+        "Client(7)": 6,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Participant(5)\u0027 in state \u0027WaitForRequests\u0027 sent event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(5), transId:202, status:0, \u003E)\u0027 to \u0027Coordinator(6)\u0027.",
+      "event": "ePrepareResp",
+      "state": "WaitForRequests",
+      "payload": {
+        "participant": "Participant(5)",
+        "transId": 202,
+        "status": 0
+      },
+      "sender": "Participant(5)",
+      "target": "Coordinator(6)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Participant(5)": 11,
+        "Coordinator(6)": 31,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Timer(9)\u0027 dequeued event \u0027eStartTimer\u0027 in state \u0027WaitForTimerRequests\u0027.",
+      "id": "Timer(9)",
+      "event": "eStartTimer",
+      "state": "WaitForTimerRequests",
+      "clock": {
+        "Timer(9)": 20,
+        "Coordinator(6)": 32,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Timer(9) is transitioning from state \u0027WaitForTimerRequests\u0027 to state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "startState": "WaitForTimerRequests",
+      "endState": "TimerStarted",
+      "clock": {
+        "Timer(9)": 21,
+        "Coordinator(6)": 32,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) exits state \u0027WaitForTimerRequests\u0027.",
+      "id": "Timer(9)",
+      "state": "WaitForTimerRequests",
+      "isEntry": false,
+      "clock": {
+        "Timer(9)": 22,
+        "Coordinator(6)": 32,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) enters state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "state": "TimerStarted",
+      "isEntry": true,
+      "clock": {
+        "Timer(9)": 23,
+        "Coordinator(6)": 32,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Timer(9)\u0027 in state \u0027TimerStarted\u0027 sent event \u0027eDelayedTimeOut\u0027 to \u0027Timer(9)\u0027.",
+      "event": "eDelayedTimeOut",
+      "state": "TimerStarted",
+      "sender": "Timer(9)",
+      "target": "Timer(9)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Timer(9)": 24,
+        "Coordinator(6)": 32,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Client(7)\u0027 in state \u0027ConfirmTransaction\u0027 sent event \u0027eReadTransReq with payload (\u003Cclient:Client(7), key:\u00225\u0022, \u003E)\u0027 to \u0027Coordinator(6)\u0027.",
+      "event": "eReadTransReq",
+      "state": "ConfirmTransaction",
+      "payload": {
+        "client": "Client(7)",
+        "key": "5"
+      },
+      "sender": "Client(7)",
+      "target": "Coordinator(6)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Client(7)": 11,
+        "Coordinator(6)": 23,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "WaitMultipleEvents",
+    "details": {
+      "log": "Client(7) is waiting to dequeue an event of type \u0027eReadTransResp\u0027 or \u0027PHalt\u0027 in state \u0027ConfirmTransaction\u0027.",
+      "id": "Client(7)",
+      "eventTypes": [
+        "eReadTransResp",
+        "PHalt"
+      ],
+      "clock": {
+        "Client(7)": 12,
+        "Coordinator(6)": 23,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 dequeued event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(3), transId:202, status:0, \u003E)\u0027 in state \u0027WaitForPrepareResponses\u0027.",
+      "id": "Coordinator(6)",
+      "event": "ePrepareResp",
+      "state": "WaitForPrepareResponses",
+      "payload": {
+        "participant": "Participant(3)",
+        "transId": 202,
+        "status": 0
+      },
+      "clock": {
+        "Coordinator(6)": 36,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 dequeued event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(4), transId:202, status:0, \u003E)\u0027 in state \u0027WaitForPrepareResponses\u0027.",
+      "id": "Coordinator(6)",
+      "event": "ePrepareResp",
+      "state": "WaitForPrepareResponses",
+      "payload": {
+        "participant": "Participant(4)",
+        "transId": 202,
+        "status": 0
+      },
+      "clock": {
+        "Coordinator(6)": 37,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 8,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 dequeued event \u0027ePrepareResp with payload (\u003Cparticipant:Participant(5), transId:202, status:0, \u003E)\u0027 in state \u0027WaitForPrepareResponses\u0027.",
+      "id": "Coordinator(6)",
+      "event": "ePrepareResp",
+      "state": "WaitForPrepareResponses",
+      "payload": {
+        "participant": "Participant(5)",
+        "transId": 202,
+        "status": 0
+      },
+      "clock": {
+        "Coordinator(6)": 38,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForPrepareResponses\u0027 sent event \u0027eCommitTrans with payload (202)\u0027 to \u0027Participant(3)\u0027.",
+      "event": "eCommitTrans",
+      "state": "WaitForPrepareResponses",
+      "payload": 202,
+      "sender": "Coordinator(6)",
+      "target": "Participant(3)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 39,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForPrepareResponses\u0027 sent event \u0027eCommitTrans with payload (202)\u0027 to \u0027Participant(4)\u0027.",
+      "event": "eCommitTrans",
+      "state": "WaitForPrepareResponses",
+      "payload": 202,
+      "sender": "Coordinator(6)",
+      "target": "Participant(4)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 40,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(3)\u0027 dequeued event \u0027eCommitTrans with payload (202)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(3)",
+      "event": "eCommitTrans",
+      "state": "WaitForRequests",
+      "payload": 202,
+      "clock": {
+        "Participant(3)": 12,
+        "Coordinator(6)": 39,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForPrepareResponses\u0027 sent event \u0027eCommitTrans with payload (202)\u0027 to \u0027Participant(5)\u0027.",
+      "event": "eCommitTrans",
+      "state": "WaitForPrepareResponses",
+      "payload": 202,
+      "sender": "Coordinator(6)",
+      "target": "Participant(5)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 41,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "AtomicityInvariant is processing event \u0027eWriteTransResp with payload (\u003CtransId:202, status:0, \u003E)\u0027 in state \u0027WaitForEvents\u0027.",
+      "event": "eWriteTransResp",
+      "state": "WaitForEvents",
+      "payload": {
+        "transId": 202,
+        "status": 0
+      },
+      "monitor": "AtomicityInvariant",
+      "clock": {
+        "AtomicityInvariant": 13
+      }
+    }
+  },
+  {
+    "type": "MonitorProcessEvent",
+    "details": {
+      "log": "Progress is processing event \u0027eWriteTransResp with payload (\u003CtransId:202, status:0, \u003E)\u0027 in state \u0027WaitForResponses\u0027.",
+      "event": "eWriteTransResp",
+      "state": "WaitForResponses",
+      "payload": {
+        "transId": 202,
+        "status": 0
+      },
+      "monitor": "Progress",
+      "clock": {
+        "Progress": 8
+      }
+    }
+  },
+  {
+    "type": "MonitorRaiseEvent",
+    "details": {
+      "log": "Monitor \u0027Progress\u0027 raised event \u0027GotoStateEvent\u0027 in state \u0027WaitForResponses\u0027.",
+      "event": "GotoStateEvent",
+      "state": "WaitForResponses",
+      "monitor": "Progress",
+      "clock": {
+        "Progress": 9
+      }
+    }
+  },
+  {
+    "type": "MonitorStateTransition",
+    "details": {
+      "log": "Progress exits hot state \u0027WaitForResponses\u0027.",
+      "state": "WaitForResponses",
+      "isEntry": false,
+      "isInHotState": true,
+      "monitor": "Progress",
+      "clock": {
+        "Progress": 10
+      }
+    }
+  },
+  {
+    "type": "MonitorStateTransition",
+    "details": {
+      "log": "Progress enters cold state \u0027AllTransactionsFinished\u0027.",
+      "state": "AllTransactionsFinished",
+      "isEntry": true,
+      "isInHotState": false,
+      "monitor": "Progress",
+      "clock": {
+        "Progress": 11
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForPrepareResponses\u0027 sent event \u0027eWriteTransResp with payload (\u003CtransId:202, status:0, \u003E)\u0027 to \u0027Client(8)\u0027.",
+      "event": "eWriteTransResp",
+      "state": "WaitForPrepareResponses",
+      "payload": {
+        "transId": 202,
+        "status": 0
+      },
+      "sender": "Coordinator(6)",
+      "target": "Client(8)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 42,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Client(8)\u0027 dequeued event \u0027eWriteTransResp with payload (\u003CtransId:202, status:0, \u003E)\u0027 in state \u0027SendWriteTransaction\u0027.",
+      "id": "Client(8)",
+      "event": "eWriteTransResp",
+      "state": "SendWriteTransaction",
+      "payload": {
+        "transId": 202,
+        "status": 0
+      },
+      "clock": {
+        "Client(8)": 7,
+        "Coordinator(6)": 42,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Client(8) is transitioning from state \u0027SendWriteTransaction\u0027 to state \u0027ConfirmTransaction\u0027.",
+      "id": "Client(8)",
+      "startState": "SendWriteTransaction",
+      "endState": "ConfirmTransaction",
+      "clock": {
+        "Client(8)": 8,
+        "Coordinator(6)": 42,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Client(8) exits state \u0027SendWriteTransaction\u0027.",
+      "id": "Client(8)",
+      "state": "SendWriteTransaction",
+      "isEntry": false,
+      "clock": {
+        "Client(8)": 9,
+        "Coordinator(6)": 42,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Client(8) enters state \u0027ConfirmTransaction\u0027.",
+      "id": "Client(8)",
+      "state": "ConfirmTransaction",
+      "isEntry": true,
+      "clock": {
+        "Client(8)": 10,
+        "Coordinator(6)": 42,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(5)\u0027 dequeued event \u0027eCommitTrans with payload (202)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(5)",
+      "event": "eCommitTrans",
+      "state": "WaitForRequests",
+      "payload": 202,
+      "clock": {
+        "Participant(5)": 12,
+        "Coordinator(6)": 41,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Client(8)\u0027 in state \u0027ConfirmTransaction\u0027 sent event \u0027eReadTransReq with payload (\u003Cclient:Client(8), key:\u00225\u0022, \u003E)\u0027 to \u0027Coordinator(6)\u0027.",
+      "event": "eReadTransReq",
+      "state": "ConfirmTransaction",
+      "payload": {
+        "client": "Client(8)",
+        "key": "5"
+      },
+      "sender": "Client(8)",
+      "target": "Coordinator(6)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Client(8)": 11,
+        "Coordinator(6)": 42,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11
+      }
+    }
+  },
+  {
+    "type": "WaitMultipleEvents",
+    "details": {
+      "log": "Client(8) is waiting to dequeue an event of type \u0027eReadTransResp\u0027 or \u0027PHalt\u0027 in state \u0027ConfirmTransaction\u0027.",
+      "id": "Client(8)",
+      "eventTypes": [
+        "eReadTransResp",
+        "PHalt"
+      ],
+      "clock": {
+        "Client(8)": 12,
+        "Coordinator(6)": 42,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForPrepareResponses\u0027 sent event \u0027eCancelTimer\u0027 to \u0027Timer(9)\u0027.",
+      "event": "eCancelTimer",
+      "state": "WaitForPrepareResponses",
+      "sender": "Coordinator(6)",
+      "target": "Timer(9)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 43,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Coordinator(6) is transitioning from state \u0027WaitForPrepareResponses\u0027 to state \u0027WaitForTransactions\u0027.",
+      "id": "Coordinator(6)",
+      "startState": "WaitForPrepareResponses",
+      "endState": "WaitForTransactions",
+      "clock": {
+        "Coordinator(6)": 44,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Coordinator(6) exits state \u0027WaitForPrepareResponses\u0027.",
+      "id": "Coordinator(6)",
+      "state": "WaitForPrepareResponses",
+      "isEntry": false,
+      "clock": {
+        "Coordinator(6)": 45,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Coordinator(6) enters state \u0027WaitForTransactions\u0027.",
+      "id": "Coordinator(6)",
+      "state": "WaitForTransactions",
+      "isEntry": true,
+      "clock": {
+        "Coordinator(6)": 46,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(4)\u0027 dequeued event \u0027eCommitTrans with payload (202)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(4)",
+      "event": "eCommitTrans",
+      "state": "WaitForRequests",
+      "payload": 202,
+      "clock": {
+        "Participant(4)": 12,
+        "Coordinator(6)": 40,
+        "Client(7)": 6,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 dequeued event \u0027eReadTransReq with payload (\u003Cclient:Client(7), key:\u00225\u0022, \u003E)\u0027 in state \u0027WaitForTransactions\u0027.",
+      "id": "Coordinator(6)",
+      "event": "eReadTransReq",
+      "state": "WaitForTransactions",
+      "payload": {
+        "client": "Client(7)",
+        "key": "5"
+      },
+      "clock": {
+        "Coordinator(6)": 47,
+        "Client(7)": 11,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForTransactions\u0027 sent event \u0027eReadTransReq with payload (\u003Cclient:Client(7), key:\u00225\u0022, \u003E)\u0027 to \u0027Participant(3)\u0027.",
+      "event": "eReadTransReq",
+      "state": "WaitForTransactions",
+      "payload": {
+        "client": "Client(7)",
+        "key": "5"
+      },
+      "sender": "Coordinator(6)",
+      "target": "Participant(3)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 48,
+        "Client(7)": 11,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 dequeued event \u0027eReadTransReq with payload (\u003Cclient:Client(8), key:\u00225\u0022, \u003E)\u0027 in state \u0027WaitForTransactions\u0027.",
+      "id": "Coordinator(6)",
+      "event": "eReadTransReq",
+      "state": "WaitForTransactions",
+      "payload": {
+        "client": "Client(8)",
+        "key": "5"
+      },
+      "clock": {
+        "Coordinator(6)": 49,
+        "Client(7)": 11,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 11
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Coordinator(6)\u0027 in state \u0027WaitForTransactions\u0027 sent event \u0027eReadTransReq with payload (\u003Cclient:Client(8), key:\u00225\u0022, \u003E)\u0027 to \u0027Participant(4)\u0027.",
+      "event": "eReadTransReq",
+      "state": "WaitForTransactions",
+      "payload": {
+        "client": "Client(8)",
+        "key": "5"
+      },
+      "sender": "Coordinator(6)",
+      "target": "Participant(4)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Coordinator(6)": 50,
+        "Client(7)": 11,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 11
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Timer(9)\u0027 dequeued event \u0027eDelayedTimeOut\u0027 in state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "event": "eDelayedTimeOut",
+      "state": "TimerStarted",
+      "clock": {
+        "Timer(9)": 25,
+        "Coordinator(6)": 32,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Timer(9) is transitioning from state \u0027TimerStarted\u0027 to state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "startState": "TimerStarted",
+      "endState": "TimerStarted",
+      "clock": {
+        "Timer(9)": 26,
+        "Coordinator(6)": 32,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) exits state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "state": "TimerStarted",
+      "isEntry": false,
+      "clock": {
+        "Timer(9)": 27,
+        "Coordinator(6)": 32,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) enters state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "state": "TimerStarted",
+      "isEntry": true,
+      "clock": {
+        "Timer(9)": 28,
+        "Coordinator(6)": 32,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(4)\u0027 dequeued event \u0027eReadTransReq with payload (\u003Cclient:Client(8), key:\u00225\u0022, \u003E)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(4)",
+      "event": "eReadTransReq",
+      "state": "WaitForRequests",
+      "payload": {
+        "client": "Client(8)",
+        "key": "5"
+      },
+      "clock": {
+        "Participant(4)": 13,
+        "Coordinator(6)": 50,
+        "Client(7)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 11
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Participant(3)\u0027 dequeued event \u0027eReadTransReq with payload (\u003Cclient:Client(7), key:\u00225\u0022, \u003E)\u0027 in state \u0027WaitForRequests\u0027.",
+      "id": "Participant(3)",
+      "event": "eReadTransReq",
+      "state": "WaitForRequests",
+      "payload": {
+        "client": "Client(7)",
+        "key": "5"
+      },
+      "clock": {
+        "Participant(3)": 13,
+        "Coordinator(6)": 48,
+        "Client(7)": 11,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Timer(9)\u0027 in state \u0027TimerStarted\u0027 sent event \u0027eDelayedTimeOut\u0027 to \u0027Timer(9)\u0027.",
+      "event": "eDelayedTimeOut",
+      "state": "TimerStarted",
+      "sender": "Timer(9)",
+      "target": "Timer(9)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Timer(9)": 29,
+        "Coordinator(6)": 32,
+        "Client(7)": 6,
+        "Participant(4)": 8,
+        "Participant(5)": 8,
+        "Participant(3)": 8,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "DequeueEvent",
+    "details": {
+      "log": "\u0027Timer(9)\u0027 dequeued event \u0027eCancelTimer\u0027 in state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "event": "eCancelTimer",
+      "state": "TimerStarted",
+      "clock": {
+        "Timer(9)": 30,
+        "Coordinator(6)": 43,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "GotoState",
+    "details": {
+      "log": "Timer(9) is transitioning from state \u0027TimerStarted\u0027 to state \u0027WaitForTimerRequests\u0027.",
+      "id": "Timer(9)",
+      "startState": "TimerStarted",
+      "endState": "WaitForTimerRequests",
+      "clock": {
+        "Timer(9)": 31,
+        "Coordinator(6)": 43,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) exits state \u0027TimerStarted\u0027.",
+      "id": "Timer(9)",
+      "state": "TimerStarted",
+      "isEntry": false,
+      "clock": {
+        "Timer(9)": 32,
+        "Coordinator(6)": 43,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "StateTransition",
+    "details": {
+      "log": "Timer(9) enters state \u0027WaitForTimerRequests\u0027.",
+      "id": "Timer(9)",
+      "state": "WaitForTimerRequests",
+      "isEntry": true,
+      "clock": {
+        "Timer(9)": 33,
+        "Coordinator(6)": 43,
+        "Client(7)": 6,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Participant(3)\u0027 in state \u0027WaitForRequests\u0027 sent event \u0027eReadTransResp with payload (\u003Ckey:\u00225\u0022, val:6, status:0, \u003E)\u0027 to \u0027Client(7)\u0027.",
+      "event": "eReadTransResp",
+      "state": "WaitForRequests",
+      "payload": {
+        "key": "5",
+        "val": 6,
+        "status": 0
+      },
+      "sender": "Participant(3)",
+      "target": "Client(7)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Participant(3)": 14,
+        "Coordinator(6)": 48,
+        "Client(7)": 11,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "ReceiveEvent",
+    "details": {
+      "log": "\u0027Client(7)\u0027 dequeued event \u0027eReadTransResp with payload (\u003Ckey:\u00225\u0022, val:6, status:0, \u003E)\u0027 and unblocked in state \u0027ConfirmTransaction\u0027.",
+      "id": "Client(7)",
+      "event": "eReadTransResp",
+      "state": "ConfirmTransaction",
+      "payload": {
+        "key": "5",
+        "val": 6,
+        "status": 0
+      },
+      "wasBlocked": true,
+      "clock": {
+        "Client(7)": 13,
+        "Coordinator(6)": 48,
+        "Participant(4)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 14,
+        "Client(8)": 6
+      }
+    }
+  },
+  {
+    "type": "SendEvent",
+    "details": {
+      "log": "\u0027Participant(4)\u0027 in state \u0027WaitForRequests\u0027 sent event \u0027eReadTransResp with payload (\u003Ckey:\u00225\u0022, val:6, status:0, \u003E)\u0027 to \u0027Client(8)\u0027.",
+      "event": "eReadTransResp",
+      "state": "WaitForRequests",
+      "payload": {
+        "key": "5",
+        "val": 6,
+        "status": 0
+      },
+      "sender": "Participant(4)",
+      "target": "Client(8)",
+      "opGroupId": "00000000-0000-0000-0000-000000000000",
+      "isTargetHalted": false,
+      "clock": {
+        "Participant(4)": 14,
+        "Coordinator(6)": 50,
+        "Client(7)": 11,
+        "Participant(5)": 11,
+        "Participant(3)": 11,
+        "Client(8)": 11
+      }
+    }
+  },
+  {
+    "type": "ReceiveEvent",
+    "details": {
+      "log": "\u0027Client(8)\u0027 dequeued event \u0027eReadTransResp with payload (\u003Ckey:\u00225\u0022, val:6, status:0, \u003E)\u0027 and unblocked in state \u0027ConfirmTransaction\u0027.",
+      "id": "Client(8)",
+      "event": "eReadTransResp",
+      "state": "ConfirmTransaction",
+      "payload": {
+        "key": "5",
+        "val": 6,
+        "status": 0
+      },
+      "wasBlocked": true,
+      "clock": {
+        "Client(8)": 13,
+        "Coordinator(6)": 50,
+        "Client(7)": 11,
+        "Participant(4)": 14,
+        "Participant(5)": 11,
+        "Participant(3)": 11
+      }
+    }
+  },
+  {
+    "type": "AssertionFailure",
+    "details": {
+      "log": "Assertion Failed: PTst/Client.p:42:13 Record read is not same as what was written by the client:: read - 6, written - 7",
+      "error": "Assertion Failed: PTst/Client.p:42:13 Record read is not same as what was written by the client:: read - 6, written - 7"
+    }
+  },
+  {
+    "type": "StrategyDescription",
+    "details": {
+      "log": "Found bug using \u0027random\u0027 strategy.",
+      "strategy": "random",
+      "strategyDescription": "random[seed \u00272260886623\u0027]"
+    }
+  }
+]
