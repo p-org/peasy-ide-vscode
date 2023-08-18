@@ -33,6 +33,13 @@ export default class CompileCommands {
     context.subscriptions.push(
       vscode.workspace.onDidDeleteFiles((e) => generateProjects()),
       vscode.workspace.onDidCreateFiles((e) => generateProjects())
+      //   vscode.workspace.onDidChangeTextDocument(async (e) => {
+      //     for (var t of await vscode.tasks.fetchTasks()) {
+      //       if (t.name === "Compile") {
+      //         vscode.tasks.executeTask(t);
+      //       }
+      //     }
+      //   })
     );
 
     return new CompileCommands();
