@@ -43,18 +43,15 @@ theme:
 # This should be renamed to nav for mkdocs 1.0+
 nav:
   - Home: index.md
-  - Features: 
-    - Syntax Highlighting: ./features/syntax_highlighting.md
-    - Compilation: 
-      - Automatic Compilation:  ./features/compilation/basic.md
-      - Error Reporting: ./features/compilation/error_reporting.md
-      - Multiple Projects: ./features/compilation/multiple.md
-    - Testing Framework:
-      - How to Run P Test Cases: ./features/testing.md
-    - State Machine Visualizations: ./features/visualizations.md
-    - Snippets: ./features/snippets.md
-    - Trace Visualizer: ./features/error_tracing.md
-  - Contributing to Peasy: contribute.md
+  - Getting Started: gettingStarted.md
+  - User Guide:
+    - Compiling Code: compilingCode.md
+    - Running Testcases: runningTestcases.md
+    - Editing Code: editingCode.md
+    - Keyboard Shortcuts and Commands: shortcutsAndCommands.md
+    - Visualizing State Machines: visualizingStateMachines.md
+    - Trace Visualizer: traceVisualizer.md
+  - Contributing to the Peasy Extension: contribute.md
   - The Motivation Behind Peasy: motivations.md
   
 markdown_extensions:
