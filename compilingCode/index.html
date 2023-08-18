@@ -387,15 +387,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#compiling-multiple-projects" class="md-nav__link">
-    Compiling Multiple Projects
+  <a href="#error-reporting" class="md-nav__link">
+    Error Reporting
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#error-reporting" class="md-nav__link">
-    Error Reporting
+  <a href="#compiling-multiple-projects" class="md-nav__link">
+    Compiling Multiple Projects
   </a>
   
 </li>
@@ -470,10 +470,154 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+          Trace Visualizer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_6">
+          <span class="md-nav__icon md-icon"></span>
+          Trace Visualizer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../traceVisualizer/" class="md-nav__link">
-        Trace Visualizer
+      <a href="../trace-visualizer/getting_started/" class="md-nav__link">
+        Getting Started
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trace-visualizer/p_json_output/" class="md-nav__link">
+        P JSON Output
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6_3" >
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_3_6_3" id="__nav_3_6_3_label" tabindex="0">
+          Features
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_6_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          Features
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trace-visualizer/feature_basics/" class="md-nav__link">
+        Basics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trace-visualizer/feature_search_bar/" class="md-nav__link">
+        Search Bar
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../trace-visualizer/feature_motifs/" class="md-nav__link">
+        Motifs
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -545,31 +689,30 @@
 </div>
 
 <h2 id="automatic-compilation"><strong>Automatic Compilation</strong></h2>
-<p>Compiling in P is made easy with this addition to our extension!</p>
-<p>Simple press <span class="keys"><kbd class="key-f5">F5</kbd></span> or <code>Save</code> in your VSCode terminal and your project will automatically compile the current P project folder with the <code>p compile</code> command.</p>
-<p>The Peasy extension also handles cases where there are multiple P project files in the current working directory. Press <span class="keys"><kbd class="key-f4">F4</kbd></span> and a pop-up will appear, displaying all the P projects inside of the folder. Select the project you want to work on at the moment, and that project will compile every time you press <span class="keys"><kbd class="key-f5">F5</kbd></span>.</p>
+<p>Compiling P programs is now super easy with Peasy!</p>
+<p>Simply press <span class="keys"><kbd class="key-f5">F5</kbd></span> or <code>Save</code> in VS Code and your project will automatically compile the current P project with the <code>p compile</code> command.</p>
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
     <source src="../videos/basic_compilation.mov" type="video/mp4">
   </video>
 </figure>
 
-<h2 id="compiling-multiple-projects"><strong>Compiling Multiple Projects</strong></h2>
-<p>When working in a P project directory with a single project, the Peasy extension handles which project is compiled for you!</p>
-<p><strong>But what if there are multiple projects within a single directory?</strong></p>
-<p>To select another project that compiles after pressing <span class="keys"><kbd class="key-f5">F5</kbd></span> and <code>Save</code>, press <span class="keys"><kbd class="key-f4">F4</kbd></span>. This will trigger a pop-up that shows all the available P projects available to compile in your current working directory. Simply click or select the project you wish to compile automatically, and change the selected project later as needed!</p>
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true" >
-    <source src="../videos/mult_compilation.mov" type="video/mp4">
-  </video>
-</figure>
-
 <h2 id="error-reporting"><strong>Error Reporting</strong></h2>
-<p>The Peasy extension automatically detects errors in P. There are two types of errors in P: Parse Errors and Type Errors.</p>
-<p>If compiling a P project with <span class="keys"><kbd class="key-f5">F5</kbd></span> triggers errors, the user may simply open the <code>Problems</code> panel in VSCode to view all the errors within their project. Then, users can navigate to the location of the error by simply clicking the error.</p>
+<p>Peasy automatically detects compilation errors in your P project. There are two types of compile-time errors in P: Parse Errors and Type Errors.</p>
+<p>If compiling a P project with <span class="keys"><kbd class="key-f5">F5</kbd></span> triggers errors, you can simply open the <code>Problems</code> panel in VS Code to view all compilation errors in the current P project. Then, you can jump to the error location by simply clicking the error.</p>
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
     <source src="../videos/error_reporting.mov" type="video/mp4">
+  </video>
+</figure>
+
+<h2 id="compiling-multiple-projects"><strong>Compiling Multiple Projects</strong></h2>
+<p>When working in a directory with a single P project, Peasy automatically identifies the P project.</p>
+<p><strong>But what if there are multiple P projects in the same directory?</strong></p>
+<p>To select another P project, press <span class="keys"><kbd class="key-f4">F4</kbd></span>. This will trigger a pop-up that shows all the available P projects in your current working directory. Simply click or select one of them to change the current P project!</p>
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" >
+    <source src="../videos/mult_compilation.mov" type="video/mp4">
   </video>
 </figure>
 
