@@ -39,7 +39,7 @@ Follow the [VS Code](https://code.visualstudio.com/docs) documentation to downlo
 
 * Open VS Code
 * Select View and then click Extensions to open Extension View. Alternatively, you can also click on the Extensions shortcut on the left side navigation bar
-* Enter *"P Extension"* in the marketplace search box and select the extension
+* Enter [*"P Extension"*](vscode:extension/PLanguage.p-extension) in the marketplace search box and select the extension
 * Click on the install button to download and install the PEasy extension
 
 !!! note
