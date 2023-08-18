@@ -29,4 +29,4 @@ If you would like to contribute or add to the current state of the Peasy extensi
 
 4.  In order to test out the extension, press ++f5++ to create an `Extension Development Host` where you can open P projects to view how the extension looks in its current state.
 
-![Extension Dev Host](../images/extension_host.png)
+![Extension Dev Host](images/extension_host.png)

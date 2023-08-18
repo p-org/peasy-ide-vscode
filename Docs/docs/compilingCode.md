@@ -11,11 +11,10 @@
 </div>
 
 ## **Automatic Compilation**
-Compiling in P is made easy with this addition to our extension!
 
-Simple press ++f5++ or `Save` in your VSCode terminal and your project will automatically compile the current P project folder with the `p compile` command.
+Compiling P programs is now super easy with Peasy!
 
-The Peasy extension also handles cases where there are multiple P project files in the current working directory. Press ++f4++ and a pop-up will appear, displaying all the P projects inside of the folder. Select the project you want to work on at the moment, and that project will compile every time you press ++f5++.
+Simply press ++f5++ or `Save` in VS Code and your project will automatically compile the current P project with the `p compile` command.
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
@@ -23,28 +22,28 @@ The Peasy extension also handles cases where there are multiple P project files 
   </video>
 </figure>
 
-## **Compiling Multiple Projects**
-
-When working in a P project directory with a single project, the Peasy extension handles which project is compiled for you!
-
-**But what if there are multiple projects within a single directory?**
-
-To select another project that compiles after pressing ++f5++ and `Save`, press ++f4++. This will trigger a pop-up that shows all the available P projects available to compile in your current working directory. Simply click or select the project you wish to compile automatically, and change the selected project later as needed!
-
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true" >
-    <source src="../videos/mult_compilation.mov" type="video/mp4">
-  </video>
-</figure>
-
 ## **Error Reporting**
 
-The Peasy extension automatically detects errors in P. There are two types of errors in P: Parse Errors and Type Errors.
+Peasy automatically detects compilation errors in your P project. There are two types of compile-time errors in P: Parse Errors and Type Errors.
 
-If compiling a P project with ++f5++ triggers errors, the user may simply open the `Problems` panel in VSCode to view all the errors within their project. Then, users can navigate to the location of the error by simply clicking the error.
+If compiling a P project with ++f5++ triggers errors, you can simply open the `Problems` panel in VS Code to view all compilation errors in the current P project. Then, you can jump to the error location by simply clicking the error.
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
     <source src="../videos/error_reporting.mov" type="video/mp4">
+  </video>
+</figure>
+
+## **Compiling Multiple Projects**
+
+When working in a directory with a single P project, Peasy automatically identifies the P project.
+
+**But what if there are multiple P projects in the same directory?**
+
+To select another P project, press ++f4++. This will trigger a pop-up that shows all the available P projects in your current working directory. Simply click or select one of them to change the current P project!
+
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" >
+    <source src="../videos/mult_compilation.mov" type="video/mp4">
   </video>
 </figure>

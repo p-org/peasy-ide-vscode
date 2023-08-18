@@ -12,11 +12,13 @@
 
 ## **Snippet Auto-Completion**
 
-Coding in P became much easier with snippets! Snippets allow P developers to complete templates of repeating code patterns in P, such as state machines, different statements, test cases, and more. Snippets appear through **Intellisense** when users type out the beginning of P keywords such as **machine** or **test** or **send**.
+Coding in P is now much easier with snippets! Snippets allow P developers to complete templates of repeating code patterns in P, such as state machines, P statements, test cases, and more. Snippets appear through **Intellisense** when you type out the beginning of P keywords such as **machine** or **test** or **send**.
 
-After selecting a particular snippet, users can press `Tab` in order to jump to edit each placeholder in the snippet.
+After selecting a particular snippet, press `Tab` in order to jump to edit each placeholder in the snippet.
 
-Snippets help P developers code faster and easier because they don't need to refer back to documentation for help when coding common data structures in P. Below is an example tutorial of coding with snippets in P!
+Snippets help P developers code faster and easier because they don't need to refer back to documentation for help when coding common data structures in P.
+
+Below is an example demo of coding with snippets in P!
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true" >
@@ -26,7 +28,10 @@ Snippets help P developers code faster and easier because they don't need to ref
 
 ## **Syntax Highlighting**
 
-Syntax highlighting in P makes developing programs in P easier, faster, and more enjoyable.
+Syntax highlighting in P makes developing P programs easier, faster, and more enjoyable.
 
-We created a Custom P theme that the P team prefers to develop in P, but feel free to change the theme to whatever you would like!
-![Syntax Highlighting](../images/syntax_highlighting.png)
+We created a Custom P theme that we suggest, but feel free to change the theme to whatever you like!
+
+Here is a sample of syntax highlighting for the [Two Phase Commit](https://github.com/p-org/P/tree/master/Tutorial/2_TwoPhaseCommit) protocol from the P tutorial. 
+![Syntax Highlighting](images/syntax_highlighting.png)
+

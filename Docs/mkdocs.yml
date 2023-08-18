@@ -50,7 +50,13 @@ nav:
     - Editing Code: editingCode.md
     - Keyboard Shortcuts and Commands: shortcutsAndCommands.md
     - Visualizing State Machines: visualizingStateMachines.md
-    - Trace Visualizer: traceVisualizer.md
+    - Trace Visualizer:
+      - Getting Started: trace-visualizer/getting_started.md
+      - P JSON Output: trace-visualizer/p_json_output.md
+      - Features:
+        - Basics: trace-visualizer/feature_basics.md
+        - Search Bar: trace-visualizer/feature_search_bar.md
+        - Motifs: trace-visualizer/feature_motifs.md
   - Contributing to the Peasy Extension: contribute.md
   - The Motivation Behind Peasy: motivations.md
   

@@ -30,7 +30,7 @@ Another alternative to launch the visualizer is to use the Visual Studio Code sh
 
 <figure class="video_container">
     <video controls="true" allowfullscreen="true">
-        <source src="../../../videos/trace-visualizer/getting_started.mp4" type="video/mp4"/>
+        <source src="../../videos/trace-visualizer/getting_started.mp4" type="video/mp4"/>
     </video>
 </figure>
 
@@ -42,7 +42,7 @@ Another alternative to launch the visualizer is to use the Visual Studio Code sh
 
 ### **Breakdown**
 
-![Trace Visualizer](../../images//trace-visualizer/trace_visualizer.png)
+![Trace Visualizer](../images/trace-visualizer/trace_visualizer.png)
 
 <table>
 	<thead class="block">
