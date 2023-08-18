@@ -191,16 +191,9 @@
     },
     "commands": [
       {
-        "command": "p.definition",
-        "title": "P: Go to Definition"
-      },
-      {
-        "command": "workbench.errors",
-        "title": "Error"
-      },
-      {
         "command": "workbench.files",
-        "title": "Files"
+        "title": "Peasy: Show Project Files", 
+        "description": "Users can select a P project to compile from a VSCode Quick Pick."
       },
       {
         "command": "peasy-visualizer.run",
