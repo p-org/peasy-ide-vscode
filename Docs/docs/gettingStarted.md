@@ -12,8 +12,8 @@
 
 ## **Prerequisites**
 
-* P
-* VS Code
+* P (version >= 2.0.15)
+* VS Code (version >= 1.78.0)
 * PEasy VS Code Extension
 
 ## **Installation**
@@ -22,9 +22,18 @@
 
 Follow the [Installing P](https://p-org.github.io/P/getstarted/install/) page to install P based on the platform you are using
 
+
+!!! note
+
+    Make sure that you intalled the right version of P (i.e., version >= 2.0.15)
+
 **Installing VS Code**
 
 Follow the [VS Code](https://code.visualstudio.com/docs) documentation to download and install VS Code based on the platform you are using
+
+!!! note
+
+    Make sure that you intalled the right version of VS Code (i.e., version >= 1.78.0)
 
 **Installing PEasy**
 

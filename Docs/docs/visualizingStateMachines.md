@@ -15,12 +15,12 @@ Many P users wanted a method of creating visualizations of P state machines and 
 In order to create visualizations of P state machines, follow these steps or scroll down to watch a demo:
 
 1. Press ++f7++ to run the command `p compile --mode stately` in the terminal. Your visualization code is generated! A message in red should be sent through the terminal.
-   ![Syntax Highlighting](../images/code_generation_text.png)
+   ![Syntax Highlighting](images/code_generation_text.png)
 2. Navigate to the file using ++ctrl++ `Click` or ++cmd++ `Click`. Copy-and-paste the file contents into https://stately.ai/viz.
 3. Click the Visualize button on the bottom left!
 
 Voila! Here is an example visualization using the P Tutorial's Two Phase Commit project.
-![Visualization](../images/visualization.png)
+![Visualization](images/visualization.png)
 
 <div align="center">
   <h2>How to Navigate Stately's Open Source Visualization Website</h2>

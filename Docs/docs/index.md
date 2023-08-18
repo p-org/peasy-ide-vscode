@@ -29,48 +29,19 @@ Peasy achieves this by providing a VS Code language extension for editing P prog
 </div>
 
 **Syntax Highlighting**
-[Learn more.](editingCode/#syntax-highlighting)
+[Learn more.](editingCode.md/#syntax-highlighting)
 
 **Automatic Compilation**
-[Learn more.](compilingCode/#automatic-compilation)
+[Learn more.](compilingCode.md/#automatic-compilation)
 
 **Snippets**
-[Learn more.](editingCode/#snippet-auto-completion)
+[Learn more.](editingCode.md/#snippet-auto-completion)
 
 **Error Reporting**
-[Learn more.](compilingCode/#error-reporting)
+[Learn more.](compilingCode.md/#error-reporting)
 
 **Testing Framework**
 [Learn more.](runningTestcases.md)
 
 **Trace Visualizer**
-[Learn more.](traceVisualizer/)
-
-<!-- **Syntax Highlighting**
-[Learn more.](./features/syntax_highlighting.md)
-
-**Automatic Compilation**
-[Learn more.](./features/compilation/basic.md)
-
-**Snippets**
-[Learn more.](./features/snippets.md)
-
-**Error Reporting**
-[Learn more.](./features/compilation/error_reporting.md)
-
-**Testing Framework**
-[Learn more.](./features/testing.md)
-
-**Trace Visualizer**
-[Learn more.](./features/error_tracing.md) -->
-
-<!-- <div align="left">
-  <h2>Peasy Shortcuts</h2>
-</div>
-
-| Keypress | Description                                                         |
-| -------- |---------------------------------------------------------------------|
-| ++f4++   | Shows a dropdown menu to select a P project                         |
-| ++f5++   | Compiles the current P Project                                      |
-| ++f6++   | Opens the Peasy Trace Visualizer Webview                            |
-| ++f7++   | Generates code to visualize state machines of the current P project | -->
+[Learn more.](trace-visualizer/getting_started.md)
