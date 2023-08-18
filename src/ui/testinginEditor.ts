@@ -10,6 +10,7 @@ import { checkPInstalled, searchDirectory } from "../miscTools";
 import { PCommands } from "../commands";
 import * as child_process from "child_process";
 import { SpawnSyncReturns } from "child_process";
+import { integer } from "vscode-languageclient";
 const fs = require("fs");
 
 export default class TestingEditor {
@@ -35,16 +36,20 @@ export default class TestingEditor {
       ),
       vscode.workspace.onWillDeleteFiles((e) =>
         e.files.forEach(async (fileUri) => {
-          updateNodeFromDocument(
-            await vscode.workspace.openTextDocument(fileUri)
-          );
+          if (fs.existsSync(fileUri)) {
+            updateNodeFromDocument(
+              await vscode.workspace.openTextDocument(fileUri)
+            );
+          }
         })
       ),
       vscode.workspace.onDidCreateFiles((e) =>
         e.files.forEach(async (fileUri) => {
-          updateNodeFromDocument(
-            await vscode.workspace.openTextDocument(fileUri)
-          );
+          if (fs.existsSync(fileUri)) {
+            updateNodeFromDocument(
+              await vscode.workspace.openTextDocument(fileUri)
+            );
+          }
         })
       )
     );
@@ -142,7 +147,7 @@ async function runHandler(
 }
 
 /*
-Compiles the P directory.
+
 If the Test Item is a file: run its children. Else: Run the test case.
 */
 async function handlePTestCase(
@@ -151,7 +156,7 @@ async function handlePTestCase(
 ): Promise<boolean> {
   if (tc.parent == undefined) {
     tc.children.forEach((item) => run.enqueued(item));
-    tc.children.forEach(async (item) => runPTestCase(run, item));
+    tc.children.forEach(async (item) => await runPTestCase(run, item));
 
     run.passed(tc);
   } else {
@@ -163,6 +168,7 @@ async function handlePTestCase(
 //Always runs a SINGLE P Test Case.
 async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
   run.started(tc);
+
   var result = TestResults.Error;
   let terminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
   if (terminal.name == PCommands.RunTask) {
@@ -188,94 +194,147 @@ async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
       terminal,
       tc,
       outputDirectory,
-      projectDirectory ?? ""
-    );
-    await checkResult(
-      result,
-      outputFile,
-      run,
-      tc,
       projectDirectory ?? "",
-      contents
+      run
     );
   }
 
   return;
 }
 
-//Check the output of the test.
-async function checkResult(
-  result: string,
-  outputFile: string,
-  run: vscode.TestRun,
-  tc: vscode.TestItem,
-  projectDirectory: string,
-  contents: string
-) {
-  if (contents.includes("Found 0 bugs")) {
-    result = TestResults.Pass;
-  } else if (contents.includes("found a bug")) {
-    result = TestResults.Fail;
-  }
-  switch (result) {
-    case TestResults.Pass: {
-      run.passed(tc);
-      break;
-    }
-    case TestResults.Fail: {
-      var msg = new vscode.TestMessage("Failure after P Check Command");
-      msg.location = new vscode.Location(tc.uri!, tc.range!);
-      run.failed(tc, msg);
-      break;
-    }
-    case TestResults.Error: {
-      var msg = new vscode.TestMessage("Test Errored in Running");
-      run.errored(tc, msg);
-    }
-  }
-}
-
-//Runs p check in a child process and returns the stdout or result.
+//Runs p check and calls a wait function to wait for the result
 async function runCheckCommand(
   terminal: vscode.Terminal,
   tc: vscode.TestItem,
   outputDirectory: string,
-  projectDirectory: string
-): Promise<string> {
+  projectDirectory: string,
+  run: vscode.TestRun
+) {
   //number of p checker iterations that are run
 
   const numIterations: String =
     vscode.workspace.getConfiguration("p-vscode").get("iterations") ?? "1000";
   //The p check command depends on if the terminal is bash or zsh.
   var command;
-  terminal.sendText("cd " + projectDirectory + " && p compile");
+
   if (!(await checkPInstalled())) {
     command = 'echo -e "\\e[1;31m ' + messages.Messages.Installation.noP + '"';
+    terminal.sendText(command);
   } else {
-    command =
+    let stdOut = child_process.execSync(
+      "cd " + projectDirectory + " && p compile ",
+      { shell: "/bin/zsh" }
+    );
+    var outputFile = projectDirectory + outputDirectory;
+    if (!fs.existsSync(projectDirectory + "PCheckerOutput")) {
+      try {
+        fs.mkdirSync(projectDirectory + "PCheckerOutput");
+      } catch (Error) {}
+    }
+    waitCompile(
+      projectDirectory,
+      outputFile,
+      tc,
+      numIterations,
+      terminal,
+      run,
+      stdOut
+    );
+  }
+}
+
+/*
+1. Ensure the PCheckerOutput directory exists (we need it to put the results of p check inside.)
+2. Wait for P program to finish compiling through p compile
+
+*/
+async function waitCompile(
+  projectDirectory: string,
+  outputFile: string,
+  tc: vscode.TestItem,
+  numIterations: String,
+  terminal: vscode.Terminal,
+  run: vscode.TestRun,
+  stdOut: Buffer
+) {
+  var files = await searchDirectory(projectDirectory + "PCheckerOutput");
+  if (
+    !fs.existsSync(projectDirectory + "PCheckerOutput") ||
+    !stdOut.toString().includes("Thanks for using P")
+  ) {
+    setTimeout(waitCompile, 1000, projectDirectory, outputFile);
+  } else {
+    fs.writeFile(outputFile, "", function (err: any) {
+      if (err) {
+        throw err;
+      }
+    });
+    var command =
       "cd " +
       projectDirectory +
       " && p check -tc " +
       tc.label +
       " -i " +
       numIterations;
+
+    if (terminal.name == "bash") {
+      command = command + " 2>&1 | tee " + outputFile;
+    } else {
+      //hopefully a zsh terminal
+      command = command + " |& tee " + outputFile;
+    }
+    //Runs Command in Terminal
+    terminal.sendText(command);
+    waitCreateResultDoc(outputFile, run, tc);
   }
-  //Runs Command in Terminal
-  terminal.sendText(command);
-  var contents: string;
-  //Runs command in separate shell that finds the test contents
+}
+
+/*
+1. Wait to create a text document to put the results of p check inside 
+2. Wait for the p check command to fully run and populate PCheckerOutput folder.
+*/
+async function waitCreateResultDoc(
+  promise: string,
+  run: vscode.TestRun,
+  tc: vscode.TestItem
+) {
   try {
-    let stdOut = child_process.execSync(command, { shell: "/bin/zsh" });
-    return stdOut.toString();
-  } catch (e) {
-    const val: SpawnSyncReturns<Buffer> = e as SpawnSyncReturns<Buffer>;
-    contents = val.stdout.toString();
-    if (contents.length == 0) {
-      vscode.window.showErrorMessage("Test Failed: " + tc.label);
-      throw e;
+    await vscode.workspace.openTextDocument(promise);
+  } catch (Error) {
+    throw Error;
+  }
+  if (
+    !fs.existsSync(promise) ||
+    !(await vscode.workspace.openTextDocument(promise))
+      .getText()
+      .includes("Scheduling")
+  ) {
+    setTimeout(waitCreateResultDoc, 1000, promise, run, tc);
+  } else {
+    var contents = (await vscode.workspace.openTextDocument(promise)).getText();
+    var result;
+    if (contents.includes("Found 0 bugs")) {
+      result = TestResults.Pass;
+    } else if (contents.includes("found a bug")) {
+      result = TestResults.Fail;
+    }
+    switch (result) {
+      case TestResults.Pass: {
+        run.passed(tc);
+        break;
+      }
+      case TestResults.Fail: {
+        var msg = new vscode.TestMessage("Failure after P Check Command");
+        msg.location = new vscode.Location(tc.uri!, tc.range!);
+        run.failed(tc, msg);
+        break;
+      }
+      case TestResults.Error: {
+        var msg = new vscode.TestMessage("Test Errored While Running");
+        run.errored(tc, msg);
+      }
     }
   }
-  return contents;
 }
 
 function updateNodeFromDocument(e: vscode.TextDocument) {
@@ -308,24 +367,3 @@ function getFile(uri: vscode.Uri) {
   file.canResolveChildren = true;
   return file;
 }
-
-// export class TestFile {
-//     parsePTestFile(text: string, events: {
-//             onTest(name: string, range: vscode.Range): void
-//             })
-//     {
-//         const lines = text.split('\n');
-
-//         for (let lineNo = 0; lineNo < lines.length; lineNo++) {
-//             const line = lines[lineNo];
-//             const test = TestingEditor.testRe.exec(line);
-//             if (test) {
-//                 const range = new vscode.Range(new vscode.Position(lineNo, 0), new vscode.Position(lineNo, 0));
-//                 const words = line.split('\s+');
-//                 events.onTest(words[1], range);
-//                 continue;
-//             }
-
-//         }
-//     }
-// }
