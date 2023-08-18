@@ -36,7 +36,8 @@ export default class TestingEditor {
       ),
       vscode.workspace.onWillDeleteFiles((e) =>
         e.files.forEach(async (fileUri) => {
-          if (fs.existsSync(fileUri)) {
+          //wrong; should be
+          if (fileUri.toString().endsWith(".p")) {
             updateNodeFromDocument(
               await vscode.workspace.openTextDocument(fileUri)
             );
@@ -221,10 +222,23 @@ async function runCheckCommand(
     command = 'echo -e "\\e[1;31m ' + messages.Messages.Installation.noP + '"';
     terminal.sendText(command);
   } else {
-    let stdOut = child_process.execSync(
-      "cd " + projectDirectory + " && p compile ",
-      { shell: "/bin/zsh" }
-    );
+    //Runs p compile
+    var stdOut;
+
+    try {
+      stdOut = child_process
+        .execSync("cd " + projectDirectory + " && p compile ", {
+          shell: "/bin/sh",
+        })
+        .toString();
+    } catch (e) {
+      const val: SpawnSyncReturns<Buffer> = e as SpawnSyncReturns<Buffer>;
+      stdOut = val.stdout.toString();
+      if (stdOut.length == 0) {
+        vscode.window.showErrorMessage("Test Failed: " + tc.label);
+        throw e;
+      }
+    }
     var outputFile = projectDirectory + outputDirectory;
     if (!fs.existsSync(projectDirectory + "PCheckerOutput")) {
       try {
@@ -255,14 +269,19 @@ async function waitCompile(
   numIterations: String,
   terminal: vscode.Terminal,
   run: vscode.TestRun,
-  stdOut: Buffer
+  stdOut: string
 ) {
-  var files = await searchDirectory(projectDirectory + "PCheckerOutput");
   if (
     !fs.existsSync(projectDirectory + "PCheckerOutput") ||
     !stdOut.toString().includes("Thanks for using P")
   ) {
     setTimeout(waitCompile, 1000, projectDirectory, outputFile);
+  } else if (stdOut.toString().includes("Error:")) {
+    //if there is an error during compilation, end the test run.
+    vscode.window.showErrorMessage("P program is not compiling.");
+    var msg = new vscode.TestMessage("P program is not compiling");
+    run.errored(tc, msg);
+    // run.end();
   } else {
     fs.writeFile(outputFile, "", function (err: any) {
       if (err) {
