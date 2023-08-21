@@ -35,7 +35,7 @@ function LEMInterpreter(ast) {
  */
 LEMInterpreter.prototype.interpret = function (logEvent) {
   var env = logEvent.getFields();
-  env["event"] = logEvent.getText(); // TODO
+  // env["event"] = logEvent.getText(); // TODO
   var ret = this.ast.accept(this, env);
   return ret.val;
 };
