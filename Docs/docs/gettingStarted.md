@@ -14,7 +14,7 @@
 
 * P (version >= 2.0.15)
 * VS Code (version >= 1.78.0)
-* PEasy VS Code Extension
+* Peasy VS Code Extension
 
 ## **Installation**
 
@@ -40,12 +40,12 @@ Follow the [VS Code](https://code.visualstudio.com/docs) documentation to downlo
       - On Windows and Linux, go to Help > About.
 
 
-**Installing PEasy**
+**Installing Peasy**
 
 * Open VS Code
 * Select View and then click Extensions to open Extension View. Alternatively, you can also click on the Extensions shortcut on the left side navigation bar
-* Enter [*"P Extension"*](vscode:extension/PLanguage.p-extension) in the marketplace search box and select the extension
-* Click on the install button to download and install the PEasy extension
+* Enter [*"Peasy Extension"*](vscode:extension/PLanguage.peasy-extension) in the marketplace search box and select the extension
+* Click on the install button to download and install the Peasy extension
 
 !!! note "It is recommended to restart the VS Code after installation"
 
