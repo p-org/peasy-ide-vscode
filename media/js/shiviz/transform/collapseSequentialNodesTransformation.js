@@ -88,7 +88,6 @@ CollapseSequentialNodesTransformation.prototype.setThreshold = function (
  * @param {ModelNode} node The node whose LogEvents will be added as exemptions
  */
 CollapseSequentialNodesTransformation.prototype.addExemption = function (node) {
-  console.log("Adding exemption for node");
   var logEvents = node.getLogEvents();
   for (var i = 0; i < logEvents.length; i++) {
     this.exemptLogEvents[logEvents[i].getId()] = true;

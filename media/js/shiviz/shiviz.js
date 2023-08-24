@@ -19,6 +19,10 @@
  * @constructor
  */
 function Shiviz() {
+  // Declare shiviz properties for handling panel toggling
+  this.global = null;
+  this.panelSelection = "all";
+
   if (!!Shiviz.instance) {
     throw new Exception(
       "Cannot instantiate Shiviz. Shiviz is a singleton; use Shiviz.getInstance()"
@@ -95,6 +99,97 @@ function Shiviz() {
     "value",
     "(?<event>[^\\n]+)\\n(?<host>[^\\n]+)\\n(?<clock>[^\\n]+)"
   );
+
+  /**
+   * Highlights the appropriate tab for selected for panel view
+   * 
+   * @param {string} panelSelection - Of available options: all, logs, graph
+   */
+  const handlePanelSelection = (panelSelection) => {
+    this.panelSelection = panelSelection;
+    $("#panel-toggle-all").removeClass("selected");
+    $("#panel-toggle-logs").removeClass("selected");
+    $("#panel-toggle-graph").removeClass("selected");
+    $(`#panel-toggle-${panelSelection}`).addClass("selected");
+  }
+
+  /**
+   * Hides the log panel
+   */
+  const hideLogsPanel = () => {
+    $(".visualization header").css("width", "52pt");
+    $(".visualization #graph").css("margin-left", "52pt");
+    $("#panel-toggle").css("left", "1.5em");
+    $(".visualization .left").hide();
+    this.global.drawAll();
+  }
+
+  /**
+   * Shows the log panel
+   */
+  const showLogsPanel = () => {
+    $(".visualization header").css("width", `${Global.SIDE_BAR_WIDTH}pt`);
+    $(".visualization #graph").css("margin-left", `${Global.SIDE_BAR_WIDTH}pt`);
+    $("#panel-toggle").css("left", "22.5em");
+    $(".visualization .left").show();
+    this.global.drawAll();
+    $("div[id*=\"line\"]").mouseenter();
+  }
+
+  /**
+   Hides the graph panel
+   */
+  const hideGraphPanel = () => {
+    $("#hostBar").css("opacity", "0");
+    $("#vizContainer").css("opacity", "0");
+    this.global.SIDE_BAR_WIDTH = Math.round(($(window).width() - 264 - (2 * 20)) / 1.33);
+    this.global.drawAll();
+  }
+
+  /**
+   Shows the graph panel
+   */
+  const showGraphPanel = () => {
+    $("#hostBar").css("opacity", "1");
+    $("#vizContainer").css("opacity", "1");
+    this.global.SIDE_BAR_WIDTH = 264;
+    this.global.drawAll();
+  }
+
+  // Dictionary mapping the panel controls
+  const panelControl = {
+    hideGraphPanel,
+    showGraphPanel,
+    hideLogsPanel,
+    showLogsPanel,
+  }
+
+  /**
+   * Show both graph and logs when "All" tab is selected
+   */
+  $("#panel-toggle-all").on("click", () => {
+    handlePanelSelection("all");
+    panelControl.showGraphPanel();
+    panelControl.showLogsPanel();
+  })
+
+  /**
+   * Show logs when "All" tab is selected
+   */
+  $("#panel-toggle-logs").on("click", () => {
+    handlePanelSelection("logs");
+    panelControl.hideGraphPanel();
+    panelControl.showLogsPanel();
+  })
+
+  /**
+   * Show graph when "All" tab is selected
+   */
+  $("#panel-toggle-graph").on("click", () => {
+    handlePanelSelection("graph");    
+    panelControl.hideLogsPanel();
+    panelControl.showGraphPanel();
+  })
 
   $(".tabs li").on("click", function () {
     context.go($(this).index(), true);
@@ -496,6 +591,10 @@ Shiviz.prototype.visualize = function (
       $("#clusterOption input").prop("checked", false);
     }
 
+    if (views.length > 1) {
+      $("#panel-toggle").hide();
+    }
+
     var global = new Global(
       $("#vizContainer"),
       $("#sidebar"),
@@ -503,12 +602,20 @@ Shiviz.prototype.visualize = function (
       $("table.log"),
       views
     );
+
+    global.SIDE_BAR_WIDTH = 264;
+
     var searchbar = SearchBar.getInstance();
     searchbar.setGlobal(global);
     SearchBar.getInstance().clear();
 
     global.setHostPermutation(hostPermutation);
+
+    // $("#hostBar#duplicate svg").hide();
+
     global.drawAll();
+
+    return global;
   } catch (err) {
     this.handleException(err);
   }
@@ -541,7 +648,8 @@ Shiviz.prototype.go = function (index, store, force) {
       $(".visualization").show();
       try {
         if (!$("#vizContainer svg").length || force)
-          this.visualize(
+          // Make the visualize method return the global instance and bind it to this.global in this ShiViz class instance
+          this.global = this.visualize(
             $("#input").val(),
             $("#parser").val(),
             $("#delimiter").val(),

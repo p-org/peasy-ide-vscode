@@ -71,7 +71,7 @@ Global.HOST_DIALOG_ID = "hostdialog";
  * @static
  * @const
  */
-Global.SIDE_BAR_WIDTH = 240;
+Global.SIDE_BAR_WIDTH = 264;
 /**
  * @static
  * @const
@@ -536,8 +536,8 @@ Global.prototype.resize = function () {
   );
   var logTableWidth =
     this.viewR != null && this.getPairwiseView()
-      ? (Global.SIDE_BAR_WIDTH - 12) / 2
-      : Global.SIDE_BAR_WIDTH;
+      ? (this.SIDE_BAR_WIDTH - 12) / 2
+      : this.SIDE_BAR_WIDTH;
 
   this.viewL.setWidth(viewLNumHosts * widthPerHost);
   this.viewL.setLogTableWidth(logTableWidth);
@@ -723,7 +723,7 @@ Global.prototype.drawSideBar = function () {
   var hiddenHostsSVG = hiddenHostsSelection.append("svg");
 
   var hostsPerLine = Math.floor(
-    (Global.SIDE_BAR_WIDTH + 5) / (Global.HOST_SIZE + 5)
+    (this.SIDE_BAR_WIDTH + 5) / (Global.HOST_SIZE + 5)
   );
   hiddenHostsSVG
     .attr("width", this.$sidebar.width())
