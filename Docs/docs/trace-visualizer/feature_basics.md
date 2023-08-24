@@ -6,7 +6,18 @@
 		content: attr(data-icon);
 		font-size: 1em;
 	}
+
+	.md-typeset h1,
+	.md-content__button {
+		display: none;
+	}
 </style>
+
+<div align="center">
+  <h2>Basics</h2>
+</div>
+
+**Compiling Code**
 
 1. Hovering over a log highlights the corresponding node in the main panel and vice versa.
 	

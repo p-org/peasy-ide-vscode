@@ -33,5 +33,9 @@ Syntax highlighting in P makes developing P programs easier, faster, and more en
 We created a Custom P theme that we suggest, but feel free to change the theme to whatever you like!
 
 Here is a sample of syntax highlighting for the [Two Phase Commit](https://github.com/p-org/P/tree/master/Tutorial/2_TwoPhaseCommit) protocol from the P tutorial. 
-![Syntax Highlighting](images/syntax_highlighting.png)
+
+
+<div class="screenshots" markdown="1">
+  ![Syntax Highlighting](images/syntax_highlighting.png)
+</div>
 

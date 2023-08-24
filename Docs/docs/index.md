@@ -45,3 +45,6 @@ Peasy achieves this by providing a VS Code language extension for editing P prog
 
 **Trace Visualizer**
 [Learn more.](trace-visualizer/getting_started.md)
+
+**State Machine Visualization**
+[Learn more.](visualizingStateMachines.md)
