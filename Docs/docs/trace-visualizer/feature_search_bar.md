@@ -6,7 +6,16 @@
 		content: attr(data-icon);
 		font-size: 1em;
 	}
+
+	.md-typeset h1,
+	.md-content__button {
+		display: none;
+	}
 </style>
+
+<div align="center">
+  <h2>Search Bar</h2>
+</div>
 
 1. Fields filtering using "=". 
 

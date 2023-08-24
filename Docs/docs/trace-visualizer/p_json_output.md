@@ -1,3 +1,14 @@
+<style>
+.md-typeset h1,
+	.md-content__button {
+		display: none;
+	}
+</style>
+
+<div align="center">
+  <h2>P JSON Output</h2>
+</div>
+
 ### **Basic Structure**
 
 Each P error trace JSON output is in the following format.

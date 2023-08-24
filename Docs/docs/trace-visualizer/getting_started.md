@@ -18,7 +18,17 @@
 		content: attr(data-icon);
 		font-size: 1em;
 	}
+
+	.md-typeset h1,
+	.md-content__button {
+		display: none;
+	}
 </style>
+
+
+<div align="center">
+  <h2>Getting Started</h2>
+</div>
 
 ### **Launching**
 
@@ -41,8 +51,9 @@ Another alternative to launch the visualizer is to use the Visual Studio Code sh
 <u>Fields</u> - Each JSON log entry contains the log text, and fields associated with the log. I.e., field `action` is the type of log it is (`SendEvent`, `ReceiveEvent`, `StateTransition`, etc...). Field `target` is the target machine of a `SendEvent` log entry. Field `machine` is the name of the machine. More details can be found in [P JSON Output](./p_json_output.md)
 
 ### **Breakdown**
-
-![Trace Visualizer](../images/trace-visualizer/trace_visualizer.png)
+<div class="screenshots">
+	<img src="../../images/trace-visualizer/trace_visualizer.png">
+</div>
 
 <table>
 	<thead class="block">

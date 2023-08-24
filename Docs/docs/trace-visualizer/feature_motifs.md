@@ -6,7 +6,16 @@
 		content: attr(data-icon);
 		font-size: 1em;
 	}
+
+	.md-typeset h1,
+	.md-content__button {
+		display: none;
+	}
 </style>
+
+<div align="center">
+  <h2>Motifs</h2>
+</div>
 
 1. Pre-built options. Selecting one of the default motif options will highlights paths in the visualization that matches the motif pattren. In the example, paths in the main panel that matches Motif 1 (a simple sending request pattern, one machine sents to another machine) are highlighted.
 
