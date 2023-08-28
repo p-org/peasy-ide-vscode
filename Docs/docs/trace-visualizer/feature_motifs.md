@@ -17,73 +17,77 @@
   <h2>Motifs</h2>
 </div>
 
-1. Pre-built options. Selecting one of the default motif options will highlights paths in the visualization that matches the motif pattren. In the example, paths in the main panel that matches Motif 1 (a simple sending request pattern, one machine sents to another machine) are highlighted.
+Finally, let's discuss one of the most valuable features: motifs! Motifs provide P developers with a means to search for specific communication patterns within the graph. These patterns can greatly assist in debugging sessions, helping developers understand how the machines are interacting with each other.
 
-	<figure class="video_container">
-		<video controls="true" allowfullscreen="true">
-			<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/5ebf79af-af52-4c4c-8e63-42d1ae75b5fe" type="video/mp4"/>
-		</video>
-	</figure>
+**Default Motifs**
 
-2. Building custom motifs. You can build your own custom motif pattern in the search bar under the "Structured Search" tab. In the example, the custom motif searches for pattern where machine 1 sends something to machine 2, and then later sends something to machie 3, and lastly sends something to machine 4.
-	<ul>
-		<li data-icon="❑">Single click creates a node in a machine</li>
-		<li data-icon="❑">Click and drag connects one machine's node to another machine's node</li>
-		<li data-icon="❑">Double clicking a node deletes it</li>
-	</ul>
+The trace visualizer comes with default motif options available under the 'Motif' tab in the left panel. By default, there are `2-event`, `3-event`, and `4-event` motifs. Selecting any of these default motif options will highlight paths in the graph that match the motif pattern.
 
-	<figure class="video_container">
-		<video controls="true" allowfullscreen="true">
-			<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/8123613c-7cec-4aac-ac52-6de02d2cca21" type="video/mp4"/>
-		</video>
-	</figure>
+<ul>
+	<li data-icon="❑">In the following video demo, paths in the graph that match <code>Motif 1</code>, a <code>2-event</code> motif, are highlighted. This motif represents a simple send-receive pattern <i>(one machine sends an event to another machine, and that machine receives the event)</i>.</li>
+</ul>
 
-3. P motifs. You can find specific P send-receive patterns within the visualizer using the following syntax in the [search bar](./feature_search_bar.md).
-	<ul>
-		<li data-icon="❑">Syntax</li>
-		<ul>
-			<li data-icon="❑">`#pmotif=({constraint1}>{constraint2}>>{constraint3}...)`</li>
-			<ul>
-				<li data-icon="❑">`constraint[n]` is any text filtering format supported by the basic [search bar](./feature_search_bar.md)</li>
-				<li data-icon="❑">`>` and `>>` indicates the searching behavior after a constraint is satisfied</li>
-				<ul>
-					<li data-icon="❑">
-						`#pmotif=({constraint1}>{constraint2})` means that we are looking for a send event that satisfies `constraint1` and then the **immediate** first send event that satisfies `constraint2`
-					</li>
-					<li data-icon="❑">
-						`#pmotif=({constraint1}>>{constraint2})` means that we are looking for a send event that satisfies `constraint1` and then **any** send event afterwards that satisfies constraint `constraint2`
-					</li>
-				</ul>
-			</ul>
-			<li data-icon="❑">All P send-receive patterns matching the specified P motif are highlighted</li>
-		</ul>
-		<li data-icon="❑">Example</li>
-		<ul>
-			<li data-icon="❑">`#pmotif=({eInformCoordinator && target="Participant(3)"}>>{"status=0"}>{target="Client(8)"})`</li>
-			<li data-icon="❑">The constraints of the pattern we are looking for:</li>
-			<ul>
-				<li data-icon="❑">`constraint1` = `eInformCoordinator && target="Participant(3)"`</li>
-				<li data-icon="❑">`constraint2` = `"status=0"`</li>
-				<li data-icon="❑">`constraint3` = `target="Client(8)"`</li>
-			</ul>
-			<li data-icon="❑">The pattern breakdown:</li>
-			<ul>
-				<li data-icon="❑">We first look for a send event that satisfies `constraint1` — that the log contains the text "eInformCoordinator" **AND** field `target="Participant(3)"`</li>
-				<li data-icon="❑">Then, after a send event *from machine A to B* satisfying `constraint1` is found, we are looking for another send event *from machine B to C* that satisfies `constraint2` anytime afterwards (indicated by the search behavior `>>`) — that the log constains the text "status=0"</li>
-				<li data-icon="❑">Lastly, after the send event *from machine B to C* satisfying `constraint2` is found, we are looking for one last send event *from machine C to D* that satisfies `constraint3` immediately afterwards (indicated by the search behavior `>`) — that the log has field `target="Client(8)"`</li>
-			</ul>
-			<li data-icon="❑">Caveat</li>
-			<ul>
-				<li data-icon="❑">Machines A, B, C, D doesn't necessarily have to be all different machines — this was just to show that the send event is between two different machines</li>
-			</ul>
-		</ul>
-		<li data-icon="❑">
-			In the video, we are looking for first a send event that contains text "eWriteTransReq", then immediately another send event that contains text "eWriteTransResp", and lastly another immediate send event that contains the text "eReadTransReq"
-		</li>
-	</ul>
+<figure class="video_container">
+	<video controls="true" allowfullscreen="true" style="width: 100%;">
+		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/5ebf79af-af52-4c4c-8e63-42d1ae75b5fe" type="video/mp4"/>
+	</video>
+</figure>
 
-	<figure class="video_container">
-		<video controls="true" allowfullscreen="true">
-			<source src="../../videos/trace-visualizer/p_motif.mp4" type="video/mp4"/>
-		</video>
-	</figure>
+**Custom Motifs**
+
+In addition to the default motifs, you can also build your own custom motifs! You can build them in the search bar under the `Structured Search` tab. Here's how you can interact with the custom motif builder.
+
+<ul>
+	<li data-icon="❑">A single click on a machine line creates a node in that machine.</li>
+	<li data-icon="❑">Clicking and dragging connects one machine's node to another machine's node.</li>
+	<li data-icon="❑">Double-clicking a node deletes it.</li>
+</ul>
+
+<ul>
+	<li data-icon="❑">
+		In the video demo below, a custom motif was built that searches for patterns where <code>Machine 1</code> sends something to <code>Machine 2</code>, then later sends something to <code>Machine 3</code>, and finally sends something to <code>Machine 4</code>.
+	</li>
+</ul>
+
+<figure class="video_container">
+	<video controls="true" allowfullscreen="true" style="width: 100%;">
+		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/8123613c-7cec-4aac-ac52-6de02d2cca21" type="video/mp4"/>
+	</video>
+</figure>
+
+**P Motifs**
+
+Lastly, we have P-specific motifs! With P-specific motifs, you can discover specific sequences of send-receive patterns that satisfy particular constraints within the graph using the following syntax in the [search bar](./feature_search_bar.md).
+
+<ul>
+	<li data-icon="❑"><code>#pmotif=({constraint1}>{constraint2}>>{constraint3}...)</code></li>
+	<li data-icon="❑"><code>constraint[n]</code> can be any filtering format supported by the basic search bar.</li>
+	<li data-icon="❑">
+		The characters <code>></code> and <code>>></code> indicate the searching behavior after a constraint is satisfied.<br />
+		Typing <code>#pmotif=({constraint1}<b>></b>{constraint2})</code> in the search bar will highlight a send-receive pattern where the first send event satisfies <code>constraint1</code> and the <b>immediate</b> subsequent send event satisfies <code>constraint2</code>.<br />
+		In contrast, typing <code>#pmotif=({constraint1}<b>>></b>{constraint2})</code> in the search bar will highlight send-receive patterns where the first send event satisfies <code>constraint1</code> and <b>any</b> second send event that follows the first one satisfies <code>constraint2</code>.
+	</li>
+</ul>
+
+Here is an example of a P motif to explain this concept further:
+
+<ul>
+	<li data-icon="❑"><code>#pmotif=({eInformCoordinator && target="Participant(3)"}>>{"status=0"}>{target="Client(8)"})</code></li>
+	<li data-icon="❑">
+		This P motif will highlight a sequence of send-receive patterns as follows: The first send event will satisfy the constraint that the node contains the text <code>eInformCoordinator</code> <b>and</b> has a field <code>target</code> equal to <code>Participant(3)</code>. Then, following this first send event, it will highlight <b>any</b> send events afterwards <i>(indicated by <code>>></code>)</i> that satisfy the constraint that the node contains the text <code>status=0</code> or any of the node's fields' values contain the text <code>status=0</code>. Lastly, we are searching for an immediate send event after any of the send events just found that satisfies the last constraint that the node contain the field <code>target</code> with its value equal to <code>Client(8)</code>.
+	</li>
+</ul>
+
+<ul>
+	<li data-icon="❑">
+		Another example is shown in the following video demo with this P motif: <code>#pmotif=({eWriteTransReq}>{eWriteTransResp}>{eReadTransReq})</code>. This P motif looks for a sequence of send-receive patterns where the first is a send event that contains the text <code>eWriteTransReq</code>, then an <b>immediate</b> second send event that contains the text <code>eWriteTransResp</code>, and lastly, an <b>immediate</b> third send event that contains the text <code>eReadTransReq</code>.
+	</li>
+</ul>
+
+<figure class="video_container">
+	<video controls="true" allowfullscreen="true" style="width: 100%;">
+		<source src="../../videos/trace-visualizer/p_motif.mp4" type="video/mp4"/>
+	</video>
+</figure>
+
+**There you have it! Now, go ahead and try out the trace visualizer yourself to debug your P program!**

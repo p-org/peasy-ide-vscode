@@ -1,15 +1,6 @@
 <style>
-	.md-typeset__table, .w-full {
+	.md-typeset__table {
 		width: 100%;
-	}
-	.block {
-		display: block;
-	}
-	.flex {
-		display: flex;
-	}
-	.flex-1 {
-		flex: 1;
 	}
 	ul li {
 		padding-left: 0.5em;
@@ -32,27 +23,27 @@
 
 ### **Launching**
 
-First, make sure that you are in a P project directory and that you have JSON error traces available!
+First, ensure that you are in a P project directory and that you have JSON error traces available!
 
-Once you have a JSON trace, you can press ++f6++ to quick launch the trace visualizer. This should open a new tab in your Visual Studio Code and a file dialog window should open to prompt you to select JSON traces to visualize.
+Once you have a JSON trace, you can press ++f6++ to quickly launch the trace visualizer. This should open a new tab in your Visual Studio Code, and a file dialog window will appear, prompting you to select the JSON traces to visualize.
 
-Another alternative to launch the visualizer is to use the Visual Studio Code shortcut ++cmd++ + ++shift++ + ++p++ (Mac) or ++ctrl++ + ++shift++ + ++p++ (Windows) to open the Command Palette and typing `PeasyViz: Run` and clicking to launch the visualizer.
+Alternatively, you can launch the visualizer using the Visual Studio Code shortcut ++cmd++ + ++shift++ + ++p++ (Mac) or ++ctrl++ + ++shift++ + ++p++ (Windows) to open the Command Palette. Then, type `PeasyViz: Run` and click to launch the visualizer.
 
 <figure class="video_container">
-    <video controls="true" allowfullscreen="true">
+    <video controls="true" allowfullscreen="true" style="width: 100%;">
         <source src="../../videos/trace-visualizer/getting_started.mp4" type="video/mp4"/>
     </video>
 </figure>
 
 ### **Terminology**
 
-<u>Log</u> - The text of all the actions wthin the trace.  
-<u>Motif</u> - Structural patterns in the visualization graph.  
-<u>Fields</u> - Each JSON log entry contains the log text, and fields associated with the log. I.e., field `action` is the type of log it is (`SendEvent`, `ReceiveEvent`, `StateTransition`, etc...). Field `target` is the target machine of a `SendEvent` log entry. Field `machine` is the name of the machine. More details can be found in [P JSON Output](./p_json_output.md)
+<u>Log</u> - The text of all the actions within the trace.<br />
+<u>Motif</u> - Structural patterns in the visualization graph.<br />
+<u>Fields</u> - Each JSON log entry contains the log text and fields associated with the log. For example, field `action` indicates the type of log it is (`SendEvent`, `ReceiveEvent`, `StateTransition`, etc.). Field `target` specifies the target machine of a `SendEvent` log entry, while field `machine` provides the name of the machine. More details can be found in [P JSON Output](./p_json_output.md).
 
 ### **Breakdown**
 <div class="screenshots">
-	<img src="../../images/trace-visualizer/trace_visualizer.png">
+	<img src="../../images/trace-visualizer/trace_visualizer.png" style="width: 100%;">
 </div>
 
 <table>
