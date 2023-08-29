@@ -28,6 +28,7 @@ If you would like to contribute or add to the current state of the Peasy extensi
         * Windows: ++ctrl+shift+b++
 
 4.  In order to test out the extension, press ++f5++ to create an `Extension Development Host` where you can open P projects to view how the extension looks in its current state.
+
 <div class="screenshots" markdown="1">
   <img src="../images/extension_host.png" alt="Extension Dev Host" style="width: 100%;">
 </div>

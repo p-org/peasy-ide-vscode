@@ -23,7 +23,7 @@ The trace visualizer interface for viewing multiple traces remains mostly consis
 
 <ul>
     <li data-icon="❑">
-        In the video demos below, we visualized three traces and switched between them by selecting the corresponding option from the dropdown in the central panel.
+        In the video demo below, we visualized three traces and switched between them by selecting the corresponding option from the dropdown in the central panel.
     </li>
 </ul>
 
@@ -39,29 +39,38 @@ The new `Clusters` tab at the top of the left panel allows us to separate traces
 
 <ul>
     <li data-icon="❑">
-        Clustering by the <code>number of machines</code> groups traces from the smallest to the largest number of machines.
+        Clustering by the <code>number of machines</code> groups traces from the smallest to the largest number of machines. In the example below, with the three traces that we selected earlier, they all have the same number of machines.
     </li>
 </ul>
 
+<div class="screenshots" markdown="1">
+  <img src="../../images/trace-visualizer/clusters_number_of_machines.png" alt="Cluster Number of Machines" style="width: 100%;">
+</div>
+
 <ul>
     <li data-icon="❑">
-        Clustering by the <code>trace comparison</code> groups traces to see an overview of how the traces differ from a selected base. Upon selecting to cluster by <code>trace comparison</code>, a dropdown is displayed to select a base trace. Then, options appear for us to select traces that have the same or different logs from the base trace, as well as same or different machines from the base trace.
+        Clustering by the <code>trace comparison</code> groups traces to provide an overview of how the traces differ from a selected base trace. When choosing to cluster by <code>trace comparison</code>, a dropdown menu appears to select a base trace. Subsequently, options become available for selecting traces that have either the same or different logs as the base trace, as well as traces with the same or different machines. In the example below, as all three traces have different machines from each other and contain varying logs, only the sub-category of <code>Different log from base</code> under the <code>Different machines from base</code> category is shown.
     </li>
 </ul>
+
+<div class="screenshots" markdown="1">
+  <img src="../../images/trace-visualizer/clusters_trace_comparison.png" alt="Cluster Trace Comparison" style="width: 100%;">
+</div>
 
 **Pairwise Comparisons**
 
-By default, you can select to view each trace individually, or you can click the `PAIRWISE` button on the top of the right panel to view two traces side by side. When in `PAIRWISE` mode, another option appears at the top of the right panel called `SHOW DIFFERENCES`. Upon clicking `SHOW DIFFERENCES`, any differences between the two traces in the graph (center panel) will be presented as a diamond shape.
+Beyond viewing the traces individually, the trace visualizer also supports a side-by-side comparison. You can click the `PAIRWISE` button at the top of the right panel to view two traces side by side. When in `PAIRWISE` mode, another option appears at the top of the right panel called `SHOW DIFFERENCES`. Clicking `SHOW DIFFERENCES` will highlight any differences between the two traces in the graph (center panel) by presenting them as diamond shapes.
 
 <ul>
     <li data-icon="❑">
-        The diamond shape means that a machine/node appears in the trace that it's in, but not the other one. Below are some images to help.
+        The diamond shape indicates that a machine/node is present in one trace but not in the other. Below, you'll find some images to assist you.
     </li>
     <li data-icon="❑">
-        In the top machine row, we see that <code>tcMultipleClientsNoFailure1</code> <i>(left side)</i> has machine name <code>Client(7)</code> and <code>tcMultipleClientsNoFailure2</code> <i>(right side)</i> has machine name <code>Client(8)</code>. The diamond in <code>Client(7)</code> in <code>tcMultipleClientsNoFailure1</code> means that <code>Client(7)</code> occurs in <code>tcMultipleClientsNoFailure1</code> but not in <code>tcMultipleClientsNoFailure2</code>.
+        In the top row of machines, we observe that <code>tcMultipleClientsNoFailure1</code> <i>(left side)</i> corresponds to the machine named <code>Client(7)</code>, and <code>tcMultipleClientsNoFailure2</code> <i>(right side)</i> corresponds to the machine named <code>Client(8)</code>. The diamond symbol displayed on <code>Client(7)</code> within <code>tcMultipleClientsNoFailure1</code> indicates that <code>Client(7)</code> is present in <code>tcMultipleClientsNoFailure1</code> but not in <code>tcMultipleClientsNoFailure2</code>.
     </li>
     <li data-icon="❑">
-        We also see a diamond node under machine <code>Client(9)</code>. In <code>tcMultipleClientsNoFailure1</code>, that node corresponds to the log <pre><code>'Client(9)' in state 'SendWriteTransaction' sent event 'eWriteTransReq with payload (client=Client(9), trans=key="3", val=8, transId=202)' to 'Coordinator(6)'.</code></pre> where in <code>tcMultipleClientsNoFailure2</code>, the node corresponds to the following log. <pre><code>'Client(9)' in state 'SendWriteTransaction' sent event 'eWriteTransReq with payload (client=Client(9), trans=key="8", val=2, transId=202)' to 'Coordinator(6)'.</code></pre> The difference in these two nodes is that their payloads are different.
+        We can also observe a diamond-shaped node under the machine <code>Client(9)</code>. In the context of <code>tcMultipleClientsNoFailure1</code>, this node corresponds to the log entry: <pre><code>'Client(9)' in state 'SendWriteTransaction' sent event 'eWriteTransReq with payload (client=Client(9), trans=key="3", val=8, transId=202)' to 'Coordinator(6)'.</code></pre>Conversely, in <code>tcMultipleClientsNoFailure2</code>, the node corresponds to a different log entry: <pre><code>'Client(9)' in state 'SendWriteTransaction' sent event 'eWriteTransReq with payload (client=Client(9), trans=key="8", val=2, transId=202)' to 'Coordinator(6)'.</code></pre>
+The notable distinction between these two nodes lies in their payloads, which are distinct.
     </li>
 </ul>
 
