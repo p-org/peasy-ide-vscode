@@ -218,12 +218,25 @@ export class PeasyVizPanel {
 
       // Read files selected and convert to actual JSON
       for (const file of files || []) {
+
+        // Get the trace filename
+        var traceName: string = file.path.split('/').pop() ?? "";
+        traceName = traceName.split('.')[0];
+
+        // Get the trace content
         const errorTraceJsonLogsUint8Array: Uint8Array =
           await vscode.workspace.fs.readFile(file);
-        const errorTrace: any[] = JSON.parse(
+        const trace: any[] = JSON.parse(
           new TextDecoder().decode(errorTraceJsonLogsUint8Array)
         );
-        errorTraces.push(errorTrace);
+
+        // Add the trace (include the traceName and trace itself)
+        errorTraces.push(
+          {
+            traceName,
+            trace,
+          }
+        );
       }
     }
 
