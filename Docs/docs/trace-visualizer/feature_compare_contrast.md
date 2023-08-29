@@ -15,28 +15,21 @@
     <h2>Compare and Contrast</h2>
 </div>
 
-Finally, let's talk about the last feature of the Peasy Trace Visualizer: comparing and contrasting multiple traces. When selecting traces to visualize upon launching the trace visualizer, you can choose to select multiple JSON traces at once *(it is suggested that you put all the traces in one folder for easier selection in the file dialog window)*.
+Finally, let's discuss the last feature of the Peasy Trace Visualizer: comparing and contrasting multiple traces. When selecting traces to visualize upon launching the trace visualizer, you can choose to select multiple JSON traces at once. *(It is suggested that you place all the traces in one folder to facilitate easier selection in the file dialog window.)*
 
 **View Different Traces**
 
-The trace visualizer interface when selecting to view multiple traces is generally the same, with a few exceptions. On the left panel, in addition to the `Log lines` and `Motifs` tabs, there is now also a `Clusters` tab. Additionally, in the main center graph panel, there is a dropdown option to select the different traces that were chosen. Lastly, at the top of the right panel, there is an option for `PAIRWISE` which we'll discuss right after.
+The trace visualizer interface for viewing multiple traces remains mostly consistent, with a few exceptions. On the left panel, alongside the `Log lines` and `Motifs` tabs, there is now a `Clusters` tab as well. Furthermore, within the central graph panel, there exists a dropdown option for selecting the different traces that have been chosen. Lastly, located at the upper section of the right panel, there is an `PAIRWISE` option which we will discuss shortly.
 
 <ul>
     <li data-icon="❑">
-        Each of the selected traces represents a different iteration in the order they were originally chosen in the file dialog window. In the video demos below, we chose to visualize three traces and switched between them by selecting the respective option from the dropdown in the center panel.
+        In the video demos below, we visualized three traces and switched between them by selecting the corresponding option from the dropdown in the central panel.
     </li>
 </ul>
 
-
 <figure class="video_container">
 	<video controls="true" allowfullscreen="true" style="width: 100%;">
-		<source src="../../videos/trace-visualizer/selecting_multiple_traces.mp4" type="video/mp4"/>
-	</video>
-</figure>
-
-<figure class="video_container">
-	<video controls="true" allowfullscreen="true" style="width: 100%;">
-		<source src="../../videos/trace-visualizer/switching_traces.mp4" type="video/mp4"/>
+		<source src="../../videos/trace-visualizer/compare_contrast_select.mp4" type="video/mp4"/>
 	</video>
 </figure>
 
