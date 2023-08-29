@@ -515,15 +515,24 @@ Shiviz.prototype.visualize = function (
     // Get the labels and its corresponding logEvents.
     const labels = [];
     const labelsLogEventsMap = {};
-    if (jsonLogs.length > 0 && Array.isArray(jsonLogs[0]))
-      for (let logIter = 0; logIter < jsonLogs.length; logIter++) {
-        const labelName = `Iteration #${logIter + 1}`;
-        labels.push(labelName);
-        labelsLogEventsMap[labelName] = getLogEvents(jsonLogs[logIter]);
+
+    // Iterate through all the traces
+    for (let t = 0; t < jsonLogs.length; t++) {
+      // Decompose and get traceName and trace itself
+      let { traceName, trace } = jsonLogs[t];
+      // Check if trace is verbose mode trace
+      if (trace.length > 0 && Array.isArray(trace[0])) {
+        // If it is, get each iter of the verbose trace
+        for (let vt = 0; vt < trace.length; vt ++) {
+          let labelName = `${traceName}_${vt}`;
+          labels.push(labelName);
+          labelsLogEventsMap[labelName] = getLogEvents(trace[vt]);
+        }
+        // If not, just push the trace itself
+      } else {
+        labels.push(traceName);
+        labelsLogEventsMap[traceName] = getLogEvents(trace);
       }
-    else {
-      labels.push("");
-      labelsLogEventsMap[""] = getLogEvents(jsonLogs);
     }
 
     labels.forEach(function (label) {
