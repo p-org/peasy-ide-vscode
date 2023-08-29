@@ -6,7 +6,6 @@
 		content: attr(data-icon);
 		font-size: 1em;
 	}
-
 	.md-typeset h1,
 	.md-content__button {
 		display: none;
@@ -17,7 +16,7 @@
   <h2>Motifs</h2>
 </div>
 
-Finally, let's discuss one of the most valuable features: motifs! Motifs provide P developers with a means to search for specific communication patterns within the graph. These patterns can greatly assist in debugging sessions, helping developers understand how the machines are interacting with each other.
+Now, let's discuss one of the most valuable features: motifs! Motifs provide P developers with a means to search for specific communication patterns within the graph. These patterns can greatly assist in debugging sessions, helping developers understand how the machines are interacting with each other.
 
 **Default Motifs**
 
