@@ -80,7 +80,7 @@ Clusterer.prototype.clusterByNumProcesses = function() {
 
     // If all the executions have the same number of processes, they get grouped into a single cluster
     if (max == min) {
-       headings.push("All executions have " + max + " processes:");
+       headings.push("All traces have " + max + " machines:");
        var labels = [];
 
        for (var i=0; i < views.length; i++) {
@@ -187,35 +187,35 @@ Clusterer.prototype.clusterByExecComparison = function() {
         // Determine which headings and subheadings should be drawn, map subheadings and execution labels to proper headings
 
         if (noDiffExecs.length > 0 || sameHostsDiffEventsExecs.length > 0) {
-             context.headings.push("Same hosts as base:");
+             context.headings.push("Same machines as base:");
              var sameHostsSubheadings = [];
              var sameHostsExecLabels = [];
 
              if (noDiffExecs.length > 0) {
-                 sameHostsSubheadings.push("Same events as base:");
+                 sameHostsSubheadings.push("Same logs as base:");
                  sameHostsExecLabels.push(noDiffExecs);
              }
              if (sameHostsDiffEventsExecs.length > 0) {
-                 sameHostsSubheadings.push("Different events from base:");
+                 sameHostsSubheadings.push("Different logs from base:");
                  sameHostsExecLabels.push(sameHostsDiffEventsExecs);
              }
-             context.headingsToLabelsMap["Same hosts as base:"] = [sameHostsSubheadings, sameHostsExecLabels];
+             context.headingsToLabelsMap["Same machines as base:"] = [sameHostsSubheadings, sameHostsExecLabels];
         }
 
         if (diffHostsSameEventsExecs.length > 0 || diffHostsDiffEventsExecs.length > 0) {
-             context.headings.push("Different hosts from base:");
+             context.headings.push("Different machines from base:");
              var diffHostsSubheadings = [];
              var diffHostsExecLabels = [];
 
              if (diffHostsSameEventsExecs.length > 0) {
-                 diffHostsSubheadings.push("Same events as base:");
+                 diffHostsSubheadings.push("Same logs as base:");
                  diffHostsExecLabels.push(diffHostsSameEventsExecs);
              }
              if (diffHostsDiffEventsExecs.length > 0) {
-                 diffHostsSubheadings.push("Different events from base:");
+                 diffHostsSubheadings.push("Different logs from base:");
                  diffHostsExecLabels.push(diffHostsDiffEventsExecs);
              }
-             context.headingsToLabelsMap["Different hosts from base:"] = [diffHostsSubheadings, diffHostsExecLabels];
+             context.headingsToLabelsMap["Different machines from base:"] = [diffHostsSubheadings, diffHostsExecLabels];
         }
         context.drawClusterResults();
     }

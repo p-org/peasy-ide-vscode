@@ -433,16 +433,16 @@ const shivizSourceHtml = (
 						<div id="clusterOption">
 							<p>Cluster executions by:</p>
 							<input id="clusterNumProcess" type="checkbox">
-							<label>number of processes</label><br>
+							<label>number of machines</label><br>
 							<input id="clusterComparison" type="checkbox">
-							<label>execution comparison</label>
+							<label>trace comparison</label>
 						</div>
 						<table class="clusterResults">
 							<tr>
-								<td><label id="baseLabel">Base execution:</label></td>
+								<td><label id="baseLabel">Base error trace:</label></td>
 								<td>
 									<select class="clusterBase">
-										<option id="placeholder" style="display:none" selected>Select a base execution
+										<option id="placeholder" style="display:none" selected>Select a base error trace
 										</option>
 									</select>
 								</td>
