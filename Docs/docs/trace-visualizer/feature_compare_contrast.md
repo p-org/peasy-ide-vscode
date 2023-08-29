@@ -19,7 +19,7 @@ Finally, let's talk about the last feature of the Peasy Trace Visualizer: compar
 
 **View Different Traces**
 
-The trace visualizer interface when selecting to view multiple traces is generally the same, with a few exceptions. On the left panel, in addition to the `Log lines` and `Motifs` tabs, there is now also a `Clusters` tab. Additionally, in the main center graph panel, there is a dropdown option to select the different traces that were chosen. Lastly, at the top of the right panel, there is an option for `Pairwise` which we'll discuss right after.
+The trace visualizer interface when selecting to view multiple traces is generally the same, with a few exceptions. On the left panel, in addition to the `Log lines` and `Motifs` tabs, there is now also a `Clusters` tab. Additionally, in the main center graph panel, there is a dropdown option to select the different traces that were chosen. Lastly, at the top of the right panel, there is an option for `PAIRWISE` which we'll discuss right after.
 
 <ul>
     <li data-icon="❑">
@@ -42,7 +42,7 @@ The trace visualizer interface when selecting to view multiple traces is general
 
 **Trace Clusters**
 
-The `Clusters` tab allows us to separate traces into different groups based on a chosen metric between `number of machines` or `trace comparison`.
+The new `Clusters` tab at the top of the left panel allows us to separate traces into different groups based on a chosen metric between `number of machines` or `trace comparison`.
 
 <ul>
     <li data-icon="❑">
@@ -58,5 +58,23 @@ The `Clusters` tab allows us to separate traces into different groups based on a
 
 **Pairwise Comparisons**
 
-By default, you can select to view each trace individually, or you can click the `Pairwise` button on the top of the right panel to view two traces side by side. 
+By default, you can select to view each trace individually, or you can click the `PAIRWISE` button on the top of the right panel to view two traces side by side. When in `PAIRWISE` mode, another option appears at the top of the right panel called `SHOW DIFFERENCES`. Upon clicking `SHOW DIFFERENCES`, any differences between the two traces in the graph (center panel) will be presented as a diamond shape.
 
+<ul>
+    <li data-icon="❑">
+        The diamond shape means that a machine/node appears in the trace that it's in, but not the other one. Below are some images to help.
+    </li>
+    <li data-icon="❑">
+        In the top machine row, we see that <code>tcMultipleClientsNoFailure1</code> <i>(left side)</i> has machine name <code>Client(7)</code> and <code>tcMultipleClientsNoFailure2</code> <i>(right side)</i> has machine name <code>Client(8)</code>. The diamond in <code>Client(7)</code> in <code>tcMultipleClientsNoFailure1</code> means that <code>Client(7)</code> occurs in <code>tcMultipleClientsNoFailure1</code> but not in <code>tcMultipleClientsNoFailure2</code>.
+    </li>
+    <li data-icon="❑">
+        We also see a diamond node under machine <code>Client(9)</code>. In <code>tcMultipleClientsNoFailure1</code>, that node corresponds to the log <pre><code>'Client(9)' in state 'SendWriteTransaction' sent event 'eWriteTransReq with payload (client=Client(9), trans=key="3", val=8, transId=202)' to 'Coordinator(6)'.</code></pre> where in <code>tcMultipleClientsNoFailure2</code>, the node corresponds to the following log. <pre><code>'Client(9)' in state 'SendWriteTransaction' sent event 'eWriteTransReq with payload (client=Client(9), trans=key="8", val=2, transId=202)' to 'Coordinator(6)'.</code></pre> The difference in these two nodes is that their payloads are different.
+    </li>
+</ul>
+
+
+<div class="screenshots">
+    <img src="../../images/trace-visualizer/pairwise_comparison.png" alt="Extension Dev Host" style="width: 100%;">
+</div>
+
+**There you have it! Now, go ahead and try out the trace visualizer yourself to debug your P program!**
