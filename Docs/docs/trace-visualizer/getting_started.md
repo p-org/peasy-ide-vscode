@@ -30,7 +30,7 @@ Once you have a JSON trace, you can press ++f6++ to quickly launch the trace vis
 Alternatively, you can launch the visualizer using the Visual Studio Code shortcut ++cmd++ + ++shift++ + ++p++ (Mac) or ++ctrl++ + ++shift++ + ++p++ (Windows) to open the Command Palette. Then, type `PeasyViz: Run` and click to launch the visualizer.
 
 <figure class="video_container">
-    <video controls="true" allowfullscreen="true" style="width: 100%;">
+    <video controls="true" allowfullscreen="true" >
         <source src="../../videos/trace-visualizer/getting_started.mp4" type="video/mp4"/>
     </video>
 </figure>
@@ -43,7 +43,7 @@ Alternatively, you can launch the visualizer using the Visual Studio Code shortc
 
 ### **Breakdown**
 <div class="screenshots">
-	<img src="../../images/trace-visualizer/trace_visualizer.png" style="width: 100%;">
+	<img src="../../images/trace-visualizer/trace_visualizer.png" >
 </div>
 
 <table>

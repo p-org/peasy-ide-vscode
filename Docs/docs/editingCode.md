@@ -21,7 +21,7 @@ Snippets help P developers code faster and easier because they don't need to ref
 Below is an example demo of coding with snippets in P!
 
 <figure class="video_container">
-  <video controls="true" allowfullscreen="true" style="width: 100%;" >
+  <video controls="true" allowfullscreen="true"  >
     <source src="../videos/snippets.mov" type="video/mp4">
   </video>
 </figure>
@@ -36,6 +36,6 @@ Here is a sample of syntax highlighting for the [Two Phase Commit](https://githu
 
 
 <div class="screenshots" markdown="1">
-  <img src="../images/syntax_highlighting.png" alt="Syntax Highlighting" style="width: 100%;">
+  <img src="../images/syntax_highlighting.png" alt="Syntax Highlighting" >
 </div>
 

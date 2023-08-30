@@ -34,7 +34,7 @@ We can filter out specific nodes/logs using their associated fields as follows: 
 </ul>
 
 <figure class="video_container">
-	<video controls="true" allowfullscreen="true" style="width: 100%;">
+	<video controls="true" allowfullscreen="true" >
 		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/1ebf50f6-1e30-4d28-ac43-81d517237ad8" type="video/mp4"/>
 	</video>
 </figure>
@@ -51,7 +51,7 @@ In addition to filtering by nodes, we can also filter out nodes and fields by te
 
 
 <figure class="video_container">
-	<video controls="true" allowfullscreen="true" style="width: 100%;">
+	<video controls="true" allowfullscreen="true" >
 		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/5d1f6d71-9851-4218-bae4-a144f8824853" type="video/mp4"/>
 	</video>
 </figure>
@@ -65,7 +65,7 @@ If the text you are trying to filter by contains any nonalphanumeric characters 
 </ul>
 
 <figure class="video_container">
-	<video controls="true" allowfullscreen="true" style="width: 100%;">
+	<video controls="true" allowfullscreen="true" >
 		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/1d5387ab-43d5-43d0-9e08-3ed30bdfcc93" type="video/mp4"/>
 	</video>
 </figure>
