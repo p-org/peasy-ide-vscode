@@ -2,72 +2,77 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>http://p-org.github.io/Peasy/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/compilingCode/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/contribute/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/editingCode/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/gettingStarted/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/motivations/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/runningTestcases/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/shortcutsAndCommands/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/visualizingStateMachines/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/trace-visualizer/feature_basics/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>http://p-org.github.io/Peasy/trace-visualizer/feature_compare_contrast/</loc>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/trace-visualizer/feature_motifs/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/trace-visualizer/feature_search_bar/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/trace-visualizer/getting_started/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://p-org.github.io/Peasy/trace-visualizer/p_json_output/</loc>
-         <lastmod>2023-08-22</lastmod>
+         <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

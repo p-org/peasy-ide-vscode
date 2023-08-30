@@ -58,4 +58,34 @@
   margin: 10px;
 }
 
+video {
+  width: 70%;
+}
 
+.screenshots { 
+  width: 70%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.screenshots img {
+  width: 100%;
+}
+
+/* Utility Classes */
+.w-full {
+  width: 100%;
+}
+
+.block {
+  display: block;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}

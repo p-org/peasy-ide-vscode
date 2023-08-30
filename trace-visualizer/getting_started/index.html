@@ -553,6 +553,8 @@
         
           
         
+          
+        
       
       
         <label class="md-nav__link" for="__nav_3_6_3" id="__nav_3_6_3_label" tabindex="0">
@@ -603,6 +605,20 @@
     <li class="md-nav__item">
       <a href="../feature_motifs/" class="md-nav__link">
         Motifs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../feature_compare_contrast/" class="md-nav__link">
+        Compare and Contrast
       </a>
     </li>
   
@@ -677,17 +693,8 @@
   <h1>Getting Started</h1>
 
 <style>
-    .md-typeset__table, .w-full {
+    .md-typeset__table {
         width: 100%;
-    }
-    .block {
-        display: block;
-    }
-    .flex {
-        display: flex;
-    }
-    .flex-1 {
-        flex: 1;
     }
     ul li {
         padding-left: 0.5em;
@@ -696,24 +703,36 @@
         content: attr(data-icon);
         font-size: 1em;
     }
+
+    .md-typeset h1,
+    .md-content__button {
+        display: none;
+    }
 </style>
 
+<div align="center">
+  <h2>Getting Started</h2>
+</div>
+
 <h3 id="launching"><strong>Launching</strong></h3>
-<p>First, make sure that you are in a P project directory and that you have JSON error traces available!</p>
-<p>Once you have a JSON trace, you can press <span class="keys"><kbd class="key-f6">F6</kbd></span> to quick launch the trace visualizer. This should open a new tab in your Visual Studio Code and a file dialog window should open to prompt you to select JSON traces to visualize.</p>
-<p>Another alternative to launch the visualizer is to use the Visual Studio Code shortcut <span class="keys"><kbd class="key-command">Cmd</kbd></span> + <span class="keys"><kbd class="key-shift">Shift</kbd></span> + <span class="keys"><kbd class="key-p">P</kbd></span> (Mac) or <span class="keys"><kbd class="key-control">Ctrl</kbd></span> + <span class="keys"><kbd class="key-shift">Shift</kbd></span> + <span class="keys"><kbd class="key-p">P</kbd></span> (Windows) to open the Command Palette and typing <code>PeasyViz: Run</code> and clicking to launch the visualizer.</p>
+<p>First, ensure that you are in a P project directory and that you have JSON error traces available!</p>
+<p>Once you have a JSON trace, you can press <span class="keys"><kbd class="key-f6">F6</kbd></span> to quickly launch the trace visualizer. This should open a new tab in your Visual Studio Code, and a file dialog window will appear, prompting you to select the JSON traces to visualize.</p>
+<p>Alternatively, you can launch the visualizer using the Visual Studio Code shortcut <span class="keys"><kbd class="key-command">Cmd</kbd></span> + <span class="keys"><kbd class="key-shift">Shift</kbd></span> + <span class="keys"><kbd class="key-p">P</kbd></span> (Mac) or <span class="keys"><kbd class="key-control">Ctrl</kbd></span> + <span class="keys"><kbd class="key-shift">Shift</kbd></span> + <span class="keys"><kbd class="key-p">P</kbd></span> (Windows) to open the Command Palette. Then, type <code>PeasyViz: Run</code> and click to launch the visualizer.</p>
 <figure class="video_container">
-    <video controls="true" allowfullscreen="true">
+    <video controls="true" allowfullscreen="true" >
         <source src="../../videos/trace-visualizer/getting_started.mp4" type="video/mp4"/>
     </video>
 </figure>
 
 <h3 id="terminology"><strong>Terminology</strong></h3>
-<p><u>Log</u> - The text of all the actions wthin the trace.<br />
+<p><u>Log</u> - The text of all the actions within the trace.<br />
 <u>Motif</u> - Structural patterns in the visualization graph.<br />
-<u>Fields</u> - Each JSON log entry contains the log text, and fields associated with the log. I.e., field <code>action</code> is the type of log it is (<code>SendEvent</code>, <code>ReceiveEvent</code>, <code>StateTransition</code>, etc...). Field <code>target</code> is the target machine of a <code>SendEvent</code> log entry. Field <code>machine</code> is the name of the machine. More details can be found in <a href="../p_json_output/">P JSON Output</a></p>
+<u>Fields</u> - Each JSON log entry contains the log text and fields associated with the log. For example, field <code>action</code> indicates the type of log it is (<code>SendEvent</code>, <code>ReceiveEvent</code>, <code>StateTransition</code>, etc.). Field <code>target</code> specifies the target machine of a <code>SendEvent</code> log entry, while field <code>machine</code> provides the name of the machine. More details can be found in <a href="../p_json_output/">P JSON Output</a>.</p>
 <h3 id="breakdown"><strong>Breakdown</strong></h3>
-<p><img alt="Trace Visualizer" src="../../images/trace-visualizer/trace_visualizer.png" /></p>
+<div class="screenshots">
+    <img src="../../images/trace-visualizer/trace_visualizer.png" >
+</div>
+
 <table>
     <thead class="block">
         <tr class="flex">
