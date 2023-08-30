@@ -6,7 +6,6 @@
 		content: attr(data-icon);
 		font-size: 1em;
 	}
-
 	.md-typeset h1,
 	.md-content__button {
 		display: none;
@@ -17,50 +16,60 @@
   <h2>Basics</h2>
 </div>
 
-**Compiling Code**
+Let's start with some of the basics of the trace visualizer—how to interface with the trace visualizer!
 
-1. Hovering over a log highlights the corresponding node in the main panel and vice versa.
+**Log/Node Highlighting**
+
+When hovering over a log, it highlights the corresponding node in the main graph panel (center panel), and conversely, hovering over a node highlights the corresponding log in the logs panel (left panel).
 	
-	<figure class="video_container">
-		<video controls="true" allowfullscreen="true">
-			<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/3c7a1246-a3d7-4b6c-893f-1a0492aa30f0" type="video/mp4"/>
-		</video>
-	</figure>
+<figure class="video_container">
+	<video controls="true" allowfullscreen="true" >
+		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/3c7a1246-a3d7-4b6c-893f-1a0492aa30f0" type="video/mp4"/>
+	</video>
+</figure>
 
-2. A series of individual nodes are collapsible for compactness in UI.
+**Collapsible Nodes**
 
-	<figure class="video_container">
-		<video controls="true" allowfullscreen="true">
-			<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/236a2926-a177-4381-894f-92ce38d86ca8" type="video/mp4"/>
-		</video>
-	</figure>
+When clicking a node, you can choose to `Collapse` or `Expand` the sequence of individual machine nodes for a more compact UI.
 
-3. Machines are toggleable so users can show/hide a machine.
+<figure class="video_container">
+	<video controls="true" allowfullscreen="true" >
+		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/236a2926-a177-4381-894f-92ce38d86ca8" type="video/mp4"/>
+	</video>
+</figure>
 
-	<figure class="video_container">
-		<video controls="true" allowfullscreen="true">
-			<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/4d1c24aa-89d0-4713-9dbf-174ef9cd746d" type="video/mp4"/>
-		</video>
-	</figure>
+**Machine Toggling**
 
-4. Filtering a machine will remove all machines that has not direct connection to the current machine. 
+Machines can be toggled on or off, allowing users to show or hide a machine for enhanced analysis.
 
-	<ul>
-		<li data-icon="❑">
-			In the video demo, we first filtered machine "Coordinator(6)", which hid all machines that has no direct connections to "Coordinator(6)". We then filtered machine "Client(9)" as well, which removed all other machines as none of them were connected to both "Coordinator(6)" and "Client(9)".
-		</li>
-	</ul>
+<figure class="video_container">
+	<video controls="true" allowfullscreen="true" >
+		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/4d1c24aa-89d0-4713-9dbf-174ef9cd746d" type="video/mp4"/>
+	</video>
+</figure>
 
-	<figure class="video_container">
-		<video controls="true" allowfullscreen="true">
-			<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/cf74af1c-bc1c-4c01-b2ae-0a8a0166e28c" type="video/mp4"/>
-		</video>
-	</figure>
+**Machines Filtering**
 
-5. Clicking on an individual node will open a dialog box and it will have the log text by default and a "Show More" button if it has any fields. Clicking on the "Show More" will show details regarding the log.
+Filtering a machine will remove all machines that do not have a direct connection to the current machine.
 
-	<figure class="video_container">
-		<video controls="true" allowfullscreen="true">
-			<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/13bfcbfa-6b57-49b4-87fa-929800b6b7a3" type="video/mp4"/>
-		</video>
-	</figure>
+<ul>
+	<li data-icon="❑">
+    	For example, in the following video demo, we first filtered the machine <code>Coordinator(6)</code>, which hid all machines that have no direct connections to <code>Coordinator(6)</code>. We then filtered the machine <code>Client(9)</code> as well, which removed all other machines since none of them were connected to both <code>Coordinator(6)</code> and <code>Client(9)</code>.
+	</li>
+</ul>
+
+<figure class="video_container">
+	<video controls="true" allowfullscreen="true" >
+		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/cf74af1c-bc1c-4c01-b2ae-0a8a0166e28c" type="video/mp4"/>
+	</video>
+</figure>
+
+**Show More Node Information**
+
+When you click on an individual node in the graph, a dialog box will open containing the log text associated with the node by default. The dialog box also includes a `Show More` button. Clicking the `Show More` button will reveal additional details and data associated with the log.
+
+<figure class="video_container">
+	<video controls="true" allowfullscreen="true" >
+		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/13bfcbfa-6b57-49b4-87fa-929800b6b7a3" type="video/mp4"/>
+	</video>
+</figure>

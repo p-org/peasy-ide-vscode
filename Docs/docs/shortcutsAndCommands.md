@@ -3,7 +3,21 @@
   .md-content__button {
     display: none;
   }
-  
+  .md-typeset__table {
+    width: 100%;
+  }
+  .md-typeset__table thead, .md-typeset__table tbody {
+    display: block;
+  }
+  .md-typeset__table tr {
+    display: flex;
+  }
+  .md-typeset__table td:last-child, .md-typeset__table th:last-child {
+    flex: 1;
+  }
+  .md-typeset__table td:first-child, .md-typeset__table th:first-child {
+    width: clamp(131.48px, 25%, 12em);
+  }
 </style>
 
 <div align="center">

@@ -57,6 +57,7 @@ nav:
         - Basics: trace-visualizer/feature_basics.md
         - Search Bar: trace-visualizer/feature_search_bar.md
         - Motifs: trace-visualizer/feature_motifs.md
+        - Compare and Contrast: trace-visualizer/feature_compare_contrast.md
   - Contributing to the Peasy Extension: contribute.md
   - The Motivation Behind Peasy: motivations.md
   

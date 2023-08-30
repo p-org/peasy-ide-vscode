@@ -16,14 +16,14 @@ In order to create visualizations of P state machines, follow these steps or scr
 
 1. Press ++f7++ to run the command `p compile --mode stately` in the terminal. Your visualization code is generated! A message in red should be sent through the terminal.
 <div class="screenshots" markdown="1">
-   ![Syntax Highlighting](images/code_generation_text.png)
+   <img alt="Syntax Highlighting" src="../images/code_generation_text.png" >
 </div>
 2. Navigate to the file using ++ctrl++ `Click` or ++cmd++ `Click`. Copy-and-paste the file contents into https://stately.ai/viz.
 3. Click the Visualize button on the bottom left!
 
 Voila! Here is an example visualization using the P Tutorial's Two Phase Commit project.
 <div class="screenshots" markdown="1">
-  ![Visualization](images/visualization.png)
+  <img alt="Visualization" src="../images/visualization.png" >
 </div>
 
 <div align="center">
@@ -49,7 +49,7 @@ Stately's website contains four tabs:
   <h2>State Machine Visualization Tool Tutorial</h2>
 </div>
 <figure class="video_container">
-  <video controls="true" allowfullscreen="true" >
+  <video controls="true" allowfullscreen="true"  >
     <source src="../videos/visualization.mov" type="video/mp4">
   </video>
 </figure>
