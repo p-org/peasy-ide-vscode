@@ -240,11 +240,6 @@ export class PeasyVizPanel {
       }
     }
 
-    // If just one error trace log, just make the errorTraces the one error trace selected
-    if (errorTraces.length === 1) {
-      errorTraces = errorTraces[0];
-    }
-
     // Read and convert the chosen file into string and render the visualizer html
     return shivizSourceHtml(
       shivizScriptsUriMap,

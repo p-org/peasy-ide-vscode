@@ -454,7 +454,7 @@ Shiviz.prototype.visualize = function (
         const logEntry = singleJsonLogIter[i];
 
         // Don't include StrategyDescription
-        if (logEntry.type === "StrategyDescription") {
+        if (["StrategyDescription", "Print"].includes(logEntry.type)) {
           continue;
           // Process AssertionFilure logEntry details before adding the AssertionFailure node to ShiViz graph.
         } else if (logEntry.type === "AssertionFailure") {
