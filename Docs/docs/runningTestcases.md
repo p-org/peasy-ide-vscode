@@ -18,7 +18,7 @@ The Testing Panel in VS Code lists all P test cases.
 In this panel, click the :material-play-outline: button to run test cases or jump to the corresponding test case in the P program by pressing the icon right next to :material-play-outline: button. 
 
 <figure class="video_container">
-  <video controls="true" allowfullscreen="true" style="width: 100%;">
+  <video controls="true" allowfullscreen="true" >
     <source src="../videos/test_framework.mov" type="video/mp4">
   </video>
 </figure>

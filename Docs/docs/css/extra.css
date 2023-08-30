@@ -69,6 +69,10 @@ video {
   margin-right: auto;
 }
 
+.screenshots img {
+  width: 100%;
+}
+
 /* Utility Classes */
 .w-full {
   width: 100%;

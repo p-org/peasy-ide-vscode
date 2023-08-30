@@ -87,4 +87,4 @@ Each P error trace JSON output is in the following format.
 <b>MonitorStateTransition</b> — <i>log, monitor, isEntry, isInHotState, clock</i>  
 <b>StrategyDescription</b> — <i>log, strategy, strategyDescription</i>  
 
-> Check out this example <a href="./two_phase_commit_output.json" download>P JSON output</a> based on the [Two Phase Commit Tutorial](https://p-org.github.io/P/tutorial/twophasecommit/) from the P documentation!
+> Check out this example <a href="../two_phase_commit_output.json" download>P JSON output</a> based on the [Two Phase Commit Tutorial](https://p-org.github.io/P/tutorial/twophasecommit/) from the P documentation!

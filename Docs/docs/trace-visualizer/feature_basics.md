@@ -16,7 +16,7 @@
   <h2>Basics</h2>
 </div>
 
-Let's start with some of the basics of the trace visualizer—how to interface with the trace visulizer!
+Let's start with some of the basics of the trace visualizer—how to interface with the trace visualizer!
 
 **Log/Node Highlighting**
 

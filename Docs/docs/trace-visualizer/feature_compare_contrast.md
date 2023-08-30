@@ -28,7 +28,7 @@ The trace visualizer interface for viewing multiple traces remains mostly consis
 </ul>
 
 <figure class="video_container">
-	<video controls="true" allowfullscreen="true" style="width: 100%;">
+	<video controls="true" allowfullscreen="true" >
 		<source src="../../videos/trace-visualizer/compare_contrast_select.mp4" type="video/mp4"/>
 	</video>
 </figure>
@@ -44,7 +44,7 @@ The new `Clusters` tab at the top of the left panel allows us to separate traces
 </ul>
 
 <div class="screenshots" markdown="1">
-  <img src="../../images/trace-visualizer/clusters_number_of_machines.png" alt="Cluster Number of Machines" style="width: 100%;">
+  <img src="../../images/trace-visualizer/clusters_number_of_machines.png" alt="Cluster Number of Machines" >
 </div>
 
 <ul>
@@ -54,7 +54,7 @@ The new `Clusters` tab at the top of the left panel allows us to separate traces
 </ul>
 
 <div class="screenshots" markdown="1">
-  <img src="../../images/trace-visualizer/clusters_trace_comparison.png" alt="Cluster Trace Comparison" style="width: 100%;">
+  <img src="../../images/trace-visualizer/clusters_trace_comparison.png" alt="Cluster Trace Comparison" >
 </div>
 
 **Pairwise Comparisons**
@@ -76,7 +76,7 @@ The notable distinction between these two nodes lies in their payloads, which ar
 
 
 <div class="screenshots">
-    <img src="../../images/trace-visualizer/pairwise_comparison.png" alt="Extension Dev Host" style="width: 100%;">
+    <img src="../../images/trace-visualizer/pairwise_comparison.png" alt="Extension Dev Host" >
 </div>
 
 **There you have it! Now, go ahead and try out the trace visualizer yourself to debug your P program!**
