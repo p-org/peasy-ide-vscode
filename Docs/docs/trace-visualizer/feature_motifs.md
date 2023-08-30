@@ -27,7 +27,7 @@ The trace visualizer comes with default motif options available under the 'Motif
 </ul>
 
 <figure class="video_container">
-	<video controls="true" allowfullscreen="true" style="width: 100%;">
+	<video controls="true" allowfullscreen="true" >
 		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/5ebf79af-af52-4c4c-8e63-42d1ae75b5fe" type="video/mp4"/>
 	</video>
 </figure>
@@ -49,7 +49,7 @@ In addition to the default motifs, you can also build your own custom motifs! Yo
 </ul>
 
 <figure class="video_container">
-	<video controls="true" allowfullscreen="true" style="width: 100%;">
+	<video controls="true" allowfullscreen="true" >
 		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/8123613c-7cec-4aac-ac52-6de02d2cca21" type="video/mp4"/>
 	</video>
 </figure>
@@ -84,9 +84,7 @@ Here is an example of a P motif to explain this concept further:
 </ul>
 
 <figure class="video_container">
-	<video controls="true" allowfullscreen="true" style="width: 100%;">
+	<video controls="true" allowfullscreen="true" >
 		<source src="../../videos/trace-visualizer/p_motif.mp4" type="video/mp4"/>
 	</video>
 </figure>
-
-**There you have it! Now, go ahead and try out the trace visualizer yourself to debug your P program!**
