@@ -51,7 +51,22 @@ function VisualEdge(sourceVisualNode, targetVisualNode) {
     /** @private */
     this.opacity;
     this.setOpacity(0.6);
-    
+
+    try {
+      var sourceMachine = this.sourceVisualNode
+        .getNode()
+        .getFirstLogEvent()
+        .getFields().machine;
+      var { machine: targetMachine, action: targetAction } =
+        this.targetVisualNode.getNode().getFirstLogEvent().getFields();
+      if (
+        sourceMachine !== targetMachine &&
+        targetAction === "MonitorProcessEvent"
+      ) {
+        this.setOpacity(0);
+      }
+    } catch (e) {}
+
     this.$svg.attr({
         "x1": sourceVisualNode.getX(),
         "y1": sourceVisualNode.getY(),
@@ -174,7 +189,7 @@ VisualEdge.prototype.getOpacity = function() {
  * 
  * @param {Number} newOpacity The new opacity. Must be between 0 and 1 inclusive
  */
-VisualEdge.prototype.setOpacity = function(newOpacity) {
-    this.opacity = newOpacity;
-    this.$svg.attr("opacity", newOpacity);
+VisualEdge.prototype.setOpacity = function (newOpacity) {
+  this.opacity = newOpacity;
+  this.$svg.attr("opacity", newOpacity);
 };
