@@ -59,6 +59,7 @@ function VisualEdge(sourceVisualNode, targetVisualNode) {
         .getFields().machine;
       var { machine: targetMachine, action: targetAction } =
         this.targetVisualNode.getNode().getFirstLogEvent().getFields();
+      // Unhighlight edge if edge is connected to a MonitorProcessEvent
       if (
         sourceMachine !== targetMachine &&
         targetAction === "MonitorProcessEvent"
