@@ -53,16 +53,16 @@ function VisualEdge(sourceVisualNode, targetVisualNode) {
     this.setOpacity(0.6);
 
     try {
-      var sourceMachine = this.sourceVisualNode
+      var sourceMachine = this.sourceVisualNode.getNode().getHost();
+      var targetMachine = this.targetVisualNode.getNode().getHost();
+      var { action: targetAction } = this.targetVisualNode
         .getNode()
         .getFirstLogEvent()
-        .getFields().machine;
-      var { machine: targetMachine, action: targetAction } =
-        this.targetVisualNode.getNode().getFirstLogEvent().getFields();
-      // Unhighlight edge if edge is connected to a MonitorProcessEvent
+        .getFields();
+      // Unhighlight edge if edge is connected to a MonitorProcessEvent OR is a Print statement
       if (
         sourceMachine !== targetMachine &&
-        targetAction === "MonitorProcessEvent"
+        ["MonitorProcessEvent", "Print"].includes(targetAction)
       ) {
         this.setOpacity(0);
       }
