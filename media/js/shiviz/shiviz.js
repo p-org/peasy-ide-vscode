@@ -441,6 +441,30 @@ Shiviz.prototype.visualize = function (
     }
 
     /**
+     * A function that updates the "Print" machine's (NOT THE STANDARD P MACHINES OR MONITORS. Just made up for 
+     * visualizer purpose) vector clock based on the pervious log action's vector clock so there is a linear time association
+     * of when the print statement happened.
+     * 
+     * @param {Object} printVcMap - The print vector clock map
+     * @param {Object} prevLogVcMap - The previous log action's (the one prior to the print statement) vector clock
+     */
+    function updatePrintVcMap(printVcMap, prevLogVcMap) {
+      // Get a set of all the machines needed to update in the print vector clock map
+      const machinesToUpdate = new Set([...Object.keys(printVcMap), ...Object.keys(prevLogVcMap)]);
+      // Except the Print "machine" itself. This was updated right before this function was called.
+      machinesToUpdate.delete("Print");
+      // For each of the machineToUpdate, take the max of it value in printVcMap and prevLogVcMap. This is following the receive message
+      // protocol in updating vector clocks. More information on this wiki page: https://en.wikipedia.org/wiki/Vector_clock
+      for (const machineToUpdate of machinesToUpdate) {
+        if (machineToUpdate in printVcMap && machineToUpdate in prevLogVcMap) {
+          printVcMap[machineToUpdate] = Math.max(printVcMap[machineToUpdate], prevLogVcMap[machineToUpdate]);
+        } else {
+          printVcMap[machineToUpdate] = printVcMap[machineToUpdate] ?? prevLogVcMap[machineToUpdate];
+        }
+      }
+    }
+
+    /**
      * A function that takes a single iteration of json logs and get the log events in appropriate
      * representations workable with ShiViz.
      *
@@ -448,22 +472,39 @@ Shiviz.prototype.visualize = function (
      * @returns {Array.<LogEvent>} - Returns an array of LogEvent.
      */
     function getLogEvents(singleJsonLogIter) {
+      var printVcMap = {
+        Print: 0,
+      };
+
       var logEvents = [];
       for (let i = 0; i < singleJsonLogIter.length; i++) {
+        let prevLogEntry = null;
         const lineNum = i + 1;
         const logEntry = singleJsonLogIter[i];
 
         // Don't include StrategyDescription
-        if (["StrategyDescription", "Print"].includes(logEntry.type)) {
-          continue;
-          // Process AssertionFilure logEntry details before adding the AssertionFailure node to ShiViz graph.
-        } else if (logEntry.type === "AssertionFailure") {
-          // Find the log entry prior to AssertionFailure and append the machine name and clock details so the visualizer
-          // will append the assertion failure will connect to the last log prior to the entry
-          let prevLogEntry = singleJsonLogIter[i - 1];
-          logEntry.details["id"] = prevLogEntry.details.id ?? prevLogEntry.details.monitor ?? prevLogEntry.details.sender;
-          logEntry.details["clock"] = prevLogEntry.details.clock;
-          logEntry.details.clock[logEntry.details.id] += 1;
+        switch (logEntry.type) {
+          case "StrategyDescription":
+            continue;
+          case "AssertionFailure":
+            // Find the log entry prior to AssertionFailure and append the machine name and clock details so the visualizer
+            // will append the assertion failure will connect to the last log prior to the entry
+            prevLogEntry = singleJsonLogIter[i - 1];
+            logEntry.details["id"] = prevLogEntry.details.id ?? prevLogEntry.details.monitor ?? prevLogEntry.details.sender;
+            logEntry.details["clock"] = prevLogEntry.details.clock;
+            logEntry.details.clock[logEntry.details.id] += 1;  
+            break;
+          case "Print":
+            // Find the log entry prior to the Print and manually keep track of a vector clock map for Print statement machine
+            // relative to the previous log action's vector clock so the graph has time association for the print statement.
+            prevLogEntry = singleJsonLogIter[i - 1];
+            printVcMap.Print += 1;
+            updatePrintVcMap(printVcMap, prevLogEntry.details.clock);
+            logEntry.details["id"] = "Print";
+            logEntry.details["clock"] = printVcMap;
+            break;
+          default:
+            break;
         }
 
         // Create the fields dictionary

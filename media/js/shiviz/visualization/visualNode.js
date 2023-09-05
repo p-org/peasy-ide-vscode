@@ -78,6 +78,14 @@ function VisualNode(node) {
     this.opacity;
     this.setOpacity(1);
 
+    // Hides all the visualNodes for Prints
+    // try {
+    //   if (node.getHost() === "Print") {
+    //     this.setOpacity(0);
+    //   }
+    // } catch (e) {}
+    
+
     /** @private */
     this.label = "";
 	this.setLabel("");
