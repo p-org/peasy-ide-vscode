@@ -7,20 +7,14 @@
 </style>
 
 <div align="center">
-  <h2>Getting Started</h2>
+  <h2>Installing Peasy</h2>
 </div>
-
-## **Prerequisites**
-
-* P (version >= 2.0.15)
-* VS Code (version >= 1.78.0)
-* Peasy VS Code Extension
 
 ## **Installation**
 
 **Installing P**
 
-Follow the [Installing P](https://p-org.github.io/P/getstarted/install/) page to install P based on the platform you are using
+Follow the [Installing P](https://p-org.github.io/P/getstarted/install/) page to install P (version >= 2.0.15) based on the platform you are using. 
 
 
 ??? note "Make sure that you installed the right version of P (i.e., version >= 2.0.15)"
@@ -29,7 +23,7 @@ Follow the [Installing P](https://p-org.github.io/P/getstarted/install/) page to
 
 **Installing VS Code**
 
-Follow the [VS Code](https://code.visualstudio.com/docs) documentation to download and install VS Code based on the platform you are using
+Follow the [VS Code](https://code.visualstudio.com/docs) documentation to download and install VS Code (version >= 1.78.0) based on the platform you are using
 
 ??? note "Make sure that you installed the right version of VS Code (i.e., version >= 1.78.0)"
 

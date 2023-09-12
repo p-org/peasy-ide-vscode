@@ -21,17 +21,15 @@ Finally, let's discuss the last feature of the Peasy Trace Visualizer: comparing
 
 The trace visualizer interface for viewing multiple traces remains mostly consistent, with a few exceptions. On the left panel, alongside the `Log lines` and `Motifs` tabs, there is now a `Clusters` tab as well. Furthermore, within the central graph panel, there exists a dropdown option for selecting the different traces that have been chosen. Lastly, located at the upper section of the right panel, there is an `PAIRWISE` option which we will discuss shortly.
 
-<ul>
-    <li data-icon="❑">
-        In the video demo below, we visualized three traces and switched between them by selecting the corresponding option from the dropdown in the central panel.
-    </li>
-</ul>
+??? note "Demo Video: How to visualize multiple traces in trace visualizer?"
 
-<figure class="video_container">
-	<video controls="true" allowfullscreen="true" >
-		<source src="../../videos/trace-visualizer/compare_contrast_select.mp4" type="video/mp4"/>
-	</video>
-</figure>
+    In the video demo below, we visualized three traces and switched between them by selecting the corresponding option from the dropdown in the central panel.
+
+    <figure class="video_container">
+        <video controls="true" allowfullscreen="true" >
+            <source src="../../videos/trace-visualizer/compare_contrast_select.mp4" type="video/mp4"/>
+        </video>
+    </figure>
 
 **Trace Clusters**
 

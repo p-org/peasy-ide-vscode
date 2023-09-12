@@ -21,6 +21,11 @@
   <h2>Getting Started</h2>
 </div>
 
+A trace visualizer provides visualization capabilities to visualize any sequence of events that happened within a distributed system from its trace files. The interactive UI of the trace visualizer makes it easier for a user to identify any patterns or anamolies in the behaviour of a system and helps find bugs quickly.
+
+!!! info "Acknowledgement"
+	The trace visualizer in Peasy is built on top of [ShiViz visualization tool](https://github.com/DistributedClocks/shiviz). We recommend that you go through their [Visualizing Distributed System Executions](https://homes.cs.washington.edu/~mernst/pubs/visualize-distributed-tosem2020.pdf) paper to learn more about the ShiViz tool.
+
 ### **Launching**
 
 First, ensure that you are in a P project directory and that you have JSON error traces available!
@@ -29,11 +34,12 @@ Once you have a JSON trace, you can press ++f6++ to quickly launch the trace vis
 
 Alternatively, you can launch the visualizer using the Visual Studio Code shortcut ++cmd++ + ++shift++ + ++p++ (Mac) or ++ctrl++ + ++shift++ + ++p++ (Windows) to open the Command Palette. Then, type `PeasyViz: Run` and click to launch the visualizer.
 
-<figure class="video_container">
-    <video controls="true" allowfullscreen="true" >
-        <source src="../../videos/trace-visualizer/getting_started.mp4" type="video/mp4"/>
-    </video>
-</figure>
+??? note "Demo Video: How to launch Peasy trace visualizer?"
+	<figure class="video_container">
+		<video controls="true" allowfullscreen="true" >
+			<source src="../../videos/trace-visualizer/getting_started.mp4" type="video/mp4"/>
+		</video>
+	</figure>
 
 ### **Terminology**
 

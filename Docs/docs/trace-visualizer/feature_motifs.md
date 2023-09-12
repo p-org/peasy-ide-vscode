@@ -16,21 +16,23 @@
   <h2>Motifs</h2>
 </div>
 
-Now, let's discuss one of the most valuable features: motifs! Motifs provide P developers with a means to search for specific communication patterns within the graph. These patterns can greatly assist in debugging sessions, helping developers understand how the machines are interacting with each other.
+In context of a trace visualizer, a motif is a recurring pattern of events you find in a trace. Motifs provide P developers with a means to search for specific communication patterns within the graph. These patterns can greatly assist in debugging sessions, helping developers understand how the machines are interacting with each other.
 
 **Default Motifs**
 
 The trace visualizer comes with default motif options available under the 'Motif' tab in the left panel. By default, there are `2-event`, `3-event`, and `4-event` motifs. Selecting any of these default motif options will highlight paths in the graph that match the motif pattern.
 
-<ul>
-	<li data-icon="❑">In the following video demo, paths in the graph that match <code>Motif 1</code>, a <code>2-event</code> motif, are highlighted. This motif represents a simple send-receive pattern <i>(one machine sends an event to another machine, and that machine receives the event)</i>.</li>
-</ul>
+??? note "Demo Video: How to use default motifs in trace visualizer?"
 
-<figure class="video_container">
-	<video controls="true" allowfullscreen="true" >
-		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/5ebf79af-af52-4c4c-8e63-42d1ae75b5fe" type="video/mp4"/>
-	</video>
-</figure>
+	
+	In the following video demo, paths in the graph that match <code>Motif 1</code>, a <code>2-event</code> motif, are highlighted. This motif represents a simple send-receive pattern <i>(one machine sends an event to another machine, and that machine receives the event)</i>.
+	
+
+	<figure class="video_container">
+		<video controls="true" allowfullscreen="true" >
+			<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/5ebf79af-af52-4c4c-8e63-42d1ae75b5fe" type="video/mp4"/>
+		</video>
+	</figure>
 
 **Custom Motifs**
 
@@ -42,17 +44,15 @@ In addition to the default motifs, you can also build your own custom motifs! Yo
 	<li data-icon="❑">Double-clicking a node deletes it.</li>
 </ul>
 
-<ul>
-	<li data-icon="❑">
-		In the video demo below, a custom motif was built that searches for patterns where <code>Machine 1</code> sends something to <code>Machine 2</code>, then later sends something to <code>Machine 3</code>, and finally sends something to <code>Machine 4</code>.
-	</li>
-</ul>
+??? note "Demo Video: How to use custom motifs in trace visualizer?"
 
-<figure class="video_container">
-	<video controls="true" allowfullscreen="true" >
-		<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/8123613c-7cec-4aac-ac52-6de02d2cca21" type="video/mp4"/>
-	</video>
-</figure>
+	In the video demo below, a custom motif was built that searches for patterns where <code>Machine 1</code> sends something to <code>Machine 2</code>, then later sends something to <code>Machine 3</code>, and finally sends something to <code>Machine 4</code>.
+
+	<figure class="video_container">
+		<video controls="true" allowfullscreen="true" >
+			<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/8123613c-7cec-4aac-ac52-6de02d2cca21" type="video/mp4"/>
+		</video>
+	</figure>
 
 **P Motifs**
 
@@ -68,23 +68,20 @@ Lastly, we have P-specific motifs! With P-specific motifs, you can discover spec
 	</li>
 </ul>
 
-Here is an example of a P motif to explain this concept further:
+??? info "More explanation with an example"
 
-<ul>
-	<li data-icon="❑"><code>#pmotif=({eInformCoordinator && target="Participant(3)"}>>{"status=0"}>{target="Client(8)"})</code></li>
-	<li data-icon="❑">
-		This P motif will highlight a sequence of send-receive patterns as follows: The first send event will satisfy the constraint that the node contains the text <code>eInformCoordinator</code> <b>and</b> has a field <code>target</code> equal to <code>Participant(3)</code>. Then, following this first send event, it will highlight <b>any</b> send events afterwards <i>(indicated by <code>>></code>)</i> that satisfy the constraint that the node contains the text <code>status=0</code> or any of the node's fields' values contain the text <code>status=0</code>. Lastly, we are searching for an immediate send event after any of the send events just found that satisfies the last constraint that the node contain the field <code>target</code> with its value equal to <code>Client(8)</code>.
-	</li>
-</ul>
+	<ul>
+		<li data-icon="❑"><code>#pmotif=({eInformCoordinator && target="Participant(3)"}>>{"status=0"}>{target="Client(8)"})</code></li>
+		<li data-icon="❑">
+			This P motif will highlight a sequence of send-receive patterns as follows: The first send event will satisfy the constraint that the node contains the text <code>eInformCoordinator</code> <b>and</b> has a field <code>target</code> equal to <code>Participant(3)</code>. Then, following this first send event, it will highlight <b>any</b> send events afterwards <i>(indicated by <code>>></code>)</i> that satisfy the constraint that the node contains the text <code>status=0</code> or any of the node's fields' values contain the text <code>status=0</code>. Lastly, we are searching for an immediate send event after any of the send events just found that satisfies the last constraint that the node contain the field <code>target</code> with its value equal to <code>Client(8)</code>.
+		</li>
+	</ul>
 
-<ul>
-	<li data-icon="❑">
-		Another example is shown in the following video demo with this P motif: <code>#pmotif=({eWriteTransReq}>{eWriteTransResp}>{eReadTransReq})</code>. This P motif looks for a sequence of send-receive patterns where the first is a send event that contains the text <code>eWriteTransReq</code>, then an <b>immediate</b> second send event that contains the text <code>eWriteTransResp</code>, and lastly, an <b>immediate</b> third send event that contains the text <code>eReadTransReq</code>.
-	</li>
-</ul>
+??? note "Demo Video: How to use p-specific motifs in trace visualizer?"
+	Another example is shown in the following video demo with this P motif: <code>#pmotif=({eWriteTransReq}>{eWriteTransResp}>{eReadTransReq})</code>. This P motif looks for a sequence of send-receive patterns where the first is a send event that contains the text <code>eWriteTransReq</code>, then an <b>immediate</b> second send event that contains the text <code>eWriteTransResp</code>, and lastly, an <b>immediate</b> third send event that contains the text <code>eReadTransReq</code>.
 
-<figure class="video_container">
-	<video controls="true" allowfullscreen="true" >
-		<source src="../../videos/trace-visualizer/p_motif.mp4" type="video/mp4"/>
-	</video>
-</figure>
+	<figure class="video_container">
+		<video controls="true" allowfullscreen="true" >
+			<source src="../../videos/trace-visualizer/p_motif.mp4" type="video/mp4"/>
+		</video>
+	</figure>
