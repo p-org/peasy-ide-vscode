@@ -3,6 +3,16 @@
   .md-content__button {
     display: none;
   }
+
+  #demo_container {
+    width: 70%;
+    margin: auto;
+  }
+
+  #demo_container iframe {
+    width: 100%;
+    height: 450px;
+  }
   
 </style>
 
@@ -12,8 +22,6 @@
 
 This demo video gives you a quick overview of various features of Peasy and helps you get familiar with them
 
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true"  >
-    <source src="../videos/peasy_demo.mp4" type="video/mp4">
-  </video>
-</figure>
+<div id="demo_container">
+  <iframe src="https://www.youtube.com/embed/_bjzt_vdGVo" title="Iframe Example"></iframe>
+</div>
