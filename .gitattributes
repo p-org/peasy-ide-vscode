@@ -1,3 +1,0 @@
-# Set default behavior to automatically normalize line endings.
-* text=auto
-*.mp4 filter=lfs diff=lfs merge=lfs -text

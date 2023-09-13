@@ -10,7 +10,7 @@
   <h2>Demo</h2>
 </div>
 
-The demo video gives you a quick overview of various features of Peasy and helps you get familiar with them
+This demo video gives you a quick overview of various features of Peasy and helps you get familiar with them
 
 <figure class="video_container">
   <video controls="true" allowfullscreen="true"  >
