@@ -10,7 +10,7 @@
   <h2>Peasy State Machine Visualizations</h2>
 </div>
 
-Many P users wanted a method of creating visualizations of P state machines and their transitions, states, and events to help supplement design documents, visualize P code, and help to better understand the way P state machines worked. With the help of the open-source tool [Stately](https://stately.ai/viz), that dream is now realized. The stately tool 
+Many P users wanted a method of creating visualizations of P state machines and their transitions, states, and events to help supplement design documents, visualize P code, and help to better understand the way P state machines worked. With the help of the open-source tool [Stately](https://stately.ai/viz), that dream is now realized.
 
 !!! info "Acknowledgement"
 	The Stately tool's state machine visualization capability has been leveraged to visualize the logic of a given P state machine. To understand more about XState  go through their [official documentation](https://stately.ai/docs/xstate) and [Github repository](https://github.com/statelyai/xstate)
@@ -48,11 +48,10 @@ Stately's website contains four tabs:
 - **Events Tab**: This tab logs all events that have occurred so far among all machines.
 - **Actors Tab**: Use this tab to switch to different P state machines in the visualization.
 
-<div align="center">
-  <h2>State Machine Visualization Tool Tutorial</h2>
-</div>
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true"  >
-    <source src="../videos/visualization.mov" type="video/mp4">
-  </video>
-</figure>
+??? note "Tutorial: How to use state machine visualization tool?"
+
+    <figure class="video_container">
+      <video controls="true" allowfullscreen="true"  >
+        <source src="../videos/visualization.mov" type="video/mp4">
+      </video>
+    </figure>

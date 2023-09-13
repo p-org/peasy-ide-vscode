@@ -72,23 +72,40 @@ From the very beginning of users utilizing P to write formal models of their pro
   <h2>Peasy Features</h2>
 </div>
 
-**Syntax Highlighting**
-[Learn more.](editingCode.md/#syntax-highlighting)
+<div class="peasy_features">
+<div class="peasy_feature" onclick="location.href='editingCode/#syntax-highlighting'">
+  <img src="images/syntax_highlighting_icon.png" alt="my img"/>
+  <p>Syntax Highlighting</p>
+</div>
 
-**Automatic Compilation**
-[Learn more.](compilingCode.md/#automatic-compilation)
+<div class="peasy_feature" onclick="location.href='compilingCode/#automatic-compilation'">
+  <img src="images/automatic_compilation_icon.png" alt="my img"/>
+  <p>Automatic Compilation</p>
+</div>
 
-**Snippets**
-[Learn more.](editingCode.md/#snippet-auto-completion)
+<div class="peasy_feature" onclick="location.href='editingCode/#snippet-auto-completion'">
+  <img src="images/code_completion_icon.png" alt="my img"/>
+  <p>Snippets</p>
+</div>
 
-**Error Reporting**
-[Learn more.](compilingCode.md/#error-reporting)
+<div class="peasy_feature" onclick="location.href='compilingCode/#error-reporting'">
+  <img src="images/error_reporting_icon.png" alt="my img"/>
+  <p>Error Reporting</p>
+</div>
 
-**Testing Framework**
-[Learn more.](runningTestcases.md)
+<div class="peasy_feature" onclick="location.href='runningTestcases'">
+  <img src="images/testing_framework_icon.png" alt="my img"/>
+  <p>Testing Framework</p>
+</div>
 
-**Trace Visualizer**
-[Learn more.](trace-visualizer/getting_started.md)
+<div class="peasy_feature" onclick="location.href='trace-visualizer/getting_started'">
+  <img src="images/trace_visualizer_icon.png" alt="my img"/>
+  <p>Trace Visualization</p>
+</div>
 
-**State Machine Visualization**
-[Learn more.](visualizingStateMachines.md)
+<div class="peasy_feature" onclick="location.href='visualizingStateMachines'">
+  <img src="images/state_machine_visualization_icon.png" alt="my img"/>
+  <p>State Machine Visualization</p>
+</div>
+
+<div>

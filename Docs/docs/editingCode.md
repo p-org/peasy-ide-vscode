@@ -18,13 +18,13 @@ After selecting a particular snippet, press `Tab` in order to jump to edit each 
 
 Snippets help P developers code faster and easier because they don't need to refer back to documentation for help when coding common data structures in P.
 
-Below is an example demo of coding with snippets in P!
-
-<figure class="video_container">
-  <video controls="true" allowfullscreen="true"  >
-    <source src="../videos/snippets.mov" type="video/mp4">
-  </video>
-</figure>
+??? note "Demo Video: Coding P with snippets in Peasy!"
+    
+    <figure class="video_container">
+      <video controls="true" allowfullscreen="true"  >
+        <source src="../videos/snippets.mov" type="video/mp4">
+      </video>
+    </figure>
 
 ## **Syntax Highlighting**
 
