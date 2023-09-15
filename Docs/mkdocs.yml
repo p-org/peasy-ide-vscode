@@ -49,7 +49,6 @@ nav:
     - Compiling Code: compilingCode.md
     - Running Testcases: runningTestcases.md
     - Editing Code: editingCode.md
-    - Keyboard Shortcuts and Commands: shortcutsAndCommands.md
     - Visualizing State Machines: visualizingStateMachines.md
     - Trace Visualizer:
       - Getting Started: trace-visualizer/getting_started.md
@@ -59,8 +58,8 @@ nav:
         - Motifs: trace-visualizer/feature_motifs.md
         - Compare and Contrast: trace-visualizer/feature_compare_contrast.md
       - P JSON Output: trace-visualizer/p_json_output.md
+    - Keyboard Shortcuts and Commands: shortcutsAndCommands.md
   - Contributing to the Peasy Extension: contribute.md
-  - The Motivation Behind Peasy: motivations.md
   
 markdown_extensions:
   - pymdownx.superfences
