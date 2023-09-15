@@ -78,3 +78,14 @@ When you click on an individual node in the graph, a dialog box will open contai
 			<source src="https://github.com/p-org/peasy-ide-vscode/assets/137958518/13bfcbfa-6b57-49b4-87fa-929800b6b7a3" type="video/mp4"/>
 		</video>
 	</figure>
+
+**Switching Panel View**
+
+You can switch between different views to see all (logs and graph), logs, or graph panels when visualizing an individual trace. The drop-down menu on the left of the search bar enables you to switch between views.
+
+??? note "Demo Video: How to switch between views in trace visualizer?"	
+	<figure class="video_container">
+		<video controls="true" allowfullscreen="true" >
+			<source src="../../videos/trace-visualizer/panel_view_switching.mov" type="video/mp4"/>
+		</video>
+	</figure>
