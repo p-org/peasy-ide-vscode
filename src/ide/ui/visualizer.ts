@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { PeasyVizPanel } from "../web/PeasyVizPanel";
+import { PeasyVizPanel } from "../../trace-visualizer/PeasyVizPanel";
 
 //This class creates a web visualizer.
 export default class Visualizer {

@@ -3,11 +3,11 @@ import {
   ExtensionConstants,
   LanguageConstants,
   TestResults,
-} from "../constants";
+} from "../../constants";
 import * as messages from "./messages";
 import RelatedErrorView from "./relatedErrorView";
-import { checkPInstalled, searchDirectory } from "../miscTools";
-import { PCommands } from "../commands";
+import { checkPInstalled, searchDirectory } from "../../miscTools";
+import { PCommands } from "../../commands";
 import * as child_process from "child_process";
 import { SpawnSyncReturns } from "child_process";
 const fs = require("fs");

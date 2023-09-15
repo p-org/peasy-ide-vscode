@@ -2,11 +2,11 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 
-import createAndRegisterPIntegration from "./ui/pIntegration";
-import { PLanguageClient } from "./language/PLanguageClient";
+import createAndRegisterPIntegration from "./ide/ui/pIntegration";
+import { PLanguageClient } from "./ide/language/PLanguageClient";
 import { window } from "vscode";
 import { ExtensionConstants } from "./constants";
-import { PInstaller } from "./language/PInstallation";
+import { PInstaller } from "./ide/language/PInstallation";
 import { stat } from "fs";
 import { VSCodeCommands } from "./commands";
 import { WorkspaceFolder } from "vscode-languageclient";

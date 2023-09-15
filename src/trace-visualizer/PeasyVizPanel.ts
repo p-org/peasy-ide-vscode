@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
 import shivizScripts from "./constants/shivizScripts";
 import { IShiVizScriptsUri } from "./types/shiviz";
-import shivizSourceHtml from "../shivizSourceHtml";
-import visualizerErrorHtml from "../visualizerErrorHtml";
+import shivizSourceHtml from "./shivizSourceHtml";
+import visualizerErrorHtml from "./visualizerErrorHtml";
 
 export class PeasyVizPanel {
   /**
@@ -37,9 +37,9 @@ export class PeasyVizPanel {
         // Enable javascript in the webview
         enableScripts: true,
 
-        // And restrict the webview to only loading content from our extension's `media` directory.
+        // And restrict the webview to only loading content from our extension's `src/trace-visualizer` directory.
         localResourceRoots: [
-          vscode.Uri.joinPath(extensionUri, "media"),
+          vscode.Uri.joinPath(extensionUri, "src/trace-visualizer"),
           vscode.Uri.joinPath(extensionUri, "out/compiled"),
         ],
       }
@@ -125,10 +125,10 @@ export class PeasyVizPanel {
      * * Get vscode style scripts URI *
      **********************************/
     const stylesResetUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "media/styles", "reset.css")
+      vscode.Uri.joinPath(this._extensionUri, "src/trace-visualizer/css", "reset.css")
     );
     const stylesMainUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "media/styles", "vscode.css")
+      vscode.Uri.joinPath(this._extensionUri, "src/trace-visualizer/css", "vscode.css")
     );
     const vscodeStylesUri = {
       stylesResetUri,
@@ -159,7 +159,7 @@ export class PeasyVizPanel {
     const shivizStylesUri = webview.asWebviewUri(
       vscode.Uri.joinPath(
         this._extensionUri,
-        "media/styles/shiviz",
+        "src/trace-visualizer/css",
         "style.css"
       )
     );

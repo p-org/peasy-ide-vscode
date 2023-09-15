@@ -6,7 +6,7 @@ import { promisify } from 'util';
 import { Utils } from 'vscode-uri';
 const mkdirAsync = promisify(fs.mkdir);
 import { Executable } from 'vscode-languageclient/node';
-import { getDotnetExecutablePath } from '../dotnet';
+import { getDotnetExecutablePath } from '../../dotnet';
 import { PInstaller } from './PInstallation';
 
 

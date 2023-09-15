@@ -1,4 +1,4 @@
-import { IShiVizScriptsUri } from "./web/types/shiviz";
+import { IShiVizScriptsUri } from "./types/shiviz";
 
 const traceNotFoundHtml = (
   stylesUriMap: IShiVizScriptsUri,

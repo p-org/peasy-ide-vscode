@@ -25,7 +25,7 @@
         {
           "id": "peasy-visualizer",
           "title": "Peasy Visualizer",
-          "icon": "media/icons/P-icon.svg"
+          "icon": "resources/icons/P-icon.svg"
         }
       ]
     },
@@ -108,7 +108,7 @@
       {
         "label": "P's Custom Theme",
         "uiTheme": "vs-dark",
-        "path": "./themes/P Theme-color-theme.json"
+        "path": "./src/ide/themes/PColorTheme.json"
       }
     ],
     "keybindings": [
@@ -212,20 +212,20 @@
           ".p",
           ".pproj"
         ],
-        "configuration": "./language-configuration.json"
+        "configuration": "./src/ide/language/language-configuration.json"
       }
     ],
     "grammars": [
       {
         "language": "p",
         "scopeName": "source.p",
-        "path": "./syntaxes/p.tmLanguage.json"
+        "path": "./src/ide/syntaxes/p.tmLanguage.json"
       }
     ],
     "snippets": [
       {
         "language": "p",
-        "path": "./snippets/snippets.json"
+        "path": "./src/ide/snippets/snippets.json"
       }
     ]
   },
