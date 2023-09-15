@@ -6,7 +6,7 @@ import * as which from 'which';
 
 import { ConfigurationConstants, DotnetConstants } from './constants';
 import Configuration from './configuration';
-import { Messages } from './ui/messages';
+import { Messages } from './ide/ui/messages';
 
 const ListRuntimesArg = '--list-runtimes';
 const execFileAsync = promisify(execFile);

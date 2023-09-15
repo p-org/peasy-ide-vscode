@@ -2,8 +2,8 @@ import { Diagnostic, Uri } from 'vscode';
 import { HandleDiagnosticsSignature, LanguageClient, LanguageClientOptions, ServerOptions, TextDocumentPositionParams } from 'vscode-languageclient/node';
 import { PDocumentFilter } from '../tools/vscode'
 import { PInstaller } from './PInstallation';
-import Configuration from '../configuration';
-import { ConfigurationConstants,LanguageConstants } from '../constants';
+import Configuration from '../../configuration';
+import { ConfigurationConstants,LanguageConstants } from '../../constants';
 import * as os from 'os';
 
 

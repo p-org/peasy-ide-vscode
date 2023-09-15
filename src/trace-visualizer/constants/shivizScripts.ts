@@ -1,6 +1,6 @@
 import { IShiVizScripts } from "../types/shiviz";
 
-const pathToShivizJsDir = "media/js/shiviz";
+const pathToShivizJsDir = "src/trace-visualizer/js";
 const shivizScripts: IShiVizScripts = {
   builder: {
     folderPath: `${pathToShivizJsDir}/builder`,

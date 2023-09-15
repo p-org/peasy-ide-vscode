@@ -3,9 +3,9 @@ import * as path from "path";
 import * as vscode from "vscode";
 import * as messages from "./messages";
 
-import { ExtensionConstants } from "../constants";
-import { checkPInstalled, searchDirectory } from "../miscTools";
-import { PCommands } from "../commands";
+import { ExtensionConstants } from "../../constants";
+import { checkPInstalled, searchDirectory } from "../../miscTools";
+import { PCommands } from "../../commands";
 
 // const OutputPathArg = '--output';
 //This class runs commands in the terminal based on Compile Command (example: F5 = "p compile")

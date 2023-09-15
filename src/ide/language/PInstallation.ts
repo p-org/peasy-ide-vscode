@@ -1,7 +1,7 @@
 /* eslint-disable max-depth */
 import { ExtensionContext, OutputChannel, env, Uri, window } from 'vscode';
-import { ConfigurationConstants } from '../constants';
-import Configuration from '../configuration';
+import { ConfigurationConstants } from '../../constants';
+import Configuration from '../../configuration';
 import { Executable } from 'vscode-languageclient/node';
 import * as os from 'os';
 
