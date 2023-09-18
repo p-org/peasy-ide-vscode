@@ -12,16 +12,16 @@
 
 ## **Installation**
 
-**Installing P**
+**[Step 1] Install P**
 
-Follow the [Installing P](https://p-org.github.io/P/getstarted/install/) page to install P (version >= 2.0.19), depending on your platform.
+Follow the [installing P](https://p-org.github.io/P/getstarted/install/) instructions to install P locally (version >= 2.0.19), depending on your platform.
 
 
 ??? note "Make sure that you installed the right version of P (i.e., version >= 2.0.19)"
     
     Run `p --version` command to get the version of P
 
-**Installing VS Code**
+**[Step 2] Install VS Code**
 
 Follow the [VS Code](https://code.visualstudio.com/docs) documentation to download and install VS Code (version >= 1.78.0) based on the platform you are using.
 
@@ -34,14 +34,16 @@ Follow the [VS Code](https://code.visualstudio.com/docs) documentation to downlo
       - On Windows and Linux, go to Help > About.
 
 
-**Installing Peasy**
+**[Step 3] Install Peasy Extension**
 
-* Open VS Code
-* Select "View" and then click "Extensions" to open Extension View. Alternatively, use the Extensions shortcut on the left side navigation bar
-* Enter [*"Peasy Extension"*](vscode:extension/PLanguage.peasy-extension) in the marketplace search box and select the extension
-* Click on the "Install" button to download and install the Peasy extension
+??? hint "Click [here](vscode:extension/PLanguage.peasy-extension) to open Peasy extension in VS Code"
+    Manually install:
+    * Open VS Code
+    * Select "View" and then click "Extensions" to open Extension View. Alternatively, use the Extensions shortcut on the left side navigation bar
+    * Enter [*"Peasy Extension"*](vscode:extension/PLanguage.peasy-extension) in the marketplace search box and select the extension
+    * Click on the "Install" button to download and install the Peasy extension
 
-!!! note "It is recommended to restart the VS Code after installation"
+!!! success "It is recommended to restart the VS Code after installation"
 
 ## **Creating your First P Project**
 
@@ -68,8 +70,8 @@ There are many [tutorial projects](https://github.com/p-org/P/tree/master/Tutori
 
 Press ++f5++ or `Save` in your VS Code editor and your project will automatically compile the current P project folder.
 
-Alternatively, you can compile your P project manually by running `p compile` in your terminal. Read [Compiling a P Program](https://p-org.github.io/P/getstarted/usingP/) page for more details.
+Alternatively, you can compile your P project manually by running `p compile` in your terminal. Read [compiling a P program](https://p-org.github.io/P/getstarted/usingP/) page for more details.
 
 **Running P Testcases**
 
-Navigate to the Testing Panel in VS Code and click on the play button to run the desired testcases. Read [Running Testcases](runningTestcases.md) section in the user guide for more details.
+Navigate to the Testing Panel in VS Code and click on the play button to run the desired testcases. Read [running testcases](runningTestcases.md) section in the user guide for more details.
