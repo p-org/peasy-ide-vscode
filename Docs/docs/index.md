@@ -28,11 +28,9 @@
 </div>
 
 
-[P](https://p-org.github.io/P/) is a state machine based programming language for formal modeling and analysis of distributed systems. 
+:mega: **Peasy** is a step towards making application of formal methods in practice, **easy-peasy**! :smile:
 
-:mega: **Peasy** is a step towards making application of formal methods in practice, **easy-peasy** :bulb:
-
-**Peasy** is a VSCode language extension for the P language. Peasy supports syntax highlighting, compilation and error reporting, unit testing, state machine visualization, and error tracing visualization. Navigate to the [Peasy webpage](https://p-org.github.io/peasy-ide-vscode/) for in-depth description and demo videos of all these features of the Peasy extension.
+[P](https://p-org.github.io/P/) is a state machine based programming language for formal modeling and analysis of distributed systems. **Peasy** is a VSCode language extension for the P language. Peasy supports syntax highlighting, compilation and error reporting, unit testing, state machine visualization, and error tracing visualization. Navigate to the [Peasy webpage](https://p-org.github.io/peasy-ide-vscode/) for in-depth description and demo videos of all these features of the Peasy extension.
 
 <p align="left">
 With ❤️ from the P Team @ Amazon Web Services (AWS).
@@ -43,9 +41,7 @@ With ❤️ from the P Team @ Amazon Web Services (AWS).
 
 
 
-<a href="vscode:extension/PLanguage.peasy-extension">
-<button id="hover" style="font-weight:bold;" class="button1 block1"> Download Peasy for VS Code </button>
-</a>
+
 
 <div align="left">
   <h2>Peasy Features</h2>
@@ -88,6 +84,5 @@ With ❤️ from the P Team @ Amazon Web Services (AWS).
 </div>
 
 <div>
-
 
 
