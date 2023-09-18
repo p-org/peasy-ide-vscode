@@ -1,11 +1,9 @@
 {
     "Machine": {
         "prefix": ["machine "],
-        "body": ["machine ${1:_name_} ", 
-        "{",
+        "body": ["machine ${1:_name_} {",
             "\tstart state ${2:_stateName_} {",
-            "\t\tentry (${3:_entryName_})",
-            "\t\t{",
+            "\t\tentry (${3:_entryName_}) {",
             "\t\t\t${4:_body_};",
             "\t\t}",
         "\t}",
@@ -17,8 +15,7 @@
 
     "Entry": {
         "prefix": ["entry ("],
-        "body": ["entry (${1:_parameters_})",
-        "{",
+        "body": ["entry (${1:_parameters_}) {",
         "\t${2:_body_};",
         "}"
         ], 

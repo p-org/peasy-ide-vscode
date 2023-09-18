@@ -242,10 +242,10 @@ async function runCheckCommand(
   outputDirectory: string,
   projectDirectory: string
 ): Promise<string> {
-  //number of p checker iterations that are run
+  //number of p checker schedules that are run
 
-  const numIterations: String =
-    vscode.workspace.getConfiguration("p-vscode").get("iterations") ?? "1000";
+  const numSchedules: String =
+    vscode.workspace.getConfiguration("p-vscode").get("schedules") ?? "1000";
   //The p check command depends on if the terminal is bash or zsh.
   var command;
   if (!(await checkPInstalled())) {
@@ -256,8 +256,8 @@ async function runCheckCommand(
       projectDirectory +
       " && p check -tc " +
       tc.label +
-      " -i " +
-      numIterations;
+      " -s " +
+      numSchedules;
   }
   //Runs Command in Terminal
   terminal.sendText(command);

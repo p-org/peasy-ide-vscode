@@ -21,7 +21,7 @@ Visualize P state machines by copy-and-pasting code from the following file:
       P LANGUAGE is not installed on your computer! 
       Automatic Compilation and P testing capabilities will not work. 
       Download P at https://p-org.github.io/P/getstarted/install/. 
-      Then, reload VSCode.`;
+      Then, reload VS Code.`;
     export const Start = "Starting P installation";
     export const Error = "An error occurred during the installation of P.";
     export const Completed = "P installation completed";

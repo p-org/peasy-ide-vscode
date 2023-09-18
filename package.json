@@ -181,11 +181,11 @@
           "default": "verbose",
           "description": "Traces the communication between VS Code and the language server."
         },
-        "p-vscode.iterations": {
+        "p-vscode.schedules": {
           "scope": "window",
           "type": "integer",
           "default": 1000,
-          "description": "Manages the number of iterations run during P testing at a 'p check' command."
+          "description": "Manages the number of schedules run during P testing at a 'p check' command."
         }
       }
     },
@@ -193,7 +193,7 @@
       {
         "command": "workbench.files",
         "title": "Peasy: Show Project Files", 
-        "description": "Users can select a P project to compile from a VSCode Quick Pick."
+        "description": "Users can select a P project to compile from a VS Code Quick Pick."
       },
       {
         "command": "peasy-visualizer.run",
