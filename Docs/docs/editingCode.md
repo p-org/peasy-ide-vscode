@@ -16,12 +16,13 @@ Syntax highlighting in P makes developing P programs easier, faster, and more en
 
 We created a Custom P theme that we suggest, but feel free to change the theme to whatever you like!
 
-Here is a sample of syntax highlighting for the [Two Phase Commit](https://github.com/p-org/P/tree/master/Tutorial/2_TwoPhaseCommit) protocol from the P tutorial. 
+??? note "Sample View: Syntax Highlighting using Custom P theme in Peasy"
 
-
-<div class="screenshots" markdown="1">
-  <img src="../images/syntax_highlighting.png" alt="Syntax Highlighting" >
-</div>
+    Here is a sample of syntax highlighting for the [Two Phase Commit](https://github.com/p-org/P/tree/master/Tutorial/2_TwoPhaseCommit) protocol from the P tutorial. 
+    
+    <div class="screenshots" markdown="1">
+      <img src="../images/syntax_highlighting.png" alt="Syntax Highlighting" >
+    </div>
 
 ## **Snippet Auto-Completion**
 
@@ -31,7 +32,7 @@ After selecting a particular snippet, press `Tab` in order to jump to edit each 
 
 Snippets help P developers code faster and easier because they don't need to refer back to documentation for help when coding common data structures in P.
 
-??? note "Demo Video: Coding P with snippets in Peasy!"
+??? note "Demo Video: Coding P with snippets in Peasy"
     
     <figure class="video_container">
       <video controls="true" allowfullscreen="true"  >

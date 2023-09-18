@@ -21,9 +21,8 @@ Each P error trace JSON output is in the following format.
 ]
 ```
 
-> Each item in the array is a object containing information about a specific log entry.
-
 ### **Log Entry**
+Each item in the array of JSON output is a object containing information about a specific log entry. Each log object contains type and details.
 
 ```js
 {
@@ -58,33 +57,35 @@ Each P error trace JSON output is in the following format.
     }   
 }
 ```
-
-> Each log object contains type and details. Fields in details are available based on the type of log it is.
-
 ### **Log Types and Fields**
 
-<b>AssertionFailure</b> — <i>log, error</i>  
-<b>CreateActor</b> — <i>log, id, creatorName, creatorType, clock</i>  
-<b>CreateStateMachine</b> — <i>log, id, creatorName, creatorType, clock</i>  
-<b>DefaultEventHandler</b> — <i>log, id, state, clock</i>  
-<b>DequeueEvent</b> — <i>log, id, event, state, payload, clock</i>  
-<b>ExceptionHandled</b> — <i>log, id, state, action, exception, clock</i>  
-<b>ExceptionThrown</b> — <i>log, id, state, action, exception, clock</i>  
-<b>GoToState</b> — <i>log, id, startState, endState, clock</i>  
-<b>Halt</b> — <i>log, id, haltInboxSize, clock</i>  
-<b>PopState</b> — <i>log, id, startState, endState, clock</i>  
-<b>PopStateUnhandledEvent</b> — <i>log, id, state, event, clock</i>  
-<b>PushState</b> — <i>log, id, startState, endState, clock</i>  
-<b>RaiseEvent</b> — <i>log, id, state, event, payload, clock</i>  
-<b>ReceiveEvent</b> — <i>log, id, state, event, wasBlocked, payload, clock</i>  
-<b>SendEvent</b> — <i>log, sender, state, event, target, opGroupId, isTargetHalted, payload, clock</i>  
-<b>StateTransition</b> — <i>log, id, state, isEntry, clock</i>  
-<b>WaitEvent</b> — <i>log, id, state, eventType, clock</i>  
-<b>WaitMultipleEvents</b> — <i>log, id, state, eventTypes, clock</i>  
-<b>CreateMonitor</b> — <i>log, monitor, clock</i>  
-<b>MonitorProcessEvent</b> — <i>log, monitor, state, event, payload, clock</i>  
-<b>MonitorRaiseEvent</b> — <i>log, monitor, state, event, payload, clock</i>  
-<b>MonitorStateTransition</b> — <i>log, monitor, isEntry, isInHotState, clock</i>  
-<b>StrategyDescription</b> — <i>log, strategy, strategyDescription</i>  
+Fields in details of a log object differ based on the type of log it is.
 
-> Check out this example <a href="../two_phase_commit_output.json" download>P JSON output</a> based on the [Two Phase Commit Tutorial](https://p-org.github.io/P/tutorial/twophasecommit/) from the P documentation!
+
+Log Type | Fields
+------------ | ------------
+AssertionFailure | log, error  
+CreateActor | log, id, creatorName, creatorType, clock  
+CreateStateMachine | log, id, creatorName, creatorType, clock  
+DefaultEventHandler | log, id, state, clock  
+DequeueEvent | log, id, event, state, payload, clock  
+ExceptionHandled | log, id, state, action, exception, clock  
+ExceptionThrown | log, id, state, action, exception, clock  
+GoToState | log, id, startState, endState, clock  
+Halt | log, id, haltInboxSize, clock  
+PopState | log, id, startState, endState, clock  
+PopStateUnhandledEvent | log, id, state, event, clock  
+PushState | log, id, startState, endState, clock  
+RaiseEvent | log, id, state, event, payload, clock  
+ReceiveEvent | log, id, state, event, wasBlocked, payload, clock  
+SendEvent | log, sender, state, event, target, opGroupId, isTargetHalted, payload, clock  
+StateTransition | log, id, state, isEntry, clock  
+WaitEvent | log, id, state, eventType, clock  
+WaitMultipleEvents | log, id, state, eventTypes, clock  
+CreateMonitor | log, monitor, clock  
+MonitorProcessEvent | log, monitor, state, event, payload, clock  
+MonitorRaiseEvent | log, monitor, state, event, payload, clock  
+MonitorStateTransition | log, monitor, isEntry, isInHotState, clock  
+StrategyDescription | log, strategy, strategyDescription  
+
+!!! tip "Check out this example <a href="../two_phase_commit_output.json" download>P JSON output</a> based on the [Two Phase Commit Tutorial](https://p-org.github.io/P/tutorial/twophasecommit/) from the P documentation!"
