@@ -731,26 +731,37 @@
   <h2>Peasy State Machine Visualizer</h2>
 </div>
 
-<p>Many P users wanted a visualizer of P state machines. These visualizations help supplement design documents, visualize P code, and help to better understand the P state machines. With the help of the open-source tool <a href="https://stately.ai/viz">Stately</a>, that dream is now realized.</p>
+<p>Peasy state machines visualization helps aid design documents, visualize P code, and better understand the formal model of a complex system.</p>
 <div class="admonition info">
 <p class="admonition-title">Acknowledgement</p>
 <p>The Stately tool's state machine visualization capability has been leveraged to visualize the logic of a given P state machine. To understand more about XState  go through their <a href="https://stately.ai/docs/xstate">official documentation</a> and <a href="https://github.com/statelyai/xstate">Github repository</a>.</p>
 </div>
 <p>In order to visualize P state machines, follow these steps or scroll down to watch a demo:</p>
-<ol>
+<ul>
 <li>Press <span class="keys"><kbd class="key-f7">F7</kbd></span> to run the command <code>p compile --mode stately</code> in the terminal. Your visualization code is generated! A message in red should be sent through the terminal.</li>
-</ol>
+</ul>
 <div class="screenshots">
 <p><img alt="Syntax Highlighting" src="../images/code_generation_text.png" ></p>
 </div>
-<ol>
-<li>Navigate to the file using <span class="keys"><kbd class="key-control">Ctrl</kbd></span> <code>Click</code> or <span class="keys"><kbd class="key-command">Cmd</kbd></span> <code>Click</code>. Copy-and-paste the file contents into https://stately.ai/viz.</li>
-<li>Click the Visualize button on the bottom left!</li>
-</ol>
-<p>Voila! Here is an example visualization using the P Tutorial's Two Phase Commit project.</p>
+<ul>
+<li>
+<p>Navigate to the file using <span class="keys"><kbd class="key-control">Ctrl</kbd></span> <code>Click</code> or <span class="keys"><kbd class="key-command">Cmd</kbd></span> <code>Click</code>. Copy-and-paste the file contents into <a href="https://stately.ai/viz">Stately</a>.</p>
+</li>
+<li>
+<p>Click the Visualize button on the bottom left! Voila! Here is an example visualization using the P Tutorial's Two Phase Commit project.</p>
+</li>
+</ul>
 <div class="screenshots">
 <p><img alt="Visualization" src="../images/visualization.png" ></p>
 </div>
+<details class="note">
+<summary>Demo Video: How to use state machine visualization tool?</summary>
+<p><figure class="video_container">
+  <video controls="true" allowfullscreen="true"  >
+    <source src="../videos/visualization.mov" type="video/mp4">
+  </video>
+</figure></p>
+</details>
 <div align="center">
   <h2>How to Navigate Stately's Open Source Visualization Website</h2>
 </div>
@@ -766,14 +777,6 @@
 <li><strong>Events Tab</strong>: This tab logs all events that have occurred so far among all machines.</li>
 <li><strong>Actors Tab</strong>: Use this tab to switch to different P state machines in the visualization.</li>
 </ul>
-<details class="note">
-<summary>Tutorial: How to use state machine visualization tool?</summary>
-<p><figure class="video_container">
-  <video controls="true" allowfullscreen="true"  >
-    <source src="../videos/visualization.mov" type="video/mp4">
-  </video>
-</figure></p>
-</details>
 
 
   

@@ -791,7 +791,7 @@
   <h2>Getting Started</h2>
 </div>
 
-<p>A trace visualizer provides visualization capabilities to depict any sequence of events that occurred within a distributed system from its trace files. The interactive UI of the trace visualizer makes it easier for a user to identify any patterns or anamolies in the behaviour of a system and helps find bugs quickly.</p>
+<p>Error traces for complex distributed systems are hard to debug as they involve nontrivial interleaving of messages. Peasy provides <strong>trace visualization</strong> to aid debugging counter examples provided by the P checker. Peasy helps visualize traces as message sequence charts, perform search, and do motif based analysis.</p>
 <div class="admonition info">
 <p class="admonition-title">Acknowledgement</p>
 <p>The trace visualizer in Peasy is built on top of <a href="https://github.com/DistributedClocks/shiviz">ShiViz visualization tool</a>. We recommend that you go through their <a href="https://homes.cs.washington.edu/~mernst/pubs/visualize-distributed-tosem2020.pdf">Visualizing Distributed System Executions</a> paper to learn more about the ShiViz tool.</p>
@@ -819,7 +819,7 @@
 <tbody>
 <tr>
 <td>Log</td>
-<td>The text of all the actions within the trace.</td>
+<td>The text corresponding to an action within the trace.</td>
 </tr>
 <tr>
 <td>Motif</td>
