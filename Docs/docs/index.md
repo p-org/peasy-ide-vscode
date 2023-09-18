@@ -27,46 +27,34 @@
 
 </div>
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/p-org/peasy-ide-vscode/main/LICENSE)
-<a href="vscode:extension/PLanguage.peasy-extension">
-<button id="hover" style="font-weight:bold;" class="button1 block1"> Download Peasy for VS Code </button>
-</a>
+----
 
-Peasy is a VS Code language extension created by the P team to enable a richer, more intuitive user interface while developing P programs. It equips users with a familiar programming environment for developing, visualizing, and reviewing P code, expanding the true potential of P users.
+
+[P](https://p-org.github.io/P/) is a state machine based programming language for formal modeling and analysis of distributed systems. P is being used by developers in industry and academia to reason about the correctness of their distributed system. The goal with Peasy is to make the process of creating, checking, and debugging formal models easy and less painful. 
+
+:mega: **Peasy** is a step towards making application of formal methods in practice, **easy-peasy**! :mega:
+
+!!! info ""
+    Peasy is a VS Code language extension for P. Peasy supports **syntax highlighting, compilation, error reporting, and unit testing** of P formal models within the VS Code environment. 
+
+!!! error "" 
+    Peasy provides **state machine visualization** that developers can use to visualize their formal design (P state machines) and share in their design documentation.
+
+!!! success ""
+    Error traces for complex distributed systems are hard to debug as they involve nontrivial interleaving of messages. Peasy provides **trace visualization** to aid debugging counter examples provided by the P checker. Peasy helps visualize traces as message sequence charts, perform search, and do motif based analysis. 
+
+----------
+
+Navigate through the [user guide](https://p-org.github.io/peasy-ide-vscode/) for an in depth description and demo videos of all the cool features in the Peasy extension. Checkout the [demo video](demo.md) for a complete step-by-step guide.
+
+
+Built with ❤️ from the P Team @ Amazon Web Services (AWS).
+
+-----------
+
+
 
 <div align="center">
-  <h2>The Motivation Behind Peasy</h2>
-</div>
-
-Peasy brings the full power of an Intuitive Development Environment, including an editor, visualizer, checker, reviewer to P users.
-
-Peasy achieves this by providing a VS code language extension for editing P programs and an intuitive interface for visualizing and reviewing the formal design and specification of a distributed system as a collection of P state machines.
-
-Peasy enables the common interface of unit testing to model checking of P programs.
-
-Peasy also provides a trace visualizer to debug counter examples reported by P checker as a message sequence chart and also the ability to single step through the error trace using the VS code debugger.
-
-Peasy can also be used as a documentation tool leveraged by the service teams during design reviews to better understand/describe the complex system design.
-
-<div align="center">
-  <h2>Transforming the User Experience</h2>
-</div>
-
-From the very beginning of users utilizing P to write formal models of their projects and problems, users clamored for a VS Code extension for the language P that would allow them to streamline the process of developing in P. Therefore, the P Team went to work to create a plugin that would suit all their users' needs. We aim for this extension to attract new users to develop in P with ease as well as transform the user experience for current P developers.
-
-<div align="center">
-  <h2>Keyboard Shortcuts</h2>
-</div>
-
-| Keypress         | Description                                                         |
-| ---------------- |---------------------------------------------------------------------|
-| ++f4++           | Shows a dropdown menu to select a P project                         |
-| ++f5++           | Compiles the current P Project                                      |
-| ++f6++           | Opens the Peasy Trace Visualizer Webview                            |
-| ++f7++           | Generates code to visualize state machines of the current P project |
-| ++ctrl++ + ++s++ | Saves and compiles the P project                                    |
-
-<div align="left">
   <h2>Peasy Features</h2>
 </div>
 
@@ -107,3 +95,5 @@ From the very beginning of users utilizing P to write formal models of their pro
 </div>
 
 <div>
+
+

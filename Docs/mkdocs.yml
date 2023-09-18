@@ -1,7 +1,7 @@
 site_name: "Peasy"
 site_url: http://p-org.github.io/Peasy/
 site_description: "Peasy: An Intuitive Development Environment for P"
-site_author: "Esther Sue"
+site_author: "P Team @ AWS"
 
 repo_url: https://github.com/p-org/peasy-ide-vscode
 repo_name: Peasy-ide-vscode
@@ -33,18 +33,23 @@ theme:
       quote: octicons/quote-16
   features:
     - navigation.instant
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.tracking
+    - navigation.sections
     - navigation.indexes
-    - navigation.expand
     - navigation.top
     - toc.integrate
     - search.suggest
     - search.highlight
+    - content.code.copy
+    - content.tabs.link
+    - toc.follow
 
 # This should be renamed to nav for mkdocs 1.0+
 nav:
-  - Home: index.md
-  - Installing Peasy: installingPeasy.md
-  - Demo: demo.md
+  - Peasy: index.md
+  - Install: installingPeasy.md
   - User Guide:
     - Compiling Code: compilingCode.md
     - Running Testcases: runningTestcases.md
@@ -59,7 +64,8 @@ nav:
         - Compare and Contrast: trace-visualizer/feature_compare_contrast.md
       - P JSON Output: trace-visualizer/p_json_output.md
     - Keyboard Shortcuts and Commands: shortcutsAndCommands.md
-  - Contributing to the Peasy Extension: contribute.md
+  - Peasy Demo Video: demo.md
+  - Contributing to Peasy: contribute.md
   
 markdown_extensions:
   - pymdownx.superfences
