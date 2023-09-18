@@ -21,7 +21,7 @@
   <h2>Getting Started</h2>
 </div>
 
-A trace visualizer provides visualization capabilities to visualize any sequence of events that happened within a distributed system from its trace files. The interactive UI of the trace visualizer makes it easier for a user to identify any patterns or anamolies in the behaviour of a system and helps find bugs quickly.
+A trace visualizer provides visualization capabilities to depict any sequence of events that occurred within a distributed system from its trace files. The interactive UI of the trace visualizer makes it easier for a user to identify any patterns or anamolies in the behaviour of a system and helps find bugs quickly.
 
 !!! info "Acknowledgement"
 	The trace visualizer in Peasy is built on top of [ShiViz visualization tool](https://github.com/DistributedClocks/shiviz). We recommend that you go through their [Visualizing Distributed System Executions](https://homes.cs.washington.edu/~mernst/pubs/visualize-distributed-tosem2020.pdf) paper to learn more about the ShiViz tool.
@@ -42,10 +42,11 @@ Alternatively, you can launch the visualizer using the Visual Studio Code shortc
 	</figure>
 
 ### **Terminology**
-
-<u>Log</u> - The text of all the actions within the trace.<br />
-<u>Motif</u> - Structural patterns in the visualization graph.<br />
-<u>Fields</u> - Each JSON log entry contains the log text and fields associated with the log. For example, field `action` indicates the type of log it is (`SendEvent`, `ReceiveEvent`, `StateTransition`, etc.). Field `target` specifies the target machine of a `SendEvent` log entry, while field `machine` provides the name of the machine. More details can be found in [P JSON Output](./p_json_output.md).
+Term | Description
+------------ | ------------
+Log | The text of all the actions within the trace.
+Motif | Structural patterns in the visualization graph. 
+Fields | Each JSON log entry contains the log text and fields associated with the log. For example, field `action` indicates the type of log it is (`SendEvent`, `ReceiveEvent`, `StateTransition`, etc.). Field `target` specifies the target machine of a `SendEvent` log entry, while field `machine` provides the name of the machine. More details can be found in [P JSON Output](./p_json_output.md).
 
 ### **Breakdown**
 <div class="screenshots">

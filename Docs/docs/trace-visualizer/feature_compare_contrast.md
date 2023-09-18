@@ -15,7 +15,9 @@
     <h2>Compare and Contrast</h2>
 </div>
 
-Finally, let's discuss the last feature of the Peasy Trace Visualizer: comparing and contrasting multiple traces. When selecting traces to visualize upon launching the trace visualizer, you can choose to select multiple JSON traces at once. *(It is suggested that you place all the traces in one folder to facilitate easier selection in the file dialog window.)*
+Finally, let's discuss the last feature of the Peasy Trace Visualizer: comparing and contrasting multiple traces. When selecting traces to visualize upon launching the trace visualizer, you can choose to select multiple JSON traces at once.
+
+!!! tip "We suggest that you place all the trace files in one folder to facilitate easier selection in the file dialog window."
 
 **View Different Traces**
 

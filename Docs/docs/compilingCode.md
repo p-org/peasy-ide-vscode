@@ -14,7 +14,7 @@
 
 Compiling P programs is now super easy with Peasy!
 
-Simply press ++f5++ or `Save` in VS Code and your project will automatically compile the current P project with the `p compile` command.
+Simply press ++f5++ or `Save` in VS Code editor and your project will automatically compile the current P project using the `p compile` command.
 
 ??? note "Demo Video: How to compile code in Peasy?"
 
@@ -26,7 +26,7 @@ Simply press ++f5++ or `Save` in VS Code and your project will automatically com
 
 ## **Error Reporting**
 
-Peasy automatically detects compilation errors in your P project. There are two types of compile-time errors in P: Parse Errors and Type Errors.
+Peasy automatically detects compilation errors in your P project. There are two types of compilation errors in P: Parse Errors and Type Errors.
 
 If compiling a P project with ++f5++ triggers errors, you can simply open the `Problems` panel in VS Code to view all compilation errors in the current P project. Then, you can jump to the error location by simply clicking the error.
 

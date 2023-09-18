@@ -24,4 +24,4 @@ Peasy can also be used as a documentation tool leveraged by the service teams du
   <h2>Transforming the User Experience</h2>
 </div>
 
-From the very beginning of users utilizing P to write formal models of their projects and problems, users clamored for a VSCode extension for the language P that would allow them to streamline the process of developing in P. Therefore, the P Team went to work to create a plugin that would suit all their users' needs. We aim for this extension to attract new users to develop in P with ease as well as transform the user experience for current P developers.
+From the very beginning of users utilizing P to write formal models of their projects and problems, users clamored for a VS Code extension for the language P that would allow them to streamline the process of developing in P. Therefore, the P Team went to work to create a plugin that would suit all their users' needs. We aim for this extension to attract new users to develop in P with ease as well as transform the user experience for current P developers.

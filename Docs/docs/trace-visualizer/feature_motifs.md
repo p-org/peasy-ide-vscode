@@ -44,7 +44,7 @@ In addition to the default motifs, you can also build your own custom motifs! Yo
 	<li data-icon="❑">Double-clicking a node deletes it.</li>
 </ul>
 
-??? note "Demo Video: How to use custom motifs in trace visualizer?"
+??? note "Demo Video: How to build and use custom motifs in trace visualizer?"
 
 	In the video demo below, a custom motif was built that searches for patterns where <code>Machine 1</code> sends something to <code>Machine 2</code>, then later sends something to <code>Machine 3</code>, and finally sends something to <code>Machine 4</code>.
 
