@@ -21,7 +21,7 @@
   <h2>Getting Started</h2>
 </div>
 
-A trace visualizer provides visualization capabilities to depict any sequence of events that occurred within a distributed system from its trace files. The interactive UI of the trace visualizer makes it easier for a user to identify any patterns or anamolies in the behaviour of a system and helps find bugs quickly.
+Error traces for complex distributed systems are hard to debug as they involve nontrivial interleaving of messages. Peasy provides **trace visualization** to aid debugging counter examples provided by the P checker. Peasy helps visualize traces as message sequence charts, perform search, and do motif based analysis.
 
 !!! info "Acknowledgement"
 	The trace visualizer in Peasy is built on top of [ShiViz visualization tool](https://github.com/DistributedClocks/shiviz). We recommend that you go through their [Visualizing Distributed System Executions](https://homes.cs.washington.edu/~mernst/pubs/visualize-distributed-tosem2020.pdf) paper to learn more about the ShiViz tool.
@@ -44,7 +44,7 @@ Alternatively, you can launch the visualizer using the Visual Studio Code shortc
 ### **Terminology**
 Term | Description
 ------------ | ------------
-Log | The text of all the actions within the trace.
+Log | The text corresponding to an action within the trace.
 Motif | Structural patterns in the visualization graph. 
 Fields | Each JSON log entry contains the log text and fields associated with the log. For example, field `action` indicates the type of log it is (`SendEvent`, `ReceiveEvent`, `StateTransition`, etc.). Field `target` specifies the target machine of a `SendEvent` log entry, while field `machine` provides the name of the machine. More details can be found in [P JSON Output](./p_json_output.md).
 
