@@ -1,4 +1,4 @@
-# Peasy: An Intuitive Development Environment for P
+# Peasy: An Easy-to-Use Development Environment for P
 
 [P](https://p-org.github.io/P/) is a state machine based programming language for formal modeling and analysis of distributed systems. Peasy is a step towards making application of formal methods in practice *easy-peasy* 😃. 
 
