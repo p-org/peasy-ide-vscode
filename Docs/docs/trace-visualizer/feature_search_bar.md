@@ -14,10 +14,10 @@
 </style>
 
 <div align="center">
-  <h2>Search Bar</h2>
+  <h2>Trace Filtering</h2>
 </div>
 
-Now let's move on with the search bar filtering capabilities!
+Now let's move on with the search filtering capabilities!
 
 <a id="fields-filtering"></a>
 **Filtering by Fields**
