@@ -133,11 +133,13 @@ async function runHandler(
     request.include.forEach((test) => run.enqueued(test));
   }
 
+  let tcOutput = vscode.window.createOutputChannel("Test Case Output");
+
   while (queue.length > 0) {
     const test = queue.pop()!;
     run.started(test);
 
-    await handlePTestCase(run, test);
+    await handlePTestCase(run, test, tcOutput);
   }
 }
 
@@ -147,21 +149,22 @@ If the Test Item is a file: run its children. Else: Run the test case.
 */
 async function handlePTestCase(
   run: vscode.TestRun,
-  tc: vscode.TestItem
+  tc: vscode.TestItem,
+  tcOutput: vscode.OutputChannel
 ): Promise<boolean> {
   if (tc.parent == undefined) {
     tc.children.forEach((item) => run.enqueued(item));
-    tc.children.forEach(async (item) => runPTestCase(run, item));
+    tc.children.forEach(async (item) => runPTestCase(run, item, tcOutput));
 
     run.passed(tc);
   } else {
-    await runPTestCase(run, tc);
+    await runPTestCase(run, tc, tcOutput);
   }
   return true;
 }
 
 //Always runs a SINGLE P Test Case.
-async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
+async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem, tcOutput: vscode.OutputChannel) {
   run.started(tc);
   var result = TestResults.Error;
   let terminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
@@ -187,6 +190,7 @@ async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem) {
     var contents = await runCheckCommand(
       terminal,
       tc,
+      tcOutput,
       outputDirectory,
       projectDirectory ?? ""
     );
@@ -239,6 +243,7 @@ async function checkResult(
 async function runCheckCommand(
   terminal: vscode.Terminal,
   tc: vscode.TestItem,
+  tcOutput: vscode.OutputChannel,
   outputDirectory: string,
   projectDirectory: string
 ): Promise<string> {
@@ -259,12 +264,16 @@ async function runCheckCommand(
       " -s " +
       numSchedules;
   }
-  //Runs Command in Terminal
-  terminal.sendText(command);
   var contents: string;
+
+  // Prints in the output channel
+  tcOutput.appendLine("Executing command : " + command + "\n");
+  tcOutput.show();
+  
   //Runs command in separate shell that finds the test contents
   try {
     let stdOut = child_process.execSync(command, { shell: "/bin/zsh" });
+    tcOutput.appendLine(stdOut.toString());
     return stdOut.toString();
   } catch (e) {
     const val: SpawnSyncReturns<Buffer> = e as SpawnSyncReturns<Buffer>;
@@ -273,6 +282,7 @@ async function runCheckCommand(
       vscode.window.showErrorMessage("Test Failed: " + tc.label);
       throw e;
     }
+    tcOutput.appendLine(contents);
   }
   return contents;
 }
