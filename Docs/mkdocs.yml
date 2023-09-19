@@ -1,6 +1,6 @@
 site_name: "Peasy"
 site_url: http://p-org.github.io/Peasy/
-site_description: "Peasy: An Intuitive Development Environment for P"
+site_description: "Peasy: An easy-to-use development environment for P"
 site_author: "P Team @ AWS"
 
 repo_url: https://github.com/p-org/peasy-ide-vscode

@@ -14,10 +14,10 @@
 
 **[Step 1] Install P**
 
-Follow the [installing P](https://p-org.github.io/P/getstarted/install/) instructions to install P locally (version >= 2.0.19), depending on your platform.
+Follow the [installing P](https://p-org.github.io/P/getstarted/install/) instructions to install P locally (version >= 2.0.20), depending on your platform.
 
 
-??? note "Make sure that you installed the right version of P (i.e., version >= 2.0.19)"
+??? note "Make sure that you installed the right version of P (i.e., version >= 2.0.20)"
     
     Run `p --version` command to get the version of P
 
