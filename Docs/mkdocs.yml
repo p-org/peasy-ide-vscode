@@ -54,7 +54,7 @@ nav:
     - Compiling Code: compilingCode.md
     - Running Testcases: runningTestcases.md
     - Editing Code: editingCode.md
-    - Visualizing State Machines: visualizingStateMachines.md
+    - State Machine Visualizer: visualizingStateMachines.md
     - Trace Visualizer:
       - Getting Started: trace-visualizer/getting_started.md
       - Features:
