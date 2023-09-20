@@ -33,13 +33,16 @@ export default class CompileCommands {
     context.subscriptions.push(
       vscode.workspace.onDidDeleteFiles((e) => generateProjects()),
       vscode.workspace.onDidCreateFiles((e) => generateProjects()),
-        vscode.workspace.onDidChangeTextDocument(async (e) => {
+      // Trigger the compile task on saving P files only
+      vscode.workspace.onDidSaveTextDocument(async (e) => {
+        if(e.fileName.endsWith(".p")){
           for (var t of await vscode.tasks.fetchTasks()) {
             if (t.name === "Compile") {
               vscode.tasks.executeTask(t);
             }
           }
-        })
+        }
+      })
     );
 
     return new CompileCommands();
