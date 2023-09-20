@@ -134,6 +134,8 @@ async function runHandler(
   }
 
   let tcOutput = vscode.window.createOutputChannel("Test Case Output");
+  tcOutput.appendLine("Running the Test Cases...\n");
+  tcOutput.show();
 
   while (queue.length > 0) {
     const test = queue.pop()!;
@@ -181,7 +183,6 @@ async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem, tcOutput: 
     }
   }
   //Sends P Check command through the terminal
-  terminal.show();
   const outputDirectory = "PCheckerOutput/" + tc.label;
   var outputFile = outputDirectory + "/check.log";
   var projectDirectory = tc.uri?.fsPath.split("PTst")[0];
@@ -268,7 +269,6 @@ async function runCheckCommand(
 
   // Prints in the output channel
   tcOutput.appendLine("Executing command : " + command + "\n");
-  tcOutput.show();
   
   //Runs command in separate shell that finds the test contents
   try {
