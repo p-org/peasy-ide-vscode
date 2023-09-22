@@ -476,79 +476,98 @@ Shiviz.prototype.visualize = function (
         Print: 0,
       };
 
-      var logEvents = [];
-      for (let i = 0; i < singleJsonLogIter.length; i++) {
-        let prevLogEntry = null;
-        const lineNum = i + 1;
-        const logEntry = singleJsonLogIter[i];
+      try{
 
-        // Don't include StrategyDescription
-        switch (logEntry.type) {
-          case "StrategyDescription":
-            continue;
-          case "AssertionFailure":
-            // Find the log entry prior to AssertionFailure and append the machine name and clock details so the visualizer
-            // will append the assertion failure will connect to the last log prior to the entry
-            prevLogEntry = singleJsonLogIter[i - 1];
-            logEntry.details["id"] = prevLogEntry.details.id ?? prevLogEntry.details.monitor ?? prevLogEntry.details.sender;
-            logEntry.details["clock"] = prevLogEntry.details.clock;
-            logEntry.details.clock[logEntry.details.id] += 1;  
-            break;
-          case "Print":
-            // Find the log entry prior to the Print and manually keep track of a vector clock map for Print statement machine
-            // relative to the previous log action's vector clock so the graph has time association for the print statement.
-            prevLogEntry = singleJsonLogIter[i - 1];
-            printVcMap.Print += 1;
-            updatePrintVcMap(printVcMap, prevLogEntry.details.clock);
-            logEntry.details["id"] = "Print";
-            logEntry.details["clock"] = printVcMap;
-            break;
-          default:
-            break;
-        }
+              var logEvents = [];
+        for (let i = 0; i < singleJsonLogIter.length; i++) {
+          let prevLogEntry = null;
+          const lineNum = i + 1;
+          const logEntry = singleJsonLogIter[i];
 
-        // Create the fields dictionary
-        let fields = { ...logEntry.details };
+          // Don't include StrategyDescription
+          switch (logEntry.type) {
+            case "StrategyDescription":
+              continue;
+            case "AssertionFailure":
+              // Find the log entry prior to AssertionFailure and append the machine name and clock details so the visualizer
+              // will append the assertion failure will connect to the last log prior to the entry
+              prevLogEntry = singleJsonLogIter[i - 1];
+              logEntry.details["id"] = prevLogEntry.details.id ?? prevLogEntry.details.monitor ?? prevLogEntry.details.sender;
+              logEntry.details["clock"] = prevLogEntry.details.clock;
+              logEntry.details.clock[logEntry.details.id] += 1;  
+              break;
+            case "Print":
+              // Find the log entry prior to the Print and manually keep track of a vector clock map for Print statement machine
+              // relative to the previous log action's vector clock so the graph has time association for the print statement.
+              prevLogEntry = singleJsonLogIter[i - 1];
+              printVcMap.Print += 1;
+              updatePrintVcMap(printVcMap, prevLogEntry.details.clock);
+              logEntry.details["id"] = "Print";
+              logEntry.details["clock"] = printVcMap;
+              break;
+            default:
+              break;
+          }
 
-        // Set the action to the field to the log type of entry
-        fields.action = logEntry.type;
+          // Create the fields dictionary
+          let fields = { ...logEntry.details };
 
-        // If empty dictionary for payload, delete it in fields
-        // Else, parse it into string format
-        if ("payload" in fields) {
-          fields.payload = parsePayloadToString(fields.payload);
-        }
+          // Set the action to the field to the log type of entry
+          fields.action = logEntry.type;
 
-        // Get the machine name and assign it to fields
-        const host = fields.id ?? fields.monitor ?? fields.sender;
-        fields["machine"] = host;
+          // If empty dictionary for payload, delete it in fields
+          // Else, parse it into string format
+          if ("payload" in fields) {
+            fields.payload = parsePayloadToString(fields.payload);
+          }
 
-        // Get the event and clock necessary for initializing a new LogEvent instance
-        const event = fields.log;
-        const clock = fields.clock;
+          // Get the machine name and assign it to fields
+          const host = fields.id ?? fields.monitor ?? fields.sender;
+          fields["machine"] = host;
 
-        // Remove opGroupId
-        if ("opGroupId" in fields) delete fields["opGroupId"];
+          // Get the event and clock necessary for initializing a new LogEvent instance
+          const event = fields.log;
+          const clock = fields.clock;
 
-        // Remove clock key from fields
-        delete fields["clock"];
+          // Remove opGroupId
+          if ("opGroupId" in fields) delete fields["opGroupId"];
 
-        // Get the fields dict keys in sorter manner
-        const sortedFieldsKeys = Object.keys(fields).sort();
+          // Remove clock key from fields
+          delete fields["clock"];
 
-        logEvents.push(
-          new LogEvent(
-            event,
-            new VectorTimestamp(clock, host),
-            lineNum,
-            Object.fromEntries(
-              sortedFieldsKeys.map((key) => [key, fields[key]])
+          // Get the fields dict keys in sorter manner
+          const sortedFieldsKeys = Object.keys(fields).sort();
+
+          logEvents.push(
+            new LogEvent(
+              event,
+              new VectorTimestamp(clock, host),
+              lineNum,
+              Object.fromEntries(
+                sortedFieldsKeys.map((key) => [key, fields[key]])
+              )
             )
-          )
-        );
+          );
+        }
+        return logEvents;
+      } catch (err) {
+          $("#error_message").html("An error occurred while parsing the json file! Please report to the P team or create an issue on GitHub, Thanks!");
+          $(".visualization").hide();
+          $(".input").hide();
+          $(".popup_error").show();
+
+          // Let users close errors with esc
+          $(window).on("keydown.error", function (e) {
+            if (e.keyCode == 27) {
+              $(".error").hide();
+              $(window).unbind("keydown.error");
+            }
+          });
+
+          throw new Error(err);
       }
-      return logEvents;
     }
+      
 
     // Parse the log into JSON
     const jsonLogs = JSON.parse(log);
@@ -762,9 +781,11 @@ Shiviz.prototype.handleException = function (err) {
   if (!err.isUserFriendly()) {
     errhtml = "An unexpected error was encountered. Sorry!";
   }
-
-  $("#errorbox").html(errhtml);
-  $(".error").show();
+  
+  $("#error_message").html(errhtml);
+  $(".visualization").hide();
+  $(".input").hide();
+  $(".popup_error").show();
 
   // Let users close errors with esc
   $(window).on("keydown.error", function (e) {

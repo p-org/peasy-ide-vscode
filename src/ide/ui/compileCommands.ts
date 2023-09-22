@@ -6,6 +6,7 @@ import * as messages from "./messages";
 import { ExtensionConstants } from "../../constants";
 import { checkPInstalled, searchDirectory } from "../../miscTools";
 import { PCommands } from "../../commands";
+import TestingEditor from "./testinginEditor";
 
 // const OutputPathArg = '--output';
 //This class runs commands in the terminal based on Compile Command (example: F5 = "p compile")
@@ -54,6 +55,7 @@ Shows message if there is no need to select a project.
 Shows quick pick if there are multiple projects to compile. 
  */
 async function showFiles() {
+  await generateProjects();
   if (CompileCommands.projects.length <= 0) {
     vscode.window.showInformationMessage(
       "There is no alternative P project to select because there is only one P project in the repository."
@@ -80,6 +82,7 @@ async function changeCompilationCommand(item: vscode.QuickPickItem) {
     item.label,
     item.description + "PGenerated/Stately/",
   ];
+  await TestingEditor.updateTestCasesList(item.description ?? "**/");
 }
 
 // Runs p compile in the terminal.

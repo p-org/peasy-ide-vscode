@@ -29,7 +29,7 @@
     ], 
 
     "indentationRules": {
-        "increaseIndentPattern": "{",
-        "decreaseIndentPattern": ""
+        "increaseIndentPattern": "^((?!\\/\\/).)*(\\{[^}\"'`]*|\\([^)\"'`]*|\\[[^\\]\"'`]*)$",
+        "decreaseIndentPattern": "^((?!.*?\\/\\*).*\\*/)?\\s*[\\)\\}\\]].*$"
     }
 }

@@ -89,14 +89,6 @@ const shivizScripts: IShiVizScripts = {
       "visualNode",
     ],
   },
-  trexUtil: {
-    folderPath: `${pathToShivizJsDir}/trexUtil`,
-    files: [
-      "trexParser",
-      "generateShiVizCompatibleInput",
-      "generateVectorClock",
-    ],
-  },
   misc: {
     folderPath: `${pathToShivizJsDir}`,
     files: ["clusterer", "deployed", "dev", "searchBar", "shiviz"],
