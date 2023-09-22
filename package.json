@@ -186,6 +186,12 @@
           "type": "integer",
           "default": 1000,
           "description": "Manages the number of schedules run during P testing at a 'p check' command."
+        },
+        "p-vscode.pcompile.exclude": {
+          "scope": "window",
+          "type": "array",
+          "default": ["**/Build/*", "**/build/**"],
+          "description": "Manages the folders that must be excluded from compiling in P."
         }
       }
     },

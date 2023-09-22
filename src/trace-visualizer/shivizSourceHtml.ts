@@ -568,11 +568,18 @@ const shivizSourceHtml = (
 				<button name="collapse" class="collapse">Toggle Collapse</button>
 			</div>
 		</section>
+
+		<div id="errorbox" class="error"></div>
+		<div class="popup_error">
+			<div class="message">
+				<p id="error_message">This is an error message</p>
+			</div>
+		</div>
 	
 		<div id="errorbox" class="error"></div>
 		<div id="errorcover" class="error"></div>
-	
-		<svg id="defs">
+		
+			<svg id="defs">
 			<defs>
 				<linearGradient id="gedge">
 					<stop stop-color="#999" offset="0" />
@@ -639,10 +646,6 @@ const shivizSourceHtml = (
 		<script type="text/javascript" src="${shivizScriptsUriMap["exception"]}"></script>
 		<script type="text/javascript" src="${shivizScriptsUriMap["regexp"]}"></script>
 		<script type="text/javascript" src="${shivizScriptsUriMap["util"]}"></script>
-	
-		<script type="text/javascript" src="${shivizScriptsUriMap["generateShiVizCompatibleInput"]}"></script>
-		<script type="text/javascript" src="${shivizScriptsUriMap["generateVectorClock"]}"></script>
-		<script type="text/javascript" src="${shivizScriptsUriMap["trexParser"]}"></script>
 	
 		<script type="text/javascript" src="${shivizScriptsUriMap["controller"]}"></script>
 		<script type="text/javascript" src="${shivizScriptsUriMap["global"]}"></script>

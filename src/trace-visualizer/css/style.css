@@ -1218,3 +1218,39 @@ svg#defs {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+.popup_error {
+  display: none;
+  width: 25rem;
+  height: 10rem;
+  margin: 4rem auto;
+  background-color: #fafafa;
+  box-shadow: 2px 2px 1rem #212121;
+  border-radius: 0.25rem;
+}
+.popup_error .message {
+  display: flex;
+  overflow: hidden;
+  background-color: #e74c3c;
+  height: 10rem;
+  border-radius: 0.25rem 0.25rem 0 0;
+  overflow: hidden;
+  position: relative;
+  font-size: 0.9rem;
+}
+.popup_error .message:before {
+  content: "\f057";
+  font-family: FontAwesome;
+  position: relative;
+  color: #fafafa;
+  font-size: 3rem;
+  left: 1rem;
+  top: 3.5rem;
+}
+.popup_error .message p {
+  margin: auto;
+  color: #fafafa;
+  text-align: left;
+  margin-left: 2rem;
+}
+

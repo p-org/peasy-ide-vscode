@@ -698,6 +698,12 @@
 			}
 		},
 		{
+			"scope": "default_func",
+			"settings": {
+				"foreground": "#179722",
+			}
+		},
+		{
 			"scope": "comment",
 			"settings": {
 				"foreground": "#65656a"

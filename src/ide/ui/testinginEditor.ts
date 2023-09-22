@@ -10,7 +10,6 @@ import { checkPInstalled, searchDirectory } from "../../miscTools";
 import { PCommands } from "../../commands";
 import * as child_process from "child_process";
 import { SpawnSyncReturns } from "child_process";
-const fs = require("fs");
 
 export default class TestingEditor {
   static instance: TestingEditor;
@@ -60,6 +59,30 @@ export default class TestingEditor {
       }
     }
     return TestingEditor.instance;
+  }
+
+
+  public static async updateTestCasesList(currProject: string): Promise<void> {
+    
+    // Delete all the test items in the testing panel
+    TestingEditor.controller.items.forEach((item) => TestingEditor.controller.items.delete(item.id));
+
+    if (vscode.workspace.workspaceFolders !== undefined) {
+      const folder = vscode.workspace.workspaceFolders[0].uri;
+      currProject = currProject.replace(folder.path, "**");
+      // Create relative path pattern to the workspace
+      var files = await searchDirectory(`${currProject}PTst/Test*.p`);
+
+      // Create test items for selected p project in the testing panel
+      if (files != null) {
+        for (var i = 0; i < files.length; i++) {
+          var x = files.at(i);
+          if (x !== undefined) {
+            updateNodeFromDocument(await vscode.workspace.openTextDocument(x));
+          }
+        }
+      }
+    }
   }
 }
 
