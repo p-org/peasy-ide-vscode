@@ -36,7 +36,7 @@ Peasy lets you configure the number of schedules to explore for test cases. Simp
 }
 ```
 
-??? note "Example: Customizing number of schedules for each test case"
+??? note "Example: Customizing number of schedules for test cases"
   
     For example, when you add the below key-value pair to your VS Code settings.json file, each test case will be checked for 2000 schedules.
     ```
