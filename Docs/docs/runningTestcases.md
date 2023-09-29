@@ -23,3 +23,24 @@ The Testing Panel in VS Code lists all P test cases. In this panel, click the :m
         <source src="../videos/test_framework.mov" type="video/mp4">
       </video>
     </figure>
+
+
+
+**Configuring Test Case Settings**
+
+Peasy lets you configure the number of schedules to explore for test cases. Simply add the ***"p-vscode.schedules"*** key and specify your preferred value in the VS Code `settings.json` file. Run the testcases from the testing panel, and the extension will automatically check each test case for the specified number of schedules.
+
+```
+{
+  "p-vscode.schedules": <number_of_schedules>
+}
+```
+
+??? note "Example: Customizing number of schedules for test cases"
+  
+    For example, when you add the below key-value pair to your VS Code settings.json file, each test case will be checked for 2000 schedules.
+    ```
+    {
+      "p-vscode.schedules": 2000
+    }
+    ```
