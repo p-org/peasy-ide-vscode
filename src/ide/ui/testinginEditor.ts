@@ -1,15 +1,10 @@
 import * as vscode from "vscode";
 import {
-  ExtensionConstants,
-  LanguageConstants,
   TestResults,
 } from "../../constants";
 import * as messages from "./messages";
-import RelatedErrorView from "./relatedErrorView";
 import { checkPInstalled, searchDirectory } from "../../miscTools";
-import { PCommands } from "../../commands";
 import * as child_process from "child_process";
-import { SpawnSyncReturns } from "child_process";
 
 export default class TestingEditor {
   static instance: TestingEditor;
@@ -151,95 +146,68 @@ async function runHandler(
   const run = TestingEditor.controller.createTestRun(request);
   const queue: vscode.TestItem[] = [];
 
+  // Add all the test cases to the queue
   if (request.include) {
-    request.include.forEach((test) => queue.push(test));
-    request.include.forEach((test) => run.enqueued(test));
+    request.include.forEach((test) => {
+      if (test.parent == undefined) {
+        test.children.forEach(test => {
+          queue.push(test);
+          run.enqueued(test);
+        });
+      } else {
+        queue.push(test);
+        run.enqueued(test);
+      }
+    });
   }
 
+  // Create output channel to print the test case run live log
   let tcOutput = vscode.window.createOutputChannel("Test Case Output");
-  tcOutput.appendLine("Running the Test Cases...\n");
   tcOutput.show();
 
-  while (queue.length > 0) {
-    const test = queue.pop()!;
-    run.started(test);
-
-    await handlePTestCase(run, test, tcOutput);
-  }
+  runPTestcaseIfQueueNotEmpty(run, queue, tcOutput, token);
 }
 
-/*
-Compiles the P directory.
-If the Test Item is a file: run its children. Else: Run the test case.
-*/
-async function handlePTestCase(
-  run: vscode.TestRun,
-  tc: vscode.TestItem,
-  tcOutput: vscode.OutputChannel
-): Promise<boolean> {
-  if (tc.parent == undefined) {
-    tc.children.forEach((item) => run.enqueued(item));
-    tc.children.forEach(async (item) => runPTestCase(run, item, tcOutput));
-
-    run.passed(tc);
+// Run a p testcase if there are test cases to run, else end the run if there are no test case items or user requested a cancellation
+function runPTestcaseIfQueueNotEmpty(run: vscode.TestRun, queue: vscode.TestItem[], tcOutput: vscode.OutputChannel, token: vscode.CancellationToken) {
+  if(queue.length > 0) {
+    const test = queue.pop()!;
+    if(!token.isCancellationRequested) {
+      runPTestCase(run, test, tcOutput, queue, token);
+    } else {
+      cancelTestcaseRun(run, test, false, queue, tcOutput);
+    }
   } else {
-    await runPTestCase(run, tc, tcOutput);
+    run.end(); 
   }
-  return true;
 }
 
 //Always runs a SINGLE P Test Case.
-async function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem, tcOutput: vscode.OutputChannel) {
+function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem, tcOutput: vscode.OutputChannel, queue: vscode.TestItem[], token: vscode.CancellationToken) {
   run.started(tc);
-  var result = TestResults.Error;
-  let terminal = vscode.window.activeTerminal ?? vscode.window.createTerminal();
-  if (terminal.name == PCommands.RunTask) {
-    for (let i = 0; i < vscode.window.terminals.length; i++) {
-      if (vscode.window.terminals.at(i)?.name != PCommands.RunTask) {
-        terminal =
-          vscode.window.terminals.at(i) ?? vscode.window.createTerminal();
-        break;
-      }
-    }
-    if (terminal.name == PCommands.RunTask) {
-      terminal = vscode.window.createTerminal();
-    }
-  }
   //Sends P Check command through the terminal
-  const outputDirectory = "PCheckerOutput/" + tc.label;
-  var outputFile = outputDirectory + "/check.log";
   var projectDirectory = tc.uri?.fsPath.split("PTst")[0];
 
   if (vscode.workspace.workspaceFolders !== undefined) {
-    var contents = await runCheckCommand(
-      terminal,
-      tc,
-      tcOutput,
-      outputDirectory,
-      projectDirectory ?? ""
-    );
-    await checkResult(
-      result,
-      outputFile,
+    runCheckCommand(
       run,
       tc,
+      tcOutput,
       projectDirectory ?? "",
-      contents
+      queue,
+      token
     );
   }
-
   return;
 }
 
 //Check the output of the test.
-async function checkResult(
-  result: string,
-  outputFile: string,
+function checkResult(
   run: vscode.TestRun,
   tc: vscode.TestItem,
-  projectDirectory: string,
   contents: string
 ) {
+  var result = TestResults.Error;
   if (contents.includes("Found 0 bugs")) {
     result = TestResults.Pass;
   } else if (contents.includes("found a bug")) {
@@ -264,50 +232,86 @@ async function checkResult(
 }
 
 //Runs p check in a child process and returns the stdout or result.
-async function runCheckCommand(
-  terminal: vscode.Terminal,
+function runCheckCommand(
+  run: vscode.TestRun,
   tc: vscode.TestItem,
   tcOutput: vscode.OutputChannel,
-  outputDirectory: string,
-  projectDirectory: string
-): Promise<string> {
+  projectDirectory: string,
+  queue: vscode.TestItem[],
+  token: vscode.CancellationToken
+) {
   //number of p checker schedules that are run
 
   const numSchedules: String =
     vscode.workspace.getConfiguration("p-vscode").get("schedules") ?? "1000";
   //The p check command depends on if the terminal is bash or zsh.
   var command;
-  if (!(await checkPInstalled())) {
-    command = 'echo -e "\\e[1;31m ' + messages.Messages.Installation.noP + '"';
+  if (!checkPInstalled()) {
+    tcOutput.appendLine(messages.Messages.Installation.noP);
+    run.end();
+    return;
   } else {
-    command =
-      "cd " +
-      projectDirectory +
-      " && p check -tc " +
-      tc.label +
-      " -s " +
-      numSchedules;
+    command = "p check -tc " + tc.label + " -s " +numSchedules;
   }
-  var contents: string;
 
   // Prints in the output channel
-  tcOutput.appendLine("Executing command : " + command + "\n");
+  tcOutput.appendLine("\n\nExecuting command : " + command + "\n");
   
   //Runs command in separate shell that finds the test contents
   try {
-    let stdOut = child_process.execSync(command, { shell: "/bin/zsh" });
-    tcOutput.appendLine(stdOut.toString());
-    return stdOut.toString();
+    let testCaseProcess = child_process.spawn(command, {shell: true, cwd: projectDirectory});
+
+    const testCaseProcessLog: string[] = [];
+
+    testCaseProcess.stdout.on('data', (chunk) => {
+      // Collect the log lines and print in the output channel
+      var line = chunk.toString().trim();
+      line && tcOutput.appendLine(line);
+      testCaseProcessLog.push(line);
+
+      // If user requested to cancel the run in the middle of execution, cancel the testcase run and kill the command process
+      if(token.isCancellationRequested) {
+        testCaseProcess.kill();
+        cancelTestcaseRun(run, tc, true, queue, tcOutput);
+      }
+    });
+
+    testCaseProcess.stderr.on('data', (chunk) => {
+      // Collect the log lines and print in the output channel
+      var line = chunk.toString().trim();
+      line && tcOutput.appendLine(line);
+      testCaseProcessLog.push(line);
+
+      // If user requested to cancel the run in the middle of execution, cancel the testcase run and kill the command process
+      if(token.isCancellationRequested) {
+        testCaseProcess.kill();
+        cancelTestcaseRun(run, tc, true, queue, tcOutput);
+      }
+    });
+
+    // Once command is done executing, set the test case status and run the next p test case
+    testCaseProcess.on('close', (code, signal) => {
+      checkResult(run, tc, testCaseProcessLog.join(' '));
+      runPTestcaseIfQueueNotEmpty(run, queue, tcOutput, token);
+    });
   } catch (e) {
-    const val: SpawnSyncReturns<Buffer> = e as SpawnSyncReturns<Buffer>;
-    contents = val.stdout.toString();
-    if (contents.length == 0) {
-      vscode.window.showErrorMessage("Test Failed: " + tc.label);
-      throw e;
-    }
-    tcOutput.appendLine(contents);
+    var msg = new vscode.TestMessage("Test Errored in Running");
+    run.errored(tc, msg);
+    tcOutput.appendLine("Unexpected Error encountered while executing command: " + command);
+    runPTestcaseIfQueueNotEmpty(run, queue, tcOutput, token);
   }
-  return contents;
+}
+
+function cancelTestcaseRun(run: vscode.TestRun, test: vscode.TestItem, isTestRunning: boolean, queue: vscode.TestItem[], tcOutput: vscode.OutputChannel) {
+  
+  tcOutput.appendLine("\n\nCancelled the test case run!");
+
+  var msg = new vscode.TestMessage("Test Case Run Cancelled");
+  if(isTestRunning)
+    run.errored(test, msg);
+  queue.forEach((test) => run.errored(test, msg));
+  queue = [];
+  run.end();
 }
 
 function updateNodeFromDocument(e: vscode.TextDocument) {

@@ -88,7 +88,7 @@ async function changeCompilationCommand(item: vscode.QuickPickItem) {
 // Runs p compile in the terminal.
 async function createCompileTask() {
   //Check if P is installed on computer
-  var p_installed = await checkPInstalled();
+  var p_installed = checkPInstalled();
   var type = PCommands.RunTask;
   if (!p_installed) {
     vscode.window.showErrorMessage(messages.Messages.Installation.noP);

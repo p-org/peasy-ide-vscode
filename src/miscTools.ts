@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+var fs = require('fs');
 
 //Searches the current file directory for a specific pattern string and returns all files that match the pattern
 export async function searchDirectory(pattern: string) {
@@ -17,18 +18,12 @@ export async function searchDirectory(pattern: string) {
 }
 
 //Check if P is installed by searching in .dotnet/tools directory
-export async function checkPInstalled(): Promise<boolean> {
+export function checkPInstalled(): boolean {
   try {
     const homedir = require('os').homedir();
-    var filePath = homedir + "/.dotnet/tools";
-    
-    var uri: vscode.Uri = vscode.Uri.file(filePath);
-    var files: [string, vscode.FileType][] =
-      await vscode.workspace.fs.readDirectory(uri);
-    //turn arrays into JSON to check if the P executable exists inside of the file directory
-    var jsonFiles = JSON.stringify(files);
-    var jsonPFile = JSON.stringify(["p", vscode.FileType.File]);
-    if (jsonFiles.indexOf(jsonPFile) !== -1) {
+    var dirPath = homedir + "/.dotnet/tools";
+    var dirFiles = fs.readdirSync(dirPath);
+    if (dirFiles.includes("p")) {
       return true;
     }
   } catch (e) {
