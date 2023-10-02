@@ -3,7 +3,7 @@
   "displayName": "Peasy Extension",
   "description": "Peasy Extension provides compilation support, a custom theme, syntax highlighting, a testing framework, error tracing visualization",
   "publisher": "PLanguage",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "icon": "Docs/docs/images/p-icon.png",
   "engines": {
     "vscode": "^1.78.0"
