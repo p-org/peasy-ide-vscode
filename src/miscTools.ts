@@ -1,5 +1,7 @@
 import * as vscode from "vscode";
 var fs = require('fs');
+const path = require('path'); 
+
 
 //Searches the current file directory for a specific pattern string and returns all files that match the pattern
 export async function searchDirectory(pattern: string) {
@@ -23,9 +25,13 @@ export function checkPInstalled(): boolean {
     const homedir = require('os').homedir();
     var dirPath = homedir + "/.dotnet/tools";
     var dirFiles = fs.readdirSync(dirPath);
-    if (dirFiles.includes("p")) {
-      return true;
-    }
+    var isPFileFound = false;
+    dirFiles.forEach((file: string) => { 
+      if (path.parse(file).name == "p") {
+        isPFileFound = true;
+      }
+    });
+    return isPFileFound;
   } catch (e) {
     console.log(e);
   }
