@@ -3,6 +3,7 @@ import shivizScripts from "./constants/shivizScripts";
 import { IShiVizScriptsUri } from "./types/shiviz";
 import shivizSourceHtml from "./shivizSourceHtml";
 import visualizerErrorHtml from "./visualizerErrorHtml";
+import * as path from "path";
 
 export class PeasyVizPanel {
   /**
@@ -220,7 +221,7 @@ export class PeasyVizPanel {
       for (const file of files || []) {
 
         // Get the trace filename
-        var traceName: string = file.path.split('/').pop() ?? "";
+        var traceName: string = path.parse(file.path).base || "";
         traceName = traceName.split('.')[0];
 
         // Get the trace content
