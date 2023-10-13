@@ -5,10 +5,7 @@ export namespace Messages {
     export const MultiplePprofFile =
       "The current directory contains multiple *.pproj folders. Please select which project to compile.";
     export const NoDirectory = "The current directory is invalid.";
-    export const Visualization = `
-Code Generation Success!!
-Visualize P state machines by copy-and-pasting code from the following file: 
-`;
+    export const Visualization = `Code Generation Success!! Visualize P state machines by copy-and-pasting code from the following file: `;
   }
 
   export namespace Compiler {
@@ -17,11 +14,7 @@ Visualize P state machines by copy-and-pasting code from the following file:
   }
 
   export namespace Installation {
-    export const noP = `
-      P LANGUAGE is not installed on your computer! 
-      Automatic Compilation and P testing capabilities will not work. 
-      Download P at https://p-org.github.io/P/getstarted/install/. 
-      Then, reload VS Code.`;
+    export const noP = `P LANGUAGE is not installed on your computer! Automatic Compilation and P testing capabilities will not work. Download P at https://p-org.github.io/P/getstarted/install/. Then, reload VS Code.`;
     export const Start = "Starting P installation";
     export const Error = "An error occurred during the installation of P.";
     export const Completed = "P installation completed";

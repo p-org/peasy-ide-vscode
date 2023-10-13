@@ -5,6 +5,7 @@ import {
 import * as messages from "./messages";
 import { checkPInstalled, searchDirectory } from "../../miscTools";
 import * as child_process from "child_process";
+import * as path from "path";
 
 export default class TestingEditor {
   static instance: TestingEditor;
@@ -44,7 +45,7 @@ export default class TestingEditor {
     );
 
     //Looks through the entire test folder to discover where is the test file and where the tests are.
-    var files = await searchDirectory("**/PTst/Test*.p");
+    var files = await searchDirectory(path.join("**", "PTst", "Test*.p"));
     if (files != null) {
       for (var i = 0; i < files.length; i++) {
         var x = files.at(i);
@@ -64,9 +65,9 @@ export default class TestingEditor {
 
     if (vscode.workspace.workspaceFolders !== undefined) {
       const folder = vscode.workspace.workspaceFolders[0].uri;
-      currProject = currProject.replace(folder.path, "**");
+      currProject = currProject.replace(folder.fsPath, "**");
       // Create relative path pattern to the workspace
-      var files = await searchDirectory(`${currProject}PTst/Test*.p`);
+      var files = await searchDirectory(path.join(currProject, "PTst", "Test*.p"));
 
       // Create test items for selected p project in the testing panel
       if (files != null) {
@@ -186,7 +187,7 @@ function runPTestcaseIfQueueNotEmpty(run: vscode.TestRun, queue: vscode.TestItem
 function runPTestCase(run: vscode.TestRun, tc: vscode.TestItem, tcOutput: vscode.OutputChannel, queue: vscode.TestItem[], token: vscode.CancellationToken) {
   run.started(tc);
   //Sends P Check command through the terminal
-  var projectDirectory = tc.uri?.fsPath.split("PTst")[0];
+  var projectDirectory = tc.uri?.fsPath !== undefined ? path.parse(path.parse(tc.uri?.fsPath).dir).dir : "";
 
   if (vscode.workspace.workspaceFolders !== undefined) {
     runCheckCommand(
@@ -315,8 +316,10 @@ function cancelTestcaseRun(run: vscode.TestRun, test: vscode.TestItem, isTestRun
 }
 
 function updateNodeFromDocument(e: vscode.TextDocument) {
-  const name = e.fileName.split("/");
-  if (name.at(-1) == undefined || !name.includes("PTst")) {
+
+  const filename = path.parse(e.fileName).base;
+  const dirname = path.parse(e.fileName).dir;
+  if (filename == undefined || !dirname.endsWith("PTst")) {
     return;
   }
   if (e.uri.scheme !== "file") {

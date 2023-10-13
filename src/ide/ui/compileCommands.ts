@@ -77,12 +77,12 @@ async function showFiles() {
 }
 //Change the command WHEN the user selects a different item.
 async function changeCompilationCommand(item: vscode.QuickPickItem) {
-  CompileCommands.command = "cd " + item.description + " && p compile";
+  CompileCommands.command = "cd " + item.description + " ; p compile";
   CompileCommands.currProject = [
     item.label,
     item.description + "PGenerated/Stately/",
   ];
-  await TestingEditor.updateTestCasesList(item.description ?? "**/");
+  await TestingEditor.updateTestCasesList(item.description ?? "**");
 }
 
 // Runs p compile in the terminal.
@@ -96,7 +96,7 @@ async function createCompileTask() {
     vscode.tasks.registerTaskProvider(type, {
       async provideTasks(token?: vscode.CancellationToken) {
         var msg =
-          'echo -e "\x1b[1;31m ' + messages.Messages.Installation.noP + '"';
+          'echo "' + messages.Messages.Installation.noP + '"';
         var execution = new vscode.ShellExecution(msg);
 
         //var problemMatchers = ["$Parse", "$Type"];
@@ -128,7 +128,7 @@ async function createCompileTask() {
         var stately_execution = new vscode.ShellExecution(
           msg +
             " --mode stately" +
-            '; echo -e "\\e[1;31m ' +
+            '; echo "' +
             messages.Messages.CompilationStatus.Visualization +
             CompileCommands.currProject[1] +
             CompileCommands.currProject[0].replace(".pproj", "") +
@@ -180,7 +180,7 @@ This is run WHEN:
 
 //IDEA: only update the files being deleted or created, instead of running this everytime.
 async function generateProjects() {
-  var files = await searchDirectory("**/*.pproj");
+  var files = await searchDirectory(path.join("**", "*.pproj"));
   if (files == null) {
     //No directory to speak of.
     vscode.window.showErrorMessage(
@@ -196,14 +196,14 @@ async function generateProjects() {
   } else {
     //If there is only a single pproj file: Set the command and a single project.
     if (files.length == 1 && files.at(0) != undefined) {
-      var fileName = files.at(0)?.fsPath.split("/").at(-1);
+      var fileName = path.parse(files.at(0)?.fsPath!).base;
 
       if (fileName != undefined) {
         var directory = files.at(0)?.path.replace(fileName, "");
         CompileCommands.projects = [
           { label: fileName, description: directory },
         ];
-        CompileCommands.command = "cd " + directory + " && p compile";
+        CompileCommands.command = "cd " + directory + " ; p compile";
 
         if (directory != undefined) {
           CompileCommands.currProject = [
@@ -218,7 +218,7 @@ async function generateProjects() {
       CompileCommands.projects = [];
       for (var f of files) {
         //Add all the file pproj files to the options for the user to choose from.
-        var fileName = f.fsPath.split("/").at(-1);
+        var fileName = path.parse(f.fsPath).base;
         if (fileName != undefined) {
           var item: vscode.QuickPickItem = {
             label: fileName,
@@ -230,7 +230,7 @@ async function generateProjects() {
 
       //Set the compile command to the first P project discovered.
       CompileCommands.command =
-        "cd " + CompileCommands.projects.at(0)?.description + " && p compile";
+        "cd " + CompileCommands.projects.at(0)?.description + " ; p compile";
       if (CompileCommands.projects.at(0) != undefined) {
         CompileCommands.currProject = [
           CompileCommands.projects.at(0)?.label || "",

@@ -1,13 +1,16 @@
 import * as vscode from "vscode";
 var fs = require('fs');
+const path = require('path'); 
+
 
 //Searches the current file directory for a specific pattern string and returns all files that match the pattern
 export async function searchDirectory(pattern: string) {
   var files = null;
   if (vscode.workspace.workspaceFolders !== undefined) {
     const folder = vscode.workspace.workspaceFolders[0].uri;
+    pattern = pattern.replace(folder.fsPath, "");
     let filePattern: vscode.RelativePattern = new vscode.RelativePattern(
-      folder,
+      folder.fsPath,
       pattern
     );
     var excludeFolders: Array<string> = vscode.workspace.getConfiguration("p-vscode").get("pcompile.exclude") || ["**/Build/*", "**/build/**"];
@@ -21,11 +24,15 @@ export async function searchDirectory(pattern: string) {
 export function checkPInstalled(): boolean {
   try {
     const homedir = require('os').homedir();
-    var dirPath = homedir + "/.dotnet/tools";
+    var dirPath = path.join(homedir, ".dotnet", "tools");
     var dirFiles = fs.readdirSync(dirPath);
-    if (dirFiles.includes("p")) {
-      return true;
-    }
+    var isPFileFound = false;
+    dirFiles.forEach((file: string) => { 
+      if (path.parse(file).name == "p") {
+        isPFileFound = true;
+      }
+    });
+    return isPFileFound;
   } catch (e) {
     console.log(e);
   }
