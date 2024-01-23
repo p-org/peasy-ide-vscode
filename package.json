@@ -115,6 +115,7 @@
       {
         "key": "f5",
         "command": "runCommands",
+        "when": "editorLangId == p",
         "args": {
           "commands": [
             {
@@ -131,6 +132,7 @@
       {
         "key": "f4",
         "command": "runCommands",
+        "when": "editorLangId == p",
         "args": {
           "commands": [
             {
@@ -147,11 +149,13 @@
       {
         "command": "peasy-visualizer.run", 
         "key": "f6", 
-        "mac": "f6"
+        "mac": "f6",
+        "when": "editorLangId == p"
       }, 
       {
         "command": "runCommands", 
         "key": "f7",
+        "when": "editorLangId == p",
         "args": {
           "commands": [
             {
