@@ -13,7 +13,7 @@ export default class TestingEditor {
     "pTestController",
     "P Tests"
   );
-  static testRe = /^\s*test/g;
+  static testRe = /^\s*test\s/g;
 
   public static async createAndRegister(
     context: vscode.ExtensionContext
@@ -45,7 +45,7 @@ export default class TestingEditor {
     );
 
     //Looks through the entire test folder to discover where is the test file and where the tests are.
-    var files = await searchDirectory(path.join("**", "PTst", "Test*.p"));
+    var files = await searchDirectory(path.join("**", "PTst", "**", "*.p"));
     if (files != null) {
       for (var i = 0; i < files.length; i++) {
         var x = files.at(i);
@@ -65,13 +65,13 @@ export default class TestingEditor {
 
     if (vscode.workspace.workspaceFolders !== undefined) {
       const folder = vscode.workspace.workspaceFolders[0].uri;
-      currProject = currProject.replace(folder.fsPath, "**");
+            currProject = currProject.replace(folder.fsPath, "**");
       // Create relative path pattern to the workspace
-      var files = await searchDirectory(path.join(currProject, "PTst", "Test*.p"));
+      var files = await searchDirectory(path.join(currProject, "PTst", "**", "*.p"));
 
       // Create test items for selected p project in the testing panel
       if (files != null) {
-        for (var i = 0; i < files.length; i++) {
+                for (var i = 0; i < files.length; i++) {
           var x = files.at(i);
           if (x !== undefined) {
             updateNodeFromDocument(await vscode.workspace.openTextDocument(x));
@@ -100,7 +100,7 @@ function updateFromContents(
       tCase.range = range;
       item.children.add(tCase);
     },
-  });
+  });  
 
   if (item.children.size == 0) {
     controller.items.delete(item.id);
@@ -122,21 +122,21 @@ function parsePTestFile(
     onTest(name: string, range: vscode.Range): void;
   }
 ) {
-  const lines = text.split("\n");
+    const lines = text.split("\n");
 
-  for (let lineNo = 0; lineNo < lines.length; lineNo++) {
-    const line = lines[lineNo];
-    const test = TestingEditor.testRe.exec(line);
-    if (test) {
-      const range = new vscode.Range(
-        new vscode.Position(lineNo, 0),
-        new vscode.Position(lineNo, line.length)
-      );
-      const words = line.split("test ")[1].split(/ |[^A-Za-z_0-9]/);
-      events.onTest(words[0], range);
-      continue;
+    for (let lineNo = 0; lineNo < lines.length; lineNo++) {
+      const line = lines[lineNo];
+      const test = TestingEditor.testRe.exec(line);
+      if (test) {
+        const range = new vscode.Range(
+          new vscode.Position(lineNo, 0),
+          new vscode.Position(lineNo, line.length)
+        );
+        const words = line.split("test ")[1].split(/ |[^A-Za-z_0-9]/);
+        events.onTest(words[0], range);
+        continue;
+      }
     }
-  }
 }
 
 //Handles running a Test Run Request
@@ -318,8 +318,19 @@ function cancelTestcaseRun(run: vscode.TestRun, test: vscode.TestItem, isTestRun
 function updateNodeFromDocument(e: vscode.TextDocument) {
 
   const filename = path.parse(e.fileName).base;
-  const dirname = path.parse(e.fileName).dir;
-  if (filename == undefined || !dirname.endsWith("PTst")) {
+  if (filename == undefined) {
+    return;
+  }
+  var dirname = path.parse(e.fileName).dir;
+  var isTestDir = false;
+  while (dirname != "") {
+    if (dirname.endsWith("PTst")) {
+      isTestDir = true;
+      break;
+    }
+    dirname = path.parse(dirname).dir;
+  }
+  if (!isTestDir) {
     return;
   }
   if (e.uri.scheme !== "file") {
@@ -329,8 +340,8 @@ function updateNodeFromDocument(e: vscode.TextDocument) {
     return;
   }
   const file = getFile(e.uri);
-  updateFromContents(TestingEditor.controller, e.getText(), e.uri, file);
-}
+      updateFromContents(TestingEditor.controller, e.getText(), e.uri, file);
+  }
 
 //If the Testing File already exists, return the file. If it doesn't, add it to the TestController and then return the file.
 function getFile(uri: vscode.Uri) {

@@ -3,7 +3,7 @@
   "displayName": "Peasy Extension",
   "description": "Peasy Extension provides compilation support, a custom theme, syntax highlighting, a testing framework, error tracing visualization",
   "publisher": "PLanguage",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "icon": "Docs/docs/images/p-icon.png",
   "engines": {
     "vscode": "^1.78.0"
@@ -115,7 +115,23 @@
       {
         "key": "f5",
         "command": "runCommands",
-        "when": "editorLangId == p",
+        "when": "editorLangId == p || resourceLangId == p || resourceExtname == .p",
+        "args": {
+          "commands": [
+            {
+              "command": "workbench.action.tasks.terminate",
+                "args": "terminateAll"
+            },
+            {
+              "command": "workbench.action.tasks.runTask",
+              "args": "p-vscode: Compile"
+            }
+          ]
+        }
+      },
+      {
+        "key": "ctrl+b",
+        "command": "runCommands",
         "args": {
           "commands": [
             {
@@ -132,7 +148,23 @@
       {
         "key": "f4",
         "command": "runCommands",
-        "when": "editorLangId == p",
+        "when": "editorLangId == p || resourceLangId == p || resourceExtname == .p",
+        "args": {
+          "commands": [
+            {
+              "command": "workbench.action.tasks.terminate",
+                "args": "terminateAll"
+            },
+            {
+              "command": "workbench.files"
+            }
+          ]
+        }
+      },
+      {
+        "key": "ctrl+l",
+        "command": "runCommands",
+        "when": "!terminalFocus",
         "args": {
           "commands": [
             {
@@ -150,12 +182,12 @@
         "command": "peasy-visualizer.run", 
         "key": "f6", 
         "mac": "f6",
-        "when": "editorLangId == p"
+        "when": "!inDebugMode"
       }, 
       {
         "command": "runCommands", 
         "key": "f7",
-        "when": "editorLangId == p",
+        "when": "editorLangId == p || resourceLangId == p || resourceExtname == .p",
         "args": {
           "commands": [
             {
