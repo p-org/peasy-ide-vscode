@@ -45,7 +45,7 @@ export default class TestingEditor {
     );
 
     //Looks through the entire test folder to discover where is the test file and where the tests are.
-    var files = await searchDirectory(path.join("**", "PTst", "**", "*.p"));
+    var files = await searchDirectory(path.join("**", "*.p"));
     if (files != null) {
       for (var i = 0; i < files.length; i++) {
         var x = files.at(i);
@@ -67,7 +67,7 @@ export default class TestingEditor {
       const folder = vscode.workspace.workspaceFolders[0].uri;
             currProject = currProject.replace(folder.fsPath, "**");
       // Create relative path pattern to the workspace
-      var files = await searchDirectory(path.join(currProject, "PTst", "**", "*.p"));
+      var files = await searchDirectory(path.join(currProject, "**", "*.p"));
 
       // Create test items for selected p project in the testing panel
       if (files != null) {
@@ -319,18 +319,6 @@ function updateNodeFromDocument(e: vscode.TextDocument) {
 
   const filename = path.parse(e.fileName).base;
   if (filename == undefined) {
-    return;
-  }
-  var dirname = path.parse(e.fileName).dir;
-  var isTestDir = false;
-  while (dirname != "") {
-    if (dirname.endsWith("PTst")) {
-      isTestDir = true;
-      break;
-    }
-    dirname = path.parse(dirname).dir;
-  }
-  if (!isTestDir) {
     return;
   }
   if (e.uri.scheme !== "file") {
