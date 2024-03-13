@@ -68,7 +68,7 @@ There are many [tutorial projects](https://github.com/p-org/P/tree/master/Tutori
 
 **Compiling P Project**
 
-Press ++f5++ or `Save` in your VS Code editor and your project will automatically compile the current P project folder.
+Press ++ctrl++ + ++b++ or ++f5++ or simply `Save` in your VS Code editor and your project will automatically compile the current P project folder.
 
 Alternatively, you can compile your P project manually by running `p compile` in your terminal. Read [compiling a P program](https://p-org.github.io/P/getstarted/usingP/) page for more details.
 
