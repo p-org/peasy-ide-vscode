@@ -44,3 +44,20 @@ Peasy lets you configure the number of schedules to explore for test cases. Simp
       "p-vscode.schedules": 2000
     }
     ```
+
+Peasy lets you configure other commandline options as well for test cases. Simply add the ***"p-vscode.additionalArgs"*** key and specify your preferred commandline arguments in the VS Code `settings.json` file. Run the testcases from the testing panel, and the extension will automatically check each test case with the provided commandline arguments.
+
+```
+{
+  "p-vscode.additionalArgs": "<additional_commandline_args>"
+}
+```
+
+??? note "Example: Customizing commandline arguments for test cases"
+  
+    For example, when you add the below key-value pair to your VS Code settings.json file, each test case will be checked in bug finding mode with 100 max steps.
+    ```
+    {
+      "p-vscode.additionalArgs": "--mode bugfinding --max-steps 100"
+    }
+    ```
