@@ -3,7 +3,7 @@
   "displayName": "Peasy Extension",
   "description": "Peasy Extension provides compilation support, a custom theme, syntax highlighting, a testing framework, error tracing visualization",
   "publisher": "PLanguage",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "icon": "Docs/docs/images/p-icon.png",
   "engines": {
     "vscode": "^1.78.0"
@@ -222,6 +222,12 @@
           "type": "integer",
           "default": 1000,
           "description": "Manages the number of schedules run during P testing at a 'p check' command."
+        },
+        "p-vscode.additionalArgs": {
+          "scope": "window",
+          "type": "string",
+          "default": "",
+          "description": "Manages the commandline arguments during P testing at a 'p check' command."
         },
         "p-vscode.pcompile.exclude": {
           "scope": "window",

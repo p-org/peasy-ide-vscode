@@ -14,7 +14,7 @@ export default class TestingEditor {
     "P Tests"
   );
   static testRe = /^\s*test\s/g;
-
+ 
   public static async createAndRegister(
     context: vscode.ExtensionContext
   ): Promise<TestingEditor> {
@@ -243,8 +243,10 @@ function runCheckCommand(
 ) {
   //number of p checker schedules that are run
 
-  const numSchedules: String =
+  const numSchedules: string =
     vscode.workspace.getConfiguration("p-vscode").get("schedules") ?? "1000";
+  var additionalArgs: string =
+    vscode.workspace.getConfiguration("p-vscode").get("additionalArgs") ?? "";
   //The p check command depends on if the terminal is bash or zsh.
   var command;
   if (!checkPInstalled()) {
@@ -252,7 +254,17 @@ function runCheckCommand(
     run.end();
     return;
   } else {
-    command = "p check -tc " + tc.label + " -s " +numSchedules;
+    command = "p check -tc " + tc.label;
+    if (additionalArgs != "") {
+      // Remove the test case argument from the additionalargs param if exists
+      additionalArgs = additionalArgs.replace(/(^| )(-tc|--test-case) (\w+)/, "");
+      command += " " + additionalArgs;
+    }
+
+    // If user provides schedule option in both schedules and additionalArgs, consider the value provided in the additionalArgs param
+    if (!/(^| )(-s|--schedules) (\w+)/.test(additionalArgs)) {
+      command += " -s " + numSchedules; 
+    }
   }
 
   // Prints in the output channel
