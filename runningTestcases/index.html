@@ -756,6 +756,19 @@
 }
 </code></pre></div></p>
 </details>
+<p>Peasy lets you configure other commandline options as well for test cases. Simply add the <strong><em>"p-vscode.additionalArgs"</em></strong> key and specify your preferred commandline arguments in the VS Code <code>settings.json</code> file. Run the testcases from the testing panel, and the extension will automatically check each test case with the provided commandline arguments.</p>
+<div class="highlight"><pre><span></span><code>{
+  &quot;p-vscode.additionalArgs&quot;: &quot;&lt;additional_commandline_args&gt;&quot;
+}
+</code></pre></div>
+<details class="note">
+<summary>Example: Customizing commandline arguments for test cases</summary>
+<p>For example, when you add the below key-value pair to your VS Code settings.json file, each test case will be checked in bug finding mode with 100 max steps.
+<div class="highlight"><pre><span></span><code>{
+  &quot;p-vscode.additionalArgs&quot;: &quot;--mode bugfinding --max-steps 100&quot;
+}
+</code></pre></div></p>
+</details>
 
 
   
