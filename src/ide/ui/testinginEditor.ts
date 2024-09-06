@@ -233,7 +233,7 @@ function checkResult(
 }
 
 //Runs p check in a child process and returns the stdout or result.
-function runCheckCommand(
+async function runCheckCommand(
   run: vscode.TestRun,
   tc: vscode.TestItem,
   tcOutput: vscode.OutputChannel,
@@ -249,7 +249,8 @@ function runCheckCommand(
     vscode.workspace.getConfiguration("p-vscode").get("additionalArgs") ?? "";
   //The p check command depends on if the terminal is bash or zsh.
   var command;
-  if (!checkPInstalled()) {
+  const p_installed = await checkPInstalled();
+  if (!p_installed) {
     tcOutput.appendLine(messages.Messages.Installation.noP);
     run.end();
     return;
