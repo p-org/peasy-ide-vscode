@@ -22,7 +22,7 @@ export async function searchDirectory(pattern: string) {
 }
 
 //Check if P is installed by trying to run it
-export async function checkPInstalled(): boolean {
+export async function checkPInstalled(): Promise<boolean> {
   const execPromise = util.promisify(exec);
   try {
     await execPromise(`p --version`);
