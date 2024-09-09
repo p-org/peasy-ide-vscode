@@ -1,7 +1,8 @@
 import * as vscode from "vscode";
 var fs = require('fs');
 const path = require('path'); 
-
+const { exec } = require('child_process');
+const util = require('util');
 
 //Searches the current file directory for a specific pattern string and returns all files that match the pattern
 export async function searchDirectory(pattern: string) {
@@ -20,22 +21,13 @@ export async function searchDirectory(pattern: string) {
   return files;
 }
 
-//Check if P is installed by searching in .dotnet/tools directory
-export function checkPInstalled(): boolean {
+//Check if P is installed by trying to run it
+export async function checkPInstalled(): Promise<boolean> {
+  const execPromise = util.promisify(exec);
   try {
-    const homedir = require('os').homedir();
-    var dirPath = path.join(homedir, ".dotnet", "tools");
-    var dirFiles = fs.readdirSync(dirPath);
-    var isPFileFound = false;
-    dirFiles.forEach((file: string) => { 
-      if (path.parse(file).name == "p") {
-        isPFileFound = true;
-      }
-    });
-    return isPFileFound;
-  } catch (e) {
-    console.log(e);
+    await execPromise(`p --version`);
+  } catch(error) {
+    return false;
   }
-
-  return false;
+  return true;
 }
