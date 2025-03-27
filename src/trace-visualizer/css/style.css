@@ -79,6 +79,11 @@ button {
   opacity: 0.5;
 }
 
+/* Change visualizer node names color based on theme */
+text {
+  stroke: var(--vscode-editor-foreground);
+}
+
 input,
 textarea {
   outline: none;
@@ -681,7 +686,8 @@ section.input .left {
   /* stroke-opacity: 1; */
   stroke-opacity: 0.35;
   /* * PeasyViz Addition - Make the stroke lines colors connecting the nodes */
-  stroke: rgb(255, 255, 255);
+  /* Change the visualizer line color based on vs code theme */
+  stroke: var(--vscode-editor-foreground);
 }
 
 #searchbar #panel {
