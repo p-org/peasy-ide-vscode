@@ -227,9 +227,9 @@ export class PeasyVizPanel {
         // Get the trace content
         const errorTraceJsonLogsUint8Array: Uint8Array =
           await vscode.workspace.fs.readFile(file);
-        const trace: any[] = JSON.parse(
+        const trace: any[] = this.replaceNullWithString(JSON.parse(
           new TextDecoder().decode(errorTraceJsonLogsUint8Array)
-        );
+        ));
 
         // Add the trace (include the traceName and trace itself)
         errorTraces.push(
@@ -251,4 +251,23 @@ export class PeasyVizPanel {
       JSON.stringify(errorTraces)
     );
   }
+
+  private replaceNullWithString(obj: any): any {
+    if (Array.isArray(obj)) {
+      return obj.map(item => this.replaceNullWithString(item));
+    }
+
+    if (obj !== null && typeof obj === 'object') {
+      const result: Record<string, any> = {};
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          result[key] = this.replaceNullWithString(obj[key]);
+        }
+      }
+      return result;
+    }
+
+    return obj === null ? "null" : obj;
+  }
+  
 }
