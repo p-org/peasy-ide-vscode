@@ -229,6 +229,12 @@
           "default": "",
           "description": "Manages the commandline arguments during P testing at a 'p check' command."
         },
+        "p-vscode.compileOnSave": {
+          "scope": "window",
+          "type": "boolean",
+          "default": true,
+          "description": "Run the 'Compile' task on save."
+        },
         "p-vscode.pcompile.exclude": {
           "scope": "window",
           "type": "array",
