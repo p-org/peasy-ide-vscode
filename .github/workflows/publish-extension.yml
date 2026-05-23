@@ -52,4 +52,5 @@ jobs:
         uses: HaaLeo/publish-vscode-extension@v1
         with:
           pat: ${{ secrets.OVSX_PAT }}
+          registryUrl: https://open-vsx.org
           extensionFile: ./peasy-extension.vsix

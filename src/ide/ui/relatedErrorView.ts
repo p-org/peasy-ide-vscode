@@ -38,8 +38,22 @@ export default class RelatedErrorView {
       watcherP,
       watcherPproj,
       watcherP.onDidChange(trigger),
-      watcherPproj.onDidChange(trigger)
+      watcherPproj.onDidChange(trigger),
+      // Cancel any pending debounced refresh on deactivation so we don't
+      // execute a task after the extension has torn down.
+      {
+        dispose: () => {
+          if (RelatedErrorView.refreshTimer) {
+            clearTimeout(RelatedErrorView.refreshTimer);
+            RelatedErrorView.refreshTimer = undefined;
+          }
+        },
+      }
     );
+
+    // Initial refresh so existing workspaces get diagnostics on activation
+    // without requiring a file change first.
+    RelatedErrorView.scheduleRefresh();
 
     return RelatedErrorView.instance;
   }

@@ -16,6 +16,8 @@ export default class CompileCommands {
   static currCwd = "";
   // Directory where Stately code is generated for the active project.
   static currStatelyDir = "";
+  // File path to surface to the user when the Stately task finishes.
+  static pendingStatelyMessage: string | undefined;
   // All discovered P projects (one quick-pick entry per .pproj).
   static projects: vscode.QuickPickItem[] = [];
   static options: vscode.QuickPickOptions = {
@@ -31,7 +33,7 @@ export default class CompileCommands {
     createCompileTask();
 
     context.subscriptions.push(
-      vscode.commands.registerCommand("workbench.files", () => showFiles()),
+      vscode.commands.registerCommand("peasy.showProjectFiles", () => showFiles()),
       vscode.commands.registerCommand("peasy.compile", () => runCompileTask()),
       vscode.workspace.onDidDeleteFiles(() => generateProjects()),
       vscode.workspace.onDidCreateFiles(() => generateProjects()),
@@ -39,6 +41,20 @@ export default class CompileCommands {
       vscode.workspace.onDidSaveTextDocument(async (e) => {
         if (e.fileName.endsWith(".p")) {
           await runCompileTask();
+        }
+      }),
+      // When the Stately visualization task finishes, surface the path to the
+      // generated file via the VS Code UI rather than via a shell `echo`.
+      vscode.tasks.onDidEndTask((e) => {
+        if (
+          e.execution.task.name === "Stately" &&
+          CompileCommands.pendingStatelyMessage
+        ) {
+          vscode.window.showInformationMessage(
+            messages.Messages.CompilationStatus.Visualization +
+              CompileCommands.pendingStatelyMessage
+          );
+          CompileCommands.pendingStatelyMessage = undefined;
         }
       })
     );
@@ -120,12 +136,14 @@ function createCompileTask() {
         ["compile", "--mode", "stately"],
         { cwd }
       );
-      // A trailing echo informs the user where the visualization file lives.
-      const statelyWithMessage = new vscode.ShellExecution(
-        `p compile --mode stately && echo "${messages.Messages.CompilationStatus.Visualization}${statelyFile}"`,
-        { cwd }
-      );
       const problemMatchers = ["$Parse", "$Type"];
+
+      // Surface the path to the generated visualization file via the VS Code
+      // UI rather than appending `&& echo ...` to a shell string, which would
+      // not be portable to Windows PowerShell 5.1.
+      if (statelyFile) {
+        CompileCommands.pendingStatelyMessage = statelyFile;
+      }
 
       return [
         new vscode.Task(
@@ -141,7 +159,7 @@ function createCompileTask() {
           vscode.TaskScope.Workspace,
           "Stately",
           "p-vscode",
-          statelyWithMessage
+          statelyExecution
         ),
         // Kept for compatibility with the old name used by RelatedErrorView.
         new vscode.Task(

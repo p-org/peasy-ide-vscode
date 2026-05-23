@@ -264,8 +264,9 @@ async function runCheckCommand(
   if (additionalArgs.trim().length > 0) {
     // Remove any -tc / --test-case the user passed in additionalArgs.
     additionalArgs = additionalArgs.replace(/(^|\s)(-tc|--test-case)\s+\S+/g, "");
-    const extra = additionalArgs.split(/\s+/).filter((a) => a.length > 0);
-    args.push(...extra);
+    // Tokenise respecting single/double-quoted groups so that flag values
+    // containing spaces (e.g. `--out "my dir"`) survive intact.
+    args.push(...tokeniseShellArgs(additionalArgs));
   }
 
   // If the user did not specify -s/--schedules in additionalArgs, fall back
@@ -334,6 +335,43 @@ function cancelTestcaseRun(run: vscode.TestRun, test: vscode.TestItem, isTestRun
   queue.forEach((test) => run.errored(test, msg));
   queue = [];
   run.end();
+}
+
+// Splits a string of additional CLI arguments into argv form. Honours single
+// and double-quoted groups so that values containing whitespace survive.
+// Intentionally minimal — does not support env expansion, escape sequences,
+// or backticks. That's deliberate: we never pass these through a shell.
+function tokeniseShellArgs(input: string): string[] {
+  const tokens: string[] = [];
+  let current = "";
+  let quote: '"' | "'" | undefined;
+  for (let i = 0; i < input.length; i++) {
+    const ch = input[i];
+    if (quote) {
+      if (ch === quote) {
+        quote = undefined;
+      } else {
+        current += ch;
+      }
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      quote = ch;
+      continue;
+    }
+    if (/\s/.test(ch)) {
+      if (current.length > 0) {
+        tokens.push(current);
+        current = "";
+      }
+      continue;
+    }
+    current += ch;
+  }
+  if (current.length > 0) {
+    tokens.push(current);
+  }
+  return tokens;
 }
 
 function updateNodeFromDocument(e: vscode.TextDocument) {
