@@ -1,65 +1,65 @@
-import * as vscode from 'vscode';
-import { PLanguageClient } from '../language/PLanguageClient';
+import * as vscode from "vscode";
 
+// Triggers the "Run_Report" task when P sources change so that diagnostics
+// stay up to date. The watchers are created during activation and disposed
+// via the extension's subscriptions list.
+export default class RelatedErrorView {
+  private static instance: RelatedErrorView | undefined;
 
-//This class helps create error messages when you hover over error squiggles. 
+  // Debounce so we don't kick off a fresh compile on every keystroke.
+  private static refreshTimer: NodeJS.Timeout | undefined;
 
-const RelatedErrorDecoration: vscode.DecorationRenderOptions = {
-    // Normal error: #F14C4C
-    // Normal warning: #CCA700
-    // The color below is the average of the two
-    dark: {
-      textDecoration: 'underline wavy #000000 1px'
-    },
-    // Normal error: #E83120
-    // Normal warning: #BF8803
-    // The color below is the average of the two
-    light: {
-      textDecoration: 'underline wavy #000000 1px'
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private constructor() {}
+
+  public static createAndRegister(
+    context: vscode.ExtensionContext
+  ): RelatedErrorView {
+    if (RelatedErrorView.instance) {
+      return RelatedErrorView.instance;
     }
-  };
+    RelatedErrorView.instance = new RelatedErrorView();
 
-  interface IRelatedErrorView {
-    ranges: Range[];
+    const watcherP = vscode.workspace.createFileSystemWatcher(
+      "**/*.p",
+      false,
+      false,
+      false
+    );
+    const watcherPproj = vscode.workspace.createFileSystemWatcher(
+      "**/*.pproj",
+      false,
+      false,
+      false
+    );
+
+    const trigger = () => RelatedErrorView.scheduleRefresh();
+    context.subscriptions.push(
+      watcherP,
+      watcherPproj,
+      watcherP.onDidChange(trigger),
+      watcherPproj.onDidChange(trigger)
+    );
+
+    return RelatedErrorView.instance;
   }
 
-export default class RelatedErrorView {
-    private readonly relatedViewByDocument = new Map<string, IRelatedErrorView>();
-    static watcherP: any = vscode.workspace.createFileSystemWatcher("**/*.p", false, false, false);;
-    static watcher_pproj: any = vscode.workspace.createFileSystemWatcher("**/*.pproj", false, false, false);;
-    
-    private constructor() {
+  private static scheduleRefresh(): void {
+    if (RelatedErrorView.refreshTimer) {
+      clearTimeout(RelatedErrorView.refreshTimer);
     }
-    private static instance: RelatedErrorView;
+    RelatedErrorView.refreshTimer = setTimeout(() => {
+      RelatedErrorView.refreshTimer = undefined;
+      void RelatedErrorView.refreshRelatedErrors();
+    }, 500);
+  }
 
-    public static createAndRegister(context: vscode.ExtensionContext): RelatedErrorView {
-        RelatedErrorView.instance = new RelatedErrorView();
-        
-        context.subscriptions.push(
-            //adds errors
-            this.watcherP.onDidChange(async () => await RelatedErrorView.refreshRelatedErrors()),
-            this.watcher_pproj.onDidChange(async () => await RelatedErrorView.refreshRelatedErrors()),
-            RelatedErrorView.instance
-        );
-        RelatedErrorView.refreshRelatedErrors();
-        return RelatedErrorView.instance;
-    }
-
-
-    public static async refreshRelatedErrors(): Promise<void> {
-      for (var t of await vscode.tasks.fetchTasks()) {
-        if (t.name === "Run_Report") {
-          var exec: vscode.TaskExecution = await vscode.tasks.executeTask(t);
-
-        }
+  public static async refreshRelatedErrors(): Promise<void> {
+    for (const t of await vscode.tasks.fetchTasks({ type: "Run_Report" })) {
+      if (t.name === "Run_Report") {
+        await vscode.tasks.executeTask(t);
+        return;
       }
     }
-
-    public clearRelatedErrors(documentPath: string): void {
-        this.relatedViewByDocument.delete(documentPath);
-    }
-
-    public dispose(): void {
-      //not sure what to place here
-    }
+  }
 }

@@ -30,7 +30,10 @@ export async function checkSupportedDotnetVersion(): Promise<string | undefined>
 }
 
 export async function getDotnetExecutablePath(): Promise<{ path: string, manual: boolean }> {
-  const configuredPath = Configuration.get<string>(ConfigurationConstants.Dotnet.ExecutablePath).trim();
+  const configuredPath = Configuration.get<string>(
+    ConfigurationConstants.Dotnet.ExecutablePath,
+    ''
+  ).trim();
   if(configuredPath.length > 0) {
     return { path: configuredPath, manual: true };
   }
