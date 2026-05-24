@@ -25,7 +25,7 @@ jobs:
         run: npm run package
 
       - name: Package extension
-        run: npx --yes @vscode/vsce package --no-dependencies --out peasy-extension.vsix
+        run: npx vsce package --no-dependencies --out peasy-extension.vsix
 
       - name: Publish to Visual Studio Marketplace
         uses: HaaLeo/publish-vscode-extension@v1

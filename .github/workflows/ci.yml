@@ -35,7 +35,7 @@ jobs:
         run: npm run package
 
       - name: Package extension
-        run: npx --yes @vscode/vsce package --no-dependencies --out peasy-extension.vsix
+        run: npx vsce package --no-dependencies --out peasy-extension.vsix
 
       - name: Upload VSIX
         if: matrix.os == 'ubuntu-latest'
