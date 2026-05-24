@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import {
+  ConfigurationConstants,
   TestResults,
 } from "../../constants";
 import * as messages from "./messages";
@@ -241,39 +242,47 @@ async function runCheckCommand(
   queue: vscode.TestItem[],
   token: vscode.CancellationToken
 ) {
-  //number of p checker schedules that are run
+  const config = vscode.workspace.getConfiguration(
+    ConfigurationConstants.SectionName
+  );
+  const numSchedules: number =
+    config.get<number>(ConfigurationConstants.Test.Schedules) ?? 1000;
+  let additionalArgs: string =
+    config.get<string>(ConfigurationConstants.Test.AdditionalArgs) ?? "";
 
-  const numSchedules: string =
-    vscode.workspace.getConfiguration("p-vscode").get("schedules") ?? "1000";
-  var additionalArgs: string =
-    vscode.workspace.getConfiguration("p-vscode").get("additionalArgs") ?? "";
-  //The p check command depends on if the terminal is bash or zsh.
-  var command;
   const p_installed = await checkPInstalled();
   if (!p_installed) {
     tcOutput.appendLine(messages.Messages.Installation.noP);
     run.end();
     return;
-  } else {
-    command = "p check -tc " + tc.label;
-    if (additionalArgs != "") {
-      // Remove the test case argument from the additionalargs param if exists
-      additionalArgs = additionalArgs.replace(/(^| )(-tc|--test-case) (\w+)/, "");
-      command += " " + additionalArgs;
-    }
-
-    // If user provides schedule option in both schedules and additionalArgs, consider the value provided in the additionalArgs param
-    if (!/(^| )(-s|--schedules) (\w+)/.test(additionalArgs)) {
-      command += " -s " + numSchedules; 
-    }
   }
 
-  // Prints in the output channel
-  tcOutput.appendLine("\n\nExecuting command : " + command + "\n");
-  
-  //Runs command in separate shell that finds the test contents
+  // Build argv form so we never go through a shell. Avoids quoting / injection
+  // issues when a test case name contains spaces or shell metacharacters.
+  const args: string[] = ["check", "-tc", tc.label];
+
+  if (additionalArgs.trim().length > 0) {
+    // Remove any -tc / --test-case the user passed in additionalArgs.
+    additionalArgs = additionalArgs.replace(/(^|\s)(-tc|--test-case)\s+\S+/g, "");
+    // Tokenise respecting single/double-quoted groups so that flag values
+    // containing spaces (e.g. `--out "my dir"`) survive intact.
+    args.push(...tokeniseShellArgs(additionalArgs));
+  }
+
+  // If the user did not specify -s/--schedules in additionalArgs, fall back
+  // to the configured value.
+  if (!/(^|\s)(-s|--schedules)\s+\S+/.test(additionalArgs)) {
+    args.push("-s", String(numSchedules));
+  }
+
+  const printableCommand = ["p", ...args].join(" ");
+  tcOutput.appendLine("\n\nExecuting command : " + printableCommand + "\n");
+
   try {
-    let testCaseProcess = child_process.spawn(command, {shell: true, cwd: projectDirectory});
+    const testCaseProcess = child_process.spawn("p", args, {
+      cwd: projectDirectory,
+      shell: false,
+    });
 
     const testCaseProcessLog: string[] = [];
 
@@ -311,7 +320,7 @@ async function runCheckCommand(
   } catch (e) {
     var msg = new vscode.TestMessage("Test Errored in Running");
     run.errored(tc, msg);
-    tcOutput.appendLine("Unexpected Error encountered while executing command: " + command);
+    tcOutput.appendLine("Unexpected Error encountered while executing command: " + printableCommand);
     runPTestcaseIfQueueNotEmpty(run, queue, tcOutput, token);
   }
 }
@@ -326,6 +335,43 @@ function cancelTestcaseRun(run: vscode.TestRun, test: vscode.TestItem, isTestRun
   queue.forEach((test) => run.errored(test, msg));
   queue = [];
   run.end();
+}
+
+// Splits a string of additional CLI arguments into argv form. Honours single
+// and double-quoted groups so that values containing whitespace survive.
+// Intentionally minimal — does not support env expansion, escape sequences,
+// or backticks. That's deliberate: we never pass these through a shell.
+function tokeniseShellArgs(input: string): string[] {
+  const tokens: string[] = [];
+  let current = "";
+  let quote: '"' | "'" | undefined;
+  for (let i = 0; i < input.length; i++) {
+    const ch = input[i];
+    if (quote) {
+      if (ch === quote) {
+        quote = undefined;
+      } else {
+        current += ch;
+      }
+      continue;
+    }
+    if (ch === '"' || ch === "'") {
+      quote = ch;
+      continue;
+    }
+    if (/\s/.test(ch)) {
+      if (current.length > 0) {
+        tokens.push(current);
+        current = "";
+      }
+      continue;
+    }
+    current += ch;
+  }
+  if (current.length > 0) {
+    tokens.push(current);
+  }
+  return tokens;
 }
 
 function updateNodeFromDocument(e: vscode.TextDocument) {

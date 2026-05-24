@@ -8,18 +8,18 @@ import Visualizer from "./visualizer";
 export default async function createAndRegisterPIntegration(
   installer: PInstaller
 ): Promise<void> {
+  // Compiles and runs P projects
   await CompileCommands.createAndRegister(installer.context);
-  //Compiles and Runs P folders
 
+  // Error panel
   RelatedErrorView.createAndRegister(installer.context);
-  //Error Panel
 
-  TestingEditor.createAndRegister(installer.context);
-  //Testing Framework
+  // Testing framework
+  await TestingEditor.createAndRegister(installer.context);
 
-  //Auto Formatting
+  // Auto-formatting
   AutoFormatting.createAndRegister();
 
-  //Trace Visualization
+  // Trace visualization
   Visualizer.createAndRegister(installer.context);
 }

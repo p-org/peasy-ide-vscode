@@ -1,21 +1,24 @@
-import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
 import * as messages from "./messages";
 
-import { ExtensionConstants } from "../../constants";
 import { checkPInstalled, searchDirectory } from "../../miscTools";
 import { PCommands } from "../../commands";
 import TestingEditor from "./testinginEditor";
 
-// const OutputPathArg = '--output';
-//This class runs commands in the terminal based on Compile Command (example: F5 = "p compile")
-
+// Runs `p compile` in a task. The working directory is set via ShellExecution's
+// `cwd` option rather than baked into the command string, so it works on every
+// shell (cmd.exe, PowerShell, bash, zsh) and tolerates paths containing spaces.
 export default class CompileCommands {
-  //Current Command that f5 and save will generate.
-  static command: string = "p compile";
+  // Current project's pproj file name + directory containing the pproj.
   static currProject: [string, string] = ["", ""];
-  //All the current P Projects
+  // Working directory for the active p compile task.
+  static currCwd = "";
+  // Directory where Stately code is generated for the active project.
+  static currStatelyDir = "";
+  // File path to surface to the user when the Stately task finishes.
+  static pendingStatelyMessage: string | undefined;
+  // All discovered P projects (one quick-pick entry per .pproj).
   static projects: vscode.QuickPickItem[] = [];
   static options: vscode.QuickPickOptions = {
     title: "Choose the project to compile...",
@@ -23,25 +26,35 @@ export default class CompileCommands {
     onDidSelectItem: changeCompilationCommand,
   };
 
-  public static createAndRegister(
+  public static async createAndRegister(
     context: vscode.ExtensionContext
-  ): CompileCommands {
-    generateProjects();
+  ): Promise<CompileCommands> {
+    await generateProjects();
     createCompileTask();
 
-    vscode.commands.registerCommand("workbench.files", async () => showFiles());
-
     context.subscriptions.push(
-      vscode.workspace.onDidDeleteFiles((e) => generateProjects()),
-      vscode.workspace.onDidCreateFiles((e) => generateProjects()),
+      vscode.commands.registerCommand("peasy.showProjectFiles", () => showFiles()),
+      vscode.commands.registerCommand("peasy.compile", () => runCompileTask()),
+      vscode.workspace.onDidDeleteFiles(() => generateProjects()),
+      vscode.workspace.onDidCreateFiles(() => generateProjects()),
       // Trigger the compile task on saving P files only
       vscode.workspace.onDidSaveTextDocument(async (e) => {
-        if(e.fileName.endsWith(".p")){
-          for (var t of await vscode.tasks.fetchTasks()) {
-            if (t.name === "Compile") {
-              vscode.tasks.executeTask(t);
-            }
-          }
+        if (e.fileName.endsWith(".p")) {
+          await runCompileTask();
+        }
+      }),
+      // When the Stately visualization task finishes, surface the path to the
+      // generated file via the VS Code UI rather than via a shell `echo`.
+      vscode.tasks.onDidEndTask((e) => {
+        if (
+          e.execution.task.name === "Stately" &&
+          CompileCommands.pendingStatelyMessage
+        ) {
+          vscode.window.showInformationMessage(
+            messages.Messages.CompilationStatus.Visualization +
+              CompileCommands.pendingStatelyMessage
+          );
+          CompileCommands.pendingStatelyMessage = undefined;
         }
       })
     );
@@ -50,10 +63,19 @@ export default class CompileCommands {
   }
 }
 
+async function runCompileTask(): Promise<void> {
+  for (const t of await vscode.tasks.fetchTasks({ type: PCommands.RunTask })) {
+    if (t.name === "Compile") {
+      await vscode.tasks.executeTask(t);
+      return;
+    }
+  }
+}
+
 /*
 Shows message if there is no need to select a project.
-Shows quick pick if there are multiple projects to compile. 
- */
+Shows quick pick if there are multiple projects to compile.
+*/
 async function showFiles() {
   await generateProjects();
   if (CompileCommands.projects.length <= 0) {
@@ -61,182 +83,145 @@ async function showFiles() {
       "There is no alternative P project to select because there is only one P project in the repository."
     );
   } else {
-    var selection = vscode.window.showQuickPick(
+    const selection = await vscode.window.showQuickPick(
       CompileCommands.projects,
       CompileCommands.options
     );
-    selection.then(async (value) => {
-      for (var t of await vscode.tasks.fetchTasks()) {
-        if (t.name === "Compile") {
-          vscode.tasks.executeTask(t);
-          return;
-        }
-      }
-    });
+    if (selection) {
+      await runCompileTask();
+    }
   }
 }
-//Change the command WHEN the user selects a different item.
+
+// Change the active project WHEN the user selects a different item.
 async function changeCompilationCommand(item: vscode.QuickPickItem) {
-  CompileCommands.command = "cd " + item.description + " ; p compile";
-  CompileCommands.currProject = [
-    item.label,
-    item.description + "PGenerated/Stately/",
-  ];
-  await TestingEditor.updateTestCasesList(item.description ?? "**");
+  const directory = item.description ?? "";
+  CompileCommands.currCwd = directory;
+  CompileCommands.currProject = [item.label, directory];
+  CompileCommands.currStatelyDir = path.join(directory, "PGenerated", "Stately");
+  await TestingEditor.updateTestCasesList(directory || "**");
 }
 
-// Runs p compile in the terminal.
-async function createCompileTask() {
-  //Check if P is installed on computer
-  const p_installed = await checkPInstalled();
-  var type = PCommands.RunTask;
-  if (!p_installed) {
-    vscode.window.showErrorMessage(messages.Messages.Installation.noP);
+// Creates the compile task provider. The task itself uses ShellExecution with
+// an explicit `cwd`, so we never interpolate paths into a shell string.
+function createCompileTask() {
+  const type = PCommands.RunTask;
 
-    vscode.tasks.registerTaskProvider(type, {
-      async provideTasks(token?: vscode.CancellationToken) {
-        var msg =
-          'echo "' + messages.Messages.Installation.noP + '"';
-        var execution = new vscode.ShellExecution(msg);
-
-        //var problemMatchers = ["$Parse", "$Type"];
-        //matches errors
+  vscode.tasks.registerTaskProvider(type, {
+    async provideTasks() {
+      const p_installed = await checkPInstalled();
+      if (!p_installed) {
+        vscode.window.showErrorMessage(messages.Messages.Installation.noP);
+        const msg = `echo "${messages.Messages.Installation.noP}"`;
         return [
           new vscode.Task(
-            { type: type },
+            { type },
             vscode.TaskScope.Workspace,
             "Run_Report",
             "p-vscode",
-            execution
-            //problemMatchers
+            new vscode.ShellExecution(msg)
           ),
         ];
-      },
-      resolveTask(task: vscode.Task, token?: vscode.CancellationToken) {
-        return task;
-      },
-    });
-  } else {
-    //normal p compile task
+      }
 
-    vscode.tasks.registerTaskProvider(type, {
-      async provideTasks(token?: vscode.CancellationToken) {
-        var msg = CompileCommands.command;
-        //the command
+      const cwd = CompileCommands.currCwd || undefined;
+      const projectName = CompileCommands.currProject[0].replace(".pproj", "");
+      const statelyFile = projectName
+        ? path.join(CompileCommands.currStatelyDir, `${projectName}.ts`)
+        : CompileCommands.currStatelyDir;
 
-        var compile_execution = new vscode.ShellExecution(msg);
-        var stately_execution = new vscode.ShellExecution(
-          msg +
-            " --mode stately" +
-            '; echo "' +
-            messages.Messages.CompilationStatus.Visualization +
-            CompileCommands.currProject[1] +
-            CompileCommands.currProject[0].replace(".pproj", "") +
-            ".ts" +
-            '"'
-        );
-        var problemMatchers = ["$Parse", "$Type"];
-        //matches errors
-        return [
-          new vscode.Task(
-            { type: type },
-            vscode.TaskScope.Workspace,
-            "Compile",
-            "p-vscode",
-            compile_execution,
-            problemMatchers
-          ),
+      const compileExecution = new vscode.ShellExecution("p", ["compile"], { cwd });
+      const statelyExecution = new vscode.ShellExecution(
+        "p",
+        ["compile", "--mode", "stately"],
+        { cwd }
+      );
+      const problemMatchers = ["$Parse", "$Type"];
 
-          new vscode.Task(
-            { type: type },
-            vscode.TaskScope.Workspace,
-            "Stately",
-            "p-vscode",
-            stately_execution
-            //problemMatchers
-          ),
-        ];
-      },
-      resolveTask(task: vscode.Task, token?: vscode.CancellationToken) {
-        return task;
-      },
-    });
-  }
+      // Surface the path to the generated visualization file via the VS Code
+      // UI rather than appending `&& echo ...` to a shell string, which would
+      // not be portable to Windows PowerShell 5.1.
+      if (statelyFile) {
+        CompileCommands.pendingStatelyMessage = statelyFile;
+      }
+
+      return [
+        new vscode.Task(
+          { type },
+          vscode.TaskScope.Workspace,
+          "Compile",
+          "p-vscode",
+          compileExecution,
+          problemMatchers
+        ),
+        new vscode.Task(
+          { type },
+          vscode.TaskScope.Workspace,
+          "Stately",
+          "p-vscode",
+          statelyExecution
+        ),
+        // Kept for compatibility with the old name used by RelatedErrorView.
+        new vscode.Task(
+          { type },
+          vscode.TaskScope.Workspace,
+          "Run_Report",
+          "p-vscode",
+          statelyExecution,
+          problemMatchers
+        ),
+      ];
+    },
+    resolveTask(task: vscode.Task) {
+      return task;
+    },
+  });
 }
 
 /*
 Choose file to compile.
 Case 1: No pproj file -> Error window
-Case 2: One pproj file -> command: 'p compile' & quick pick shows single line 
-Case 3: Multiple pproj file -> 'p compile -pp ....' & quick pick shows many lines.
+Case 2: One pproj file -> single project
+Case 3: Multiple pproj files -> quick pick shows many lines
 */
-
-/*
-This is run WHEN:
--The extension is first activated. 
--File Deletion
--File Creation
-*/
-
-//IDEA: only update the files being deleted or created, instead of running this everytime.
 async function generateProjects() {
-  var files = await searchDirectory(path.join("**", "*.pproj"));
+  const files = await searchDirectory(path.join("**", "*.pproj"));
   if (files == null) {
-    //No directory to speak of.
     vscode.window.showErrorMessage(
       messages.Messages.CompilationStatus.NoDirectory
     );
     return;
-  } else if (files.length == 0) {
-    //No pproj files anywhere in the program.
+  }
+  if (files.length === 0) {
     vscode.window.showErrorMessage(
       messages.Messages.CompilationStatus.NoPprojFile
     );
     return;
-  } else {
-    //If there is only a single pproj file: Set the command and a single project.
-    if (files.length == 1 && files.at(0) != undefined) {
-      var fileName = path.parse(files.at(0)?.fsPath!).base;
-
-      if (fileName != undefined) {
-        var directory = files.at(0)?.path.replace(fileName, "");
-        CompileCommands.projects = [
-          { label: fileName, description: directory },
-        ];
-        CompileCommands.command = "cd " + directory + " ; p compile";
-
-        if (directory != undefined) {
-          CompileCommands.currProject = [
-            fileName,
-            directory + "PGenerated/Stately/",
-          ];
-        }
-      }
-
-      return;
-    } else {
-      CompileCommands.projects = [];
-      for (var f of files) {
-        //Add all the file pproj files to the options for the user to choose from.
-        var fileName = path.parse(f.fsPath).base;
-        if (fileName != undefined) {
-          var item: vscode.QuickPickItem = {
-            label: fileName,
-            description: f.fsPath.replace(fileName, ""),
-          };
-          CompileCommands.projects.push(item);
-        }
-      }
-
-      //Set the compile command to the first P project discovered.
-      CompileCommands.command =
-        "cd " + CompileCommands.projects.at(0)?.description + " ; p compile";
-      if (CompileCommands.projects.at(0) != undefined) {
-        CompileCommands.currProject = [
-          CompileCommands.projects.at(0)?.label || "",
-          CompileCommands.projects.at(0)?.description + "PGenerated/Stately/",
-        ];
-      }
-    }
   }
+
+  if (files.length === 1) {
+    const first = files[0];
+    const fileName = path.parse(first.fsPath).base;
+    const directory = path.dirname(first.fsPath);
+
+    CompileCommands.projects = [{ label: fileName, description: directory }];
+    CompileCommands.currCwd = directory;
+    CompileCommands.currProject = [fileName, directory];
+    CompileCommands.currStatelyDir = path.join(directory, "PGenerated", "Stately");
+    return;
+  }
+
+  CompileCommands.projects = files.map((f) => {
+    const fileName = path.parse(f.fsPath).base;
+    return { label: fileName, description: path.dirname(f.fsPath) };
+  });
+
+  const first = CompileCommands.projects[0];
+  CompileCommands.currCwd = first.description ?? "";
+  CompileCommands.currProject = [first.label, first.description ?? ""];
+  CompileCommands.currStatelyDir = path.join(
+    first.description ?? "",
+    "PGenerated",
+    "Stately"
+  );
 }

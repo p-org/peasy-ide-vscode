@@ -1,4 +1,25 @@
+# Build / dev tooling
 .vscode/**
 .vscode-test/**
+.github/**
+node_modules/**
+out/**
 .gitignore
+.eslintrc.json
+tsconfig.json
+webpack.config.js
+package-lock.json
 vsc-extension-quickstart.md
+
+# Docs site & repo-only artifacts (kept out of the published .vsix)
+Docs/**
+Examples/**
+REVIEW.md
+
+# TypeScript sources — the bundled dist/extension.js is what ships
+src/**/*.ts
+src/**/*.map
+**/*.vsix
+
+# Webview/raw assets stay; we only exclude the type defs
+src/trace-visualizer/types/**

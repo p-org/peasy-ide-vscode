@@ -1,27 +1,56 @@
-name: Publish vscode extension to VS Marketplace
+name: Publish vscode extension
 
 on:
   release:
     types: [published]
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm ci
+
+      - name: Build
+        run: npm run package
+
+      - name: Package extension
+        run: npx --yes @vscode/vsce package --no-dependencies --out peasy-extension.vsix
 
       - name: Publish to Visual Studio Marketplace
         uses: HaaLeo/publish-vscode-extension@v1
         with:
           pat: ${{ secrets.VSCE_PAT }}
           registryUrl: https://marketplace.visualstudio.com
+          extensionFile: ./peasy-extension.vsix
+
+      - name: Check Open VSX token
+        id: ovsx_check
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: |
+          if [ -n "$OVSX_PAT" ]; then
+            echo "has_token=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_token=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish to Open VSX Registry
+        # Lets Cursor, VSCodium, Gitpod, code-server and other VS Code-derived
+        # IDEs install the extension natively.
+        if: steps.ovsx_check.outputs.has_token == 'true'
+        uses: HaaLeo/publish-vscode-extension@v1
+        with:
+          pat: ${{ secrets.OVSX_PAT }}
+          registryUrl: https://open-vsx.org
+          extensionFile: ./peasy-extension.vsix

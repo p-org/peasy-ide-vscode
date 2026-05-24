@@ -1,33 +1,53 @@
 import * as vscode from "vscode";
-var fs = require('fs');
-const path = require('path'); 
-const { exec } = require('child_process');
-const util = require('util');
+import * as path from "path";
+import which = require("which");
 
-//Searches the current file directory for a specific pattern string and returns all files that match the pattern
+import { ConfigurationConstants } from "./constants";
+
+// Searches the current workspace for files matching a glob pattern and returns
+// the matching URIs. Honours the user's `p-vscode.pcompile.exclude` setting.
 export async function searchDirectory(pattern: string) {
-  var files = null;
-  if (vscode.workspace.workspaceFolders !== undefined) {
-    const folder = vscode.workspace.workspaceFolders[0].uri;
-    pattern = pattern.replace(folder.fsPath, "");
-    let filePattern: vscode.RelativePattern = new vscode.RelativePattern(
-      folder.fsPath,
-      pattern
-    );
-    var excludeFolders: Array<string> = vscode.workspace.getConfiguration("p-vscode").get("pcompile.exclude") || ["**/Build/*", "**/build/**"];
-    let excludeFilePattern = excludeFolders.length > 1 ? "{" + excludeFolders.join(',') + "}" : excludeFolders.join('');
-    files = await vscode.workspace.findFiles(filePattern, excludeFilePattern);
+  if (vscode.workspace.workspaceFolders === undefined) {
+    return null;
   }
-  return files;
+  const folder = vscode.workspace.workspaceFolders[0].uri;
+  pattern = pattern.replace(folder.fsPath, "");
+  const filePattern = new vscode.RelativePattern(folder.fsPath, pattern);
+
+  const excludeFolders: Array<string> =
+    vscode.workspace
+      .getConfiguration(ConfigurationConstants.SectionName)
+      .get<string[]>(ConfigurationConstants.Compile.Exclude) ?? [
+      "**/Build/*",
+      "**/build/**",
+    ];
+  const excludeFilePattern =
+    excludeFolders.length > 1
+      ? "{" + excludeFolders.join(",") + "}"
+      : excludeFolders.join("");
+
+  return await vscode.workspace.findFiles(filePattern, excludeFilePattern);
 }
 
-//Check if P is installed by trying to run it
+// Check if `p` is installed by resolving it on PATH. Works the same on Linux,
+// macOS and Windows without going through a user shell.
 export async function checkPInstalled(): Promise<boolean> {
-  const execPromise = util.promisify(exec);
   try {
-    await execPromise(`p --version`);
-  } catch(error) {
+    await which("p");
+    return true;
+  } catch {
     return false;
   }
-  return true;
 }
+
+// Convenience: resolve the absolute path to the `p` binary, or undefined.
+export async function resolvePBinary(): Promise<string | undefined> {
+  try {
+    return await which("p");
+  } catch {
+    return undefined;
+  }
+}
+
+// Re-export `path.join` style helpers if downstream callers want them.
+export const joinPath = path.join;

@@ -4,20 +4,52 @@
   "description": "Peasy Extension provides compilation support, a custom theme, syntax highlighting, a testing framework, error tracing visualization",
   "publisher": "PLanguage",
   "version": "1.0.6",
-  "icon": "Docs/docs/images/p-icon.png",
+  "icon": "resources/p-icon.png",
+  "license": "MIT",
+  "homepage": "https://p-org.github.io/peasy-ide-vscode/",
+  "bugs": {
+    "url": "https://github.com/p-org/peasy-ide-vscode/issues"
+  },
   "engines": {
-    "vscode": "^1.78.0"
+    "vscode": "^1.79.0"
   },
   "activationEvents": [
-    "workspaceContains:**/*.p"
+    "onLanguage:p",
+    "workspaceContains:**/*.p",
+    "workspaceContains:**/*.pproj"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/p-org/peasy-ide-vscode.git"
   },
   "categories": [
-    "Other"
+    "Programming Languages",
+    "Linters",
+    "Testing",
+    "Visualization"
   ],
+  "keywords": [
+    "p-language",
+    "formal-methods",
+    "state-machines",
+    "model-checking",
+    "distributed-systems"
+  ],
+  "galleryBanner": {
+    "color": "#0b132b",
+    "theme": "dark"
+  },
+  "extensionKind": [
+    "workspace",
+    "ui"
+  ],
+  "capabilities": {
+    "virtualWorkspaces": false,
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "P compilation runs shell commands in the workspace."
+    }
+  },
   "main": "./dist/extension.js",
   "contributes": {
     "viewsContainers": {
@@ -33,8 +65,8 @@
       "peasy-visualizer": [
         {
           "id": "peasy-visualizer-view",
-          "name": "Action Menu",
-          "contents": "In order to use git features, you can open a folder containing a git repository or clone from a URL.\n[Open Folder](command:vscode.openFolder)\n[Clone Repository](command:git.clone)\nTo learn more about how to use git and source control in VS Code [read our docs](https://aka.ms/vscode-scm)."
+          "name": "P Visualizer",
+          "contents": "Visualize P error traces and state machines.\n[Run Visualizer](command:peasy-visualizer.run)\n[Compile Current Project](command:peasy.compile)\n[Show Project Files](command:peasy.showProjectFiles)\nLearn more at the [Peasy documentation](https://p-org.github.io/peasy-ide-vscode/)."
         }
       ]
     },
@@ -99,7 +131,7 @@
           "beginsPattern": "Parsing",
           "endsPattern": "~"
         }
-      }, 
+      },
       {
         "name": "Install_P"
       }
@@ -120,7 +152,7 @@
           "commands": [
             {
               "command": "workbench.action.tasks.terminate",
-                "args": "terminateAll"
+              "args": "terminateAll"
             },
             {
               "command": "workbench.action.tasks.runTask",
@@ -132,11 +164,12 @@
       {
         "key": "ctrl+b",
         "command": "runCommands",
+        "when": "editorLangId == p || resourceLangId == p || resourceExtname == .p",
         "args": {
           "commands": [
             {
               "command": "workbench.action.tasks.terminate",
-                "args": "terminateAll"
+              "args": "terminateAll"
             },
             {
               "command": "workbench.action.tasks.runTask",
@@ -153,10 +186,10 @@
           "commands": [
             {
               "command": "workbench.action.tasks.terminate",
-                "args": "terminateAll"
+              "args": "terminateAll"
             },
             {
-              "command": "workbench.files"
+              "command": "peasy.showProjectFiles"
             }
           ]
         }
@@ -164,35 +197,34 @@
       {
         "key": "ctrl+l",
         "command": "runCommands",
-        "when": "!terminalFocus",
+        "when": "(editorLangId == p || resourceLangId == p || resourceExtname == .p) && !terminalFocus",
         "args": {
           "commands": [
             {
               "command": "workbench.action.tasks.terminate",
-                "args": "terminateAll"
+              "args": "terminateAll"
             },
             {
-              "command": "workbench.files"
+              "command": "peasy.showProjectFiles"
             }
           ]
         }
       },
-
       {
-        "command": "peasy-visualizer.run", 
-        "key": "f6", 
+        "command": "peasy-visualizer.run",
+        "key": "f6",
         "mac": "f6",
-        "when": "!inDebugMode"
-      }, 
+        "when": "(editorLangId == p || resourceLangId == p || resourceExtname == .p) && !inDebugMode"
+      },
       {
-        "command": "runCommands", 
+        "command": "runCommands",
         "key": "f7",
         "when": "editorLangId == p || resourceLangId == p || resourceExtname == .p",
         "args": {
           "commands": [
             {
               "command": "workbench.action.tasks.terminate",
-                "args": "terminateAll"
+              "args": "terminateAll"
             },
             {
               "command": "workbench.action.tasks.runTask",
@@ -214,7 +246,7 @@
             "messages",
             "verbose"
           ],
-          "default": "verbose",
+          "default": "off",
           "description": "Traces the communication between VS Code and the language server."
         },
         "p-vscode.schedules": {
@@ -232,21 +264,51 @@
         "p-vscode.pcompile.exclude": {
           "scope": "window",
           "type": "array",
-          "default": ["**/Build/*", "**/build/**"],
+          "default": [
+            "**/Build/*",
+            "**/build/**"
+          ],
           "description": "Manages the folders that must be excluded from compiling in P."
+        },
+        "p-vscode.dotnetExecutablePath": {
+          "scope": "machine-overridable",
+          "type": "string",
+          "default": "",
+          "description": "Absolute path to the dotnet executable. Leave empty to resolve from PATH."
+        },
+        "p-vscode.languageServer.cliPath": {
+          "scope": "machine-overridable",
+          "type": "string",
+          "default": "",
+          "description": "Absolute path to the P language server (PLanguageServer.dll). When empty, the language server is disabled — automatic download is not yet implemented."
+        },
+        "p-vscode.languageServer.launchArgs": {
+          "scope": "window",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Additional command-line arguments passed to the P language server."
         }
       }
     },
     "commands": [
       {
-        "command": "workbench.files",
-        "title": "Peasy: Show Project Files", 
-        "description": "Users can select a P project to compile from a VS Code Quick Pick."
+        "command": "peasy.showProjectFiles",
+        "category": "Peasy",
+        "title": "Show Project Files",
+        "description": "Select a P project to compile from a VS Code Quick Pick."
       },
       {
         "command": "peasy-visualizer.run",
         "category": "PeasyViz",
         "title": "Run"
+      },
+      {
+        "command": "peasy.compile",
+        "category": "Peasy",
+        "title": "Compile Current Project"
       }
     ],
     "languages": [
@@ -278,7 +340,7 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm install && webpack",
+    "vscode:prepublish": "npm install && webpack --mode production",
     "compile": "webpack",
     "watch": "webpack --watch",
     "package": "webpack --mode production --devtool hidden-source-map",
@@ -286,13 +348,13 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "typecheck": "tsc -p . --noEmit"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
-    "@types/node": "16.x",
-    "@types/vscode": "^1.78.0",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.79.0",
     "@types/which": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.59.1",
     "@typescript-eslint/parser": "^5.59.1",
@@ -312,7 +374,6 @@
     "extract-zip": "^2.0.1",
     "vscode-languageclient": "^8.1.0",
     "vscode-uri": "^3.0.7",
-    "which": "^3.0.1",
-    "which-module": "^2.0.1"
+    "which": "^3.0.1"
   }
 }

@@ -1,14 +1,8 @@
-import { ExtensionContext, FileSystemError, OutputChannel, Uri, window, workspace } from 'vscode';
-import * as os from 'os';
-import fetch from 'cross-fetch';
-import * as fs from 'fs';
-import { promisify } from 'util';
-import { Utils } from 'vscode-uri';
-const mkdirAsync = promisify(fs.mkdir);
+import { ExtensionContext, FileSystemError, OutputChannel, Uri, workspace } from 'vscode';
 import { Executable } from 'vscode-languageclient/node';
 import { getDotnetExecutablePath } from '../../dotnet';
-import { PInstaller } from './PInstallation';
-
+import Configuration from '../../configuration';
+import { ConfigurationConstants } from '../../constants';
 
 export class GitHubReleaseInstaller {
   public constructor(
@@ -18,65 +12,36 @@ export class GitHubReleaseInstaller {
 
   public async getExecutable(server: boolean, newArgs: string[]): Promise<Executable | undefined> {
     const { path: dotnetExecutable } = await getDotnetExecutablePath();
-    const standaloneServerpath = "/Users/esthersu/P-esther/Bld/Drops/Debug/Binaries/net7.0/PLanguageServer.dll";
-    return { command: dotnetExecutable, args: [ standaloneServerpath, ...newArgs ] };
+
+    const configuredServerPath = Configuration.get<string>(
+      ConfigurationConstants.LanguageServer.CliPath,
+      ''
+    ).trim();
+    if (configuredServerPath.length === 0) {
+      this.writeStatus(
+        'No P language server path configured. Set "p-vscode.languageServer.cliPath" in settings to enable LSP features.'
+      );
+      return undefined;
+    }
+
+    return { command: dotnetExecutable, args: [configuredServerPath, ...newArgs] };
   }
-
-
 
   public async cleanInstallDir(installPath: Uri): Promise<void> {
     this.writeStatus(`deleting previous P installation at ${installPath.fsPath}`);
     try {
-      await workspace.fs.delete(
-        installPath,
-        {
-          recursive: true,
-          useTrash: false
-        }
-      );
-    } catch(error: unknown) {
-      if(!(error instanceof FileSystemError) || error.code !== 'FileNotFound') {
+      await workspace.fs.delete(installPath, {
+        recursive: true,
+        useTrash: false,
+      });
+    } catch (error: unknown) {
+      if (!(error instanceof FileSystemError) || error.code !== 'FileNotFound') {
         throw error;
       }
     }
   }
 
-
-
-
-
-  
-
-
-
-
   private writeStatus(message: string): void {
     this.statusOutput.appendLine(message);
-  }
-}
-
-class ProgressReporter {
-  private lastTenth = -1;
-
-  public constructor(private readonly statusOutput: OutputChannel) {}
-
-  public updateDownloadProgress(progress: { percent: number, transferred: number }) {
-    if(progress.transferred > 0) {
-      // The transferred byte count has to be checked since got reports percent=1 at the beginning.
-      this.update(progress.percent);
-    }
-  }
-
-  public update(percent: number) {
-    const tenth = Math.round(percent * 10);
-    if(tenth > this.lastTenth) {
-      this.statusOutput.append(`${tenth * 10}%`);
-      if(tenth === 10) {
-        this.statusOutput.appendLine('');
-      } else {
-        this.statusOutput.append('...');
-      }
-      this.lastTenth = tenth;
-    }
   }
 }
