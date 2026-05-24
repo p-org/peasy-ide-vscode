@@ -3,7 +3,7 @@
   "displayName": "Peasy Extension",
   "description": "Peasy Extension provides compilation support, a custom theme, syntax highlighting, a testing framework, error tracing visualization",
   "publisher": "PLanguage",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "icon": "resources/p-icon.png",
   "license": "MIT",
   "homepage": "https://p-org.github.io/peasy-ide-vscode/",
