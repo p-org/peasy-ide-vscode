@@ -2,7 +2,7 @@
 
 All notable changes to the Peasy extension are documented in this file.
 
-## [Unreleased]
+## [1.1.0] - 2026-05-24
 
 ### Fixed
 - **Critical:** Removed hardcoded developer-machine path
@@ -35,6 +35,11 @@ All notable changes to the Peasy extension are documented in this file.
   `p-vscode.languageServer.cliPath`, `p-vscode.languageServer.launchArgs`.
 - `peasy.compile` command (palette-accessible) that invokes the active
   compile task.
+- `peasy.showProjectFiles` command (replaces the reserved-namespace
+  `workbench.files` command ID).
+- `@vscode/vsce` pinned as a devDependency with a `package:vsix` script for
+  reproducible, offline-friendly packaging; CI/publish use
+  `npx --no-install vsce`.
 - `.eslintrc.json` with a `@typescript-eslint/recommended` baseline.
 - `extensionKind`, `capabilities.virtualWorkspaces`, and
   `capabilities.untrustedWorkspaces` declarations in `package.json`.
@@ -61,6 +66,6 @@ All notable changes to the Peasy extension are documented in this file.
 - Dead `which-module` dependency.
 - Unused `runTest.js` reference in scripts (no test runner shipped yet).
 
-## 1.0.6 and earlier
+## 1.0.5 and earlier
 
-See git history.
+See git history and the [GitHub releases](https://github.com/p-org/peasy-ide-vscode/releases).
