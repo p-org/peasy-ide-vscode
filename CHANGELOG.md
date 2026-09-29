@@ -2,6 +2,13 @@
 
 All notable changes to the Peasy extension are documented in this file.
 
+## [Unreleased]
+
+### Fixed
+- Over Remote-SSH, WSL and Dev Containers the extension runs on the remote
+  host. It could run on the local machine instead, where it reported that P
+  was not installed and that the workspace had no `.pproj` files.
+
 ## [1.1.0] - 2026-05-24
 
 ### Fixed

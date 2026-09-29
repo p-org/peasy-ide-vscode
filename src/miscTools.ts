@@ -10,9 +10,9 @@ export async function searchDirectory(pattern: string) {
   if (vscode.workspace.workspaceFolders === undefined) {
     return null;
   }
-  const folder = vscode.workspace.workspaceFolders[0].uri;
-  pattern = pattern.replace(folder.fsPath, "");
-  const filePattern = new vscode.RelativePattern(folder.fsPath, pattern);
+  const folder = vscode.workspace.workspaceFolders[0];
+  pattern = pattern.replace(folder.uri.fsPath, "");
+  const filePattern = new vscode.RelativePattern(folder, pattern);
 
   const excludeFolders: Array<string> =
     vscode.workspace

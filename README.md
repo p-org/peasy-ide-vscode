@@ -23,9 +23,10 @@ VS Code-compatible extensions:
 | **Windsurf** | Open VSX | |
 | **Gitpod / code-server** | Open VSX | Desktop-only; the extension shells out to `p` and `dotnet` |
 
-The extension is **desktop-only** (`extensionKind: ["workspace", "ui"]`). It
-will not load in vscode.dev / github.dev because P compilation requires the
-`p` CLI on PATH.
+The extension is **desktop-only** and runs where the workspace is
+(`extensionKind: ["workspace"]`): over Remote-SSH, WSL or Dev Containers it
+runs on the remote host and needs the `p` CLI there. It will not load in
+vscode.dev / github.dev because P compilation requires the `p` CLI on PATH.
 
 ## Prerequisites
 

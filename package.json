@@ -40,8 +40,7 @@
     "theme": "dark"
   },
   "extensionKind": [
-    "workspace",
-    "ui"
+    "workspace"
   ],
   "capabilities": {
     "virtualWorkspaces": false,
