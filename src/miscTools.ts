@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import * as os from "os";
 import * as path from "path";
 import which = require("which");
 
@@ -29,24 +30,29 @@ export async function searchDirectory(pattern: string) {
   return await vscode.workspace.findFiles(filePattern, excludeFilePattern);
 }
 
-// Check if `p` is installed by resolving it on PATH. Works the same on Linux,
-// macOS and Windows without going through a user shell.
-export async function checkPInstalled(): Promise<boolean> {
-  try {
-    await which("p");
-    return true;
-  } catch {
-    return false;
-  }
+// PATH entries such as `~/.dotnet/tools` (written verbatim by the macOS dotnet
+// installer into /etc/paths.d) are expanded by interactive shells but not by
+// `which` or `child_process.spawn`, so expand a leading `~` ourselves.
+export function expandedSearchPath(): string {
+  const home = os.homedir();
+  return (process.env["PATH"] ?? "")
+    .split(path.delimiter)
+    .map((entry) =>
+      entry === "~" || entry.startsWith("~/") ? home + entry.slice(1) : entry
+    )
+    .join(path.delimiter);
 }
 
-// Convenience: resolve the absolute path to the `p` binary, or undefined.
-export async function resolvePBinary(): Promise<string | undefined> {
+export async function resolveExecutable(name: string): Promise<string | undefined> {
   try {
-    return await which("p");
+    return await which(name, { path: expandedSearchPath() });
   } catch {
     return undefined;
   }
+}
+
+export async function resolvePBinary(): Promise<string | undefined> {
+  return resolveExecutable("p");
 }
 
 // Re-export `path.join` style helpers if downstream callers want them.

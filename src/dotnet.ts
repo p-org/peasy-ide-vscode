@@ -2,11 +2,10 @@ import { execFile } from 'child_process';
 import { promisify } from 'util';
 import * as fs from 'fs';
 
-import * as which from 'which';
-
 import { ConfigurationConstants, DotnetConstants } from './constants';
 import Configuration from './configuration';
 import { Messages } from './ide/ui/messages';
+import { resolveExecutable } from './miscTools';
 
 const ListRuntimesArg = '--list-runtimes';
 const execFileAsync = promisify(execFile);
@@ -37,10 +36,6 @@ export async function getDotnetExecutablePath(): Promise<{ path: string, manual:
   if(configuredPath.length > 0) {
     return { path: configuredPath, manual: true };
   }
-  try {
-    const resolvedPath = await which(DotnetConstants.ExecutableName);
-    return { path: resolvedPath, manual: false };
-  } catch(error: unknown) {
-    return { path: DotnetConstants.ExecutableName, manual: false };
-  }
+  const resolvedPath = await resolveExecutable(DotnetConstants.ExecutableName);
+  return { path: resolvedPath ?? DotnetConstants.ExecutableName, manual: false };
 }

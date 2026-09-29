@@ -4,7 +4,7 @@ import {
   TestResults,
 } from "../../constants";
 import * as messages from "./messages";
-import { checkPInstalled, searchDirectory } from "../../miscTools";
+import { resolvePBinary, searchDirectory } from "../../miscTools";
 import * as child_process from "child_process";
 import * as path from "path";
 
@@ -250,8 +250,8 @@ async function runCheckCommand(
   let additionalArgs: string =
     config.get<string>(ConfigurationConstants.Test.AdditionalArgs) ?? "";
 
-  const p_installed = await checkPInstalled();
-  if (!p_installed) {
+  const pBinary = await resolvePBinary();
+  if (!pBinary) {
     tcOutput.appendLine(messages.Messages.Installation.noP);
     run.end();
     return;
@@ -279,7 +279,7 @@ async function runCheckCommand(
   tcOutput.appendLine("\n\nExecuting command : " + printableCommand + "\n");
 
   try {
-    const testCaseProcess = child_process.spawn("p", args, {
+    const testCaseProcess = child_process.spawn(pBinary, args, {
       cwd: projectDirectory,
       shell: false,
     });

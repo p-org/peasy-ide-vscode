@@ -2,7 +2,7 @@ import * as path from "path";
 import * as vscode from "vscode";
 import * as messages from "./messages";
 
-import { checkPInstalled, searchDirectory } from "../../miscTools";
+import { resolvePBinary, searchDirectory } from "../../miscTools";
 import { PCommands } from "../../commands";
 import TestingEditor from "./testinginEditor";
 
@@ -109,8 +109,8 @@ function createCompileTask() {
 
   vscode.tasks.registerTaskProvider(type, {
     async provideTasks() {
-      const p_installed = await checkPInstalled();
-      if (!p_installed) {
+      const pBinary = await resolvePBinary();
+      if (!pBinary) {
         vscode.window.showErrorMessage(messages.Messages.Installation.noP);
         const msg = `echo "${messages.Messages.Installation.noP}"`;
         return [
@@ -130,9 +130,9 @@ function createCompileTask() {
         ? path.join(CompileCommands.currStatelyDir, `${projectName}.ts`)
         : CompileCommands.currStatelyDir;
 
-      const compileExecution = new vscode.ShellExecution("p", ["compile"], { cwd });
+      const compileExecution = new vscode.ShellExecution(pBinary, ["compile"], { cwd });
       const statelyExecution = new vscode.ShellExecution(
-        "p",
+        pBinary,
         ["compile", "--mode", "stately"],
         { cwd }
       );
