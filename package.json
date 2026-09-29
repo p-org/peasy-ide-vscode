@@ -61,12 +61,17 @@
         }
       ]
     },
+    "viewsWelcome": [
+      {
+        "view": "peasy-visualizer-view",
+        "contents": "Visualize P error traces and state machines.\n[Run Visualizer](command:peasy-visualizer.run)\n[Compile Current Project](command:peasy.compile)\n[Show Project Files](command:peasy.showProjectFiles)\nLearn more at the [Peasy documentation](https://p-org.github.io/peasy-ide-vscode/)."
+      }
+    ],
     "views": {
       "peasy-visualizer": [
         {
           "id": "peasy-visualizer-view",
-          "name": "P Visualizer",
-          "contents": "Visualize P error traces and state machines.\n[Run Visualizer](command:peasy-visualizer.run)\n[Compile Current Project](command:peasy.compile)\n[Show Project Files](command:peasy.showProjectFiles)\nLearn more at the [Peasy documentation](https://p-org.github.io/peasy-ide-vscode/)."
+          "name": "P Visualizer"
         }
       ]
     },
