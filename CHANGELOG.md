@@ -2,6 +2,17 @@
 
 All notable changes to the Peasy extension are documented in this file.
 
+## [Unreleased]
+
+### Removed
+- State machine visualization (`F7`, the `Stately` task and its docs). The
+  P compiler dropped its Stately backend in P 3.1 (p-org/P#949), so
+  `p compile --mode stately` fails on current P versions.
+
+### Fixed
+- Saving a P file no longer also runs a background Stately compile, which
+  duplicated compilation and failed on P 3.1+.
+
 ## [1.1.0] - 2026-05-24
 
 ### Fixed

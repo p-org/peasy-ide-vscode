@@ -55,7 +55,6 @@ interfere with the host IDE's defaults when you're editing other files.
 | Key | Action |
 |---|---|
 | `F5` / `Ctrl+B` | Compile the current P project |
-| `F7` | Compile in Stately visualization mode |
 | `F6` | Open the Peasy trace visualizer |
 | `F4` / `Ctrl+L` | Show the project file picker |
 
