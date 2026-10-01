@@ -2,22 +2,19 @@ import * as path from "path";
 import * as vscode from "vscode";
 import * as messages from "./messages";
 
+import { ConfigurationConstants } from "../../constants";
 import { checkPInstalled, searchDirectory } from "../../miscTools";
 import { PCommands } from "../../commands";
+import BackgroundCompiler, { ActiveEditor } from "./backgroundCompiler";
+import { PProject, affectedProjectDirs, owningProjectDir } from "./pProjects";
 import TestingEditor from "./testinginEditor";
+import { PDocumentFilter } from "../tools/vscode";
 
-// Runs `p compile` in a task. The working directory is set via ShellExecution's
-// `cwd` option rather than baked into the command string, so it works on every
-// shell (cmd.exe, PowerShell, bash, zsh) and tolerates paths containing spaces.
+// Compiles the active P project in the background on save and on request.
+// The `p-vscode: Compile` task is still provided for tasks.json and Run Task.
 export default class CompileCommands {
-  // Current project's pproj file name + directory containing the pproj.
-  static currProject: [string, string] = ["", ""];
-  // Working directory for the active p compile task.
+  // Directory of the project picked in the quick pick, or the first one.
   static currCwd = "";
-  // Directory where Stately code is generated for the active project.
-  static currStatelyDir = "";
-  // File path to surface to the user when the Stately task finishes.
-  static pendingStatelyMessage: string | undefined;
   // All discovered P projects (one quick-pick entry per .pproj).
   static projects: vscode.QuickPickItem[] = [];
   static options: vscode.QuickPickOptions = {
@@ -29,66 +26,185 @@ export default class CompileCommands {
   public static async createAndRegister(
     context: vscode.ExtensionContext
   ): Promise<CompileCommands> {
+    compiler = new BackgroundCompiler(toggleCompilerOutputCommand);
     await generateProjects();
     createCompileTask();
 
+    // Watching the file system rather than editor saves also picks up
+    // changes made outside the editor, such as a git checkout.
+    const watcher = vscode.workspace.createFileSystemWatcher("**/*.{p,pproj}");
+    const onChange = (uri: vscode.Uri) => scheduleCompile(uri.fsPath);
+    const onCreateOrDelete = async (uri: vscode.Uri) => {
+      if (uri.fsPath.endsWith(".pproj")) {
+        await generateProjects();
+      }
+      scheduleCompile(uri.fsPath);
+    };
+
     context.subscriptions.push(
+      compiler,
       vscode.commands.registerCommand("peasy.showProjectFiles", () => showFiles()),
-      vscode.commands.registerCommand("peasy.compile", () => runCompileTask()),
-      vscode.workspace.onDidDeleteFiles(() => generateProjects()),
-      vscode.workspace.onDidCreateFiles(() => generateProjects()),
-      // Trigger the compile task on saving P files only
-      vscode.workspace.onDidSaveTextDocument(async (e) => {
-        if (e.fileName.endsWith(".p")) {
-          await runCompileTask();
+      vscode.commands.registerCommand("peasy.compile", () => compileActive()),
+      vscode.commands.registerCommand(showCompilerOutputCommand, () =>
+        compiler?.showOutput()
+      ),
+      // For the status bar item only, so not in package.json.
+      vscode.commands.registerCommand(toggleCompilerOutputCommand, () =>
+        compiler?.toggleOutput()
+      ),
+      watcher,
+      watcher.onDidChange(onChange),
+      watcher.onDidCreate(onCreateOrDelete),
+      watcher.onDidDelete(onCreateOrDelete),
+      vscode.window.onDidChangeActiveTextEditor((editor) => {
+        updateStatusFile(editor);
+        const [file] = activeFile(editor);
+        if (file) {
+          void compileIfStale(file);
         }
       }),
-      // When the Stately visualization task finishes, surface the path to the
-      // generated file via the VS Code UI rather than via a shell `echo`.
-      vscode.tasks.onDidEndTask((e) => {
-        if (
-          e.execution.task.name === "Stately" &&
-          CompileCommands.pendingStatelyMessage
-        ) {
-          vscode.window.showInformationMessage(
-            messages.Messages.CompilationStatus.Visualization +
-              CompileCommands.pendingStatelyMessage
-          );
-          CompileCommands.pendingStatelyMessage = undefined;
-        }
-      })
+      {
+        dispose: () => clearTimeout(changeDebounce),
+      }
     );
 
+    // VS Code restores open editors before activation; treat the active one
+    // as just opened.
+    const [file] = activeFile();
+    if (file) {
+      await compileIfStale(file);
+    }
     return new CompileCommands();
   }
 }
 
-async function runCompileTask(): Promise<void> {
-  for (const t of await vscode.tasks.fetchTasks({ type: PCommands.RunTask })) {
-    if (t.name === "Compile") {
-      await vscode.tasks.executeTask(t);
+const showCompilerOutputCommand = "peasy.showCompilerOutput";
+const toggleCompilerOutputCommand = "peasy.toggleCompilerOutput";
+let compiler: BackgroundCompiler | undefined;
+let changeDebounce: NodeJS.Timeout | undefined;
+let changedFiles: string[] = [];
+let pendingMarks: Promise<void>[] = [];
+
+interface CompileSettings {
+  onChange: boolean;
+  onOpen: boolean;
+  includingProjects: boolean;
+}
+
+// Read on every use, so changes apply without reloading.
+function compileSettings(): CompileSettings {
+  const config = vscode.workspace.getConfiguration(ConfigurationConstants.SectionName);
+  const keys = ConfigurationConstants.Compile;
+  return {
+    onChange: config.get<boolean>(keys.OnChange, true),
+    onOpen: config.get<boolean>(keys.OnOpen, true),
+    includingProjects: config.get<boolean>(keys.IncludingProjects, true),
+  };
+}
+
+function activeFile(editor = vscode.window.activeTextEditor): string[] {
+  const uri = editor?.document.uri;
+  return uri?.scheme === "file" ? [uri.fsPath] : [];
+}
+
+// Compiles every project affected by `files`: the projects containing them and
+// the projects including those.
+async function compile(files: string[]): Promise<void> {
+  if (!compiler) {
+    return;
+  }
+  const { includingProjects } = compileSettings();
+  requestCompile(await affectedProjectDirs(files, knownProjects(), includingProjects));
+}
+
+// Compiles the active file's projects. A P file outside any project gets a
+// message instead; any other editor compiles the selected project.
+async function compileActive(): Promise<void> {
+  if (CompileCommands.projects.length === 0) {
+    showNoProjects();
+    return;
+  }
+  const active = classifyEditor();
+  switch (active.kind) {
+    case "project":
+      return compile([active.file]);
+    case "orphan":
+      vscode.window.showErrorMessage(
+        messages.Messages.CompilationStatus.NotInProject(path.basename(active.file))
+      );
       return;
-    }
+    case "other":
+      requestCompile([CompileCommands.currCwd]);
   }
 }
 
-/*
-Shows message if there is no need to select a project.
-Shows quick pick if there are multiple projects to compile.
-*/
+// Projects compiled, or queued to compile, since their sources last changed.
+const freshProjects = new Set<string>();
+
+function requestCompile(dirs: string[]): void {
+  dirs.forEach((dir) => freshProjects.add(dir));
+  compiler?.compile(dirs);
+}
+
+// Compiles the project of a file being opened, unless it is up to date.
+async function compileIfStale(file: string): Promise<void> {
+  if (!compileSettings().onOpen || !file.endsWith(".p")) {
+    return;
+  }
+  const dirs = await affectedProjectDirs([file], knownProjects(), false);
+  const stale = dirs.filter((dir) => !freshProjects.has(dir));
+  if (stale.length > 0) {
+    requestCompile(stale);
+  }
+}
+
+function knownProjects(): PProject[] {
+  return CompileCommands.projects.map((p) => ({
+    dir: p.description ?? "",
+    pprojPath: path.join(p.description ?? "", p.label),
+  }));
+}
+
+// A change makes its project stale, and every project including it, whether or
+// not they are recompiled right away.
+async function markStale(file: string): Promise<void> {
+  for (const dir of await affectedProjectDirs([file], knownProjects())) {
+    freshProjects.delete(dir);
+  }
+}
+
+// "Save All" or a git checkout changes many files at once; coalesce them into
+// one round of compiles.
+function scheduleCompile(file: string): void {
+  const marked = markStale(file);
+  if (!compileSettings().onChange) {
+    return;
+  }
+  changedFiles.push(file);
+  pendingMarks.push(marked);
+  clearTimeout(changeDebounce);
+  changeDebounce = setTimeout(() => {
+    const files = changedFiles;
+    const marks = pendingMarks;
+    changedFiles = [];
+    pendingMarks = [];
+    // Mark projects stale before the compile marks them fresh again.
+    void Promise.all(marks).then(() => compile(files));
+  }, 300);
+}
+
+// Lets the user pick the project to compile, or says there is none.
 async function showFiles() {
   await generateProjects();
-  if (CompileCommands.projects.length <= 0) {
-    vscode.window.showInformationMessage(
-      "There is no alternative P project to select because there is only one P project in the repository."
-    );
+  if (CompileCommands.projects.length === 0) {
+    showNoProjects();
   } else {
     const selection = await vscode.window.showQuickPick(
       CompileCommands.projects,
       CompileCommands.options
     );
     if (selection) {
-      await runCompileTask();
+      requestCompile([CompileCommands.currCwd]);
     }
   }
 }
@@ -97,8 +213,6 @@ async function showFiles() {
 async function changeCompilationCommand(item: vscode.QuickPickItem) {
   const directory = item.description ?? "";
   CompileCommands.currCwd = directory;
-  CompileCommands.currProject = [item.label, directory];
-  CompileCommands.currStatelyDir = path.join(directory, "PGenerated", "Stately");
   await TestingEditor.updateTestCasesList(directory || "**");
 }
 
@@ -125,25 +239,8 @@ function createCompileTask() {
       }
 
       const cwd = CompileCommands.currCwd || undefined;
-      const projectName = CompileCommands.currProject[0].replace(".pproj", "");
-      const statelyFile = projectName
-        ? path.join(CompileCommands.currStatelyDir, `${projectName}.ts`)
-        : CompileCommands.currStatelyDir;
-
       const compileExecution = new vscode.ShellExecution("p", ["compile"], { cwd });
-      const statelyExecution = new vscode.ShellExecution(
-        "p",
-        ["compile", "--mode", "stately"],
-        { cwd }
-      );
       const problemMatchers = ["$Parse", "$Type"];
-
-      // Surface the path to the generated visualization file via the VS Code
-      // UI rather than appending `&& echo ...` to a shell string, which would
-      // not be portable to Windows PowerShell 5.1.
-      if (statelyFile) {
-        CompileCommands.pendingStatelyMessage = statelyFile;
-      }
 
       return [
         new vscode.Task(
@@ -154,22 +251,6 @@ function createCompileTask() {
           compileExecution,
           problemMatchers
         ),
-        new vscode.Task(
-          { type },
-          vscode.TaskScope.Workspace,
-          "Stately",
-          "p-vscode",
-          statelyExecution
-        ),
-        // Kept for compatibility with the old name used by RelatedErrorView.
-        new vscode.Task(
-          { type },
-          vscode.TaskScope.Workspace,
-          "Run_Report",
-          "p-vscode",
-          statelyExecution,
-          problemMatchers
-        ),
       ];
     },
     resolveTask(task: vscode.Task) {
@@ -178,50 +259,47 @@ function createCompileTask() {
   });
 }
 
-/*
-Choose file to compile.
-Case 1: No pproj file -> Error window
-Case 2: One pproj file -> single project
-Case 3: Multiple pproj files -> quick pick shows many lines
-*/
-async function generateProjects() {
-  const files = await searchDirectory(path.join("**", "*.pproj"));
-  if (files == null) {
-    vscode.window.showErrorMessage(
-      messages.Messages.CompilationStatus.NoDirectory
-    );
-    return;
-  }
-  if (files.length === 0) {
-    vscode.window.showErrorMessage(
-      messages.Messages.CompilationStatus.NoPprojFile
-    );
-    return;
-  }
-
-  if (files.length === 1) {
-    const first = files[0];
-    const fileName = path.parse(first.fsPath).base;
-    const directory = path.dirname(first.fsPath);
-
-    CompileCommands.projects = [{ label: fileName, description: directory }];
-    CompileCommands.currCwd = directory;
-    CompileCommands.currProject = [fileName, directory];
-    CompileCommands.currStatelyDir = path.join(directory, "PGenerated", "Stately");
-    return;
-  }
-
-  CompileCommands.projects = files.map((f) => {
-    const fileName = path.parse(f.fsPath).base;
-    return { label: fileName, description: path.dirname(f.fsPath) };
-  });
-
-  const first = CompileCommands.projects[0];
-  CompileCommands.currCwd = first.description ?? "";
-  CompileCommands.currProject = [first.label, first.description ?? ""];
-  CompileCommands.currStatelyDir = path.join(
-    first.description ?? "",
-    "PGenerated",
-    "Stately"
+// Only for commands the user runs. Activation and background compiles stay
+// quiet in a workspace without a P project.
+function showNoProjects(): void {
+  const { CompilationStatus } = messages.Messages;
+  vscode.window.showErrorMessage(
+    vscode.workspace.workspaceFolders ? CompilationStatus.NoPprojFile : CompilationStatus.NoDirectory
   );
+}
+
+// Finds the P projects in the workspace. The first one is active until
+// another is picked.
+async function generateProjects() {
+  const files = (await searchDirectory(path.join("**", "*.pproj"))) ?? [];
+  CompileCommands.projects = files.map((f) => ({
+    label: path.basename(f.fsPath),
+    description: path.dirname(f.fsPath),
+  }));
+  CompileCommands.currCwd = CompileCommands.projects[0]?.description ?? "";
+  updateStatusFile();
+}
+
+// Tells the status bar item what the active editor shows. Focusing an output
+// channel, such as the compiler output, makes it the active editor; leave the
+// item as it is.
+function updateStatusFile(editor = vscode.window.activeTextEditor): void {
+  if (editor?.document.uri.scheme === "output") {
+    return;
+  }
+  compiler?.setActiveEditor(classifyEditor(editor));
+}
+
+function classifyEditor(editor = vscode.window.activeTextEditor): ActiveEditor {
+  const [file] = activeFile(editor);
+  if (file === undefined) {
+    return { kind: "other" };
+  }
+  if (owningProjectDir(file, knownProjects()) !== undefined) {
+    return { kind: "project", file };
+  }
+  if (editor && vscode.languages.match(PDocumentFilter, editor.document) > 0) {
+    return { kind: "orphan", file };
+  }
+  return { kind: "other" };
 }

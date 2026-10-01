@@ -37,9 +37,6 @@
 !!! info ""
     Peasy is a VS Code language extension for P. Peasy supports **syntax highlighting, compilation, error reporting, and unit testing** of P formal models within the VS Code environment. 
 
-!!! error "" 
-    Peasy provides **state machine visualization** that developers can use to visualize their formal design (P state machines) and share in their design documentation.
-
 !!! success ""
     Peasy provides **trace visualization** to aid debugging counter examples provided by the P checker. Error traces for complex distributed systems are hard to debug as they involve nontrivial interleaving of messages.  Peasy helps visualize traces as message sequence charts, perform filtering, and do motif based analysis. 
 
@@ -87,11 +84,6 @@ Built with ❤️ from the P Team @ Amazon Web Services (AWS).
 <div class="peasy_feature" onclick="location.href='trace-visualizer/getting_started'">
   <img src="images/trace_visualizer_icon.png" alt="my img"/>
   <p>Trace Visualization</p>
-</div>
-
-<div class="peasy_feature" onclick="location.href='visualizingStateMachines'">
-  <img src="images/state_machine_visualization_icon.png" alt="my img"/>
-  <p>State Machine Visualization</p>
 </div>
 
 <div>

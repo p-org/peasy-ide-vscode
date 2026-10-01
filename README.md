@@ -42,6 +42,9 @@ All settings live under the `p-vscode` namespace:
 | `p-vscode.schedules` | `1000` | Schedule count for `p check` runs in the testing panel. |
 | `p-vscode.additionalArgs` | `""` | Extra args passed to `p check`. |
 | `p-vscode.pcompile.exclude` | `["**/Build/*", "**/build/**"]` | Globs excluded from `.pproj` discovery. |
+| `p-vscode.compile.onChange` | `true` | Compile when P files change on disk. |
+| `p-vscode.compile.onOpen` | `true` | Compile the project of an opened file if it changed since its last compile. |
+| `p-vscode.compile.includingProjects` | `true` | Also compile projects that include a compiled project. |
 | `p-vscode.trace.server` | `"off"` | LSP trace level (`off` / `messages` / `verbose`). |
 | `p-vscode.dotnetExecutablePath` | `""` | Absolute path to `dotnet`. Empty → resolve from PATH. |
 | `p-vscode.languageServer.cliPath` | `""` | Absolute path to `PLanguageServer.dll`. |
@@ -55,7 +58,6 @@ interfere with the host IDE's defaults when you're editing other files.
 | Key | Action |
 |---|---|
 | `F5` / `Ctrl+B` | Compile the current P project |
-| `F7` | Compile in Stately visualization mode |
 | `F6` | Open the Peasy trace visualizer |
 | `F4` / `Ctrl+L` | Show the project file picker |
 

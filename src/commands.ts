@@ -1,7 +1,6 @@
 export namespace PCommands {
   export const RunTask = "Run_Report";
   export const FilesTask = "Files";
-  export const StatelyTask = "Stately";
 }
 
 export namespace VSCodeCommands {

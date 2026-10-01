@@ -2,6 +2,43 @@
 
 All notable changes to the Peasy extension are documented in this file.
 
+## [Unreleased]
+
+### Removed
+- State machine visualization (`F7`, the `Stately` task and its docs). The
+  P compiler dropped its Stately backend in P 3.1 (p-org/P#949), so
+  `p compile --mode stately` fails on current P versions.
+
+### Changed
+- Compilation runs in the background instead of a terminal. A status bar item
+  shows progress and the error count; clicking it shows or hides the compiler
+  output (also `Peasy: Show Compiler Output`). The item appears only for P
+  files and files in a P project, and warns about a P file outside any
+  project. The `p-vscode: Compile` task is still available for `tasks.json`
+  and Run Task.
+- Saving or pressing `F5` / `Ctrl+B` compiles the project that contains the
+  file and every project that includes it, rather than the first project
+  found in the workspace. Each project keeps its own errors.
+- Projects compile when P files change on disk, including changes made
+  outside the editor such as a git checkout.
+- Opening a P file compiles its project if it changed since its last compile.
+- `p-vscode.compile.onOpen`, `p-vscode.compile.onChange` and
+  `p-vscode.compile.includingProjects` control what compiles automatically.
+
+### Fixed
+- Opening a workspace without a `.pproj` file no longer shows an error. The
+  error now appears only when you run a compile command.
+- Saving a P file no longer also runs a background Stately compile, which
+  duplicated compilation and failed on P 3.1+.
+- `F5` / `Ctrl+B` / `F4` / `Ctrl+L` no longer terminate every running task in
+  the workspace.
+- Compile errors show up in the editor with P 3.1+, which prints each error
+  on a single line.
+- Errors in included projects (`../Other/...`) point at the right file, and
+  parse error locations are no longer one column off.
+- Saving again while compiling restarts the compile instead of prompting
+  "Select an instance to terminate".
+
 ## [1.1.0] - 2026-05-24
 
 ### Fixed

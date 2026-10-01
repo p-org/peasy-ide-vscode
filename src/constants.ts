@@ -29,6 +29,9 @@ export namespace ConfigurationConstants {
 
   export namespace Compile {
     export const Exclude = 'pcompile.exclude';
+    export const OnChange = 'compile.onChange';
+    export const OnOpen = 'compile.onOpen';
+    export const IncludingProjects = 'compile.includingProjects';
   }
 
   export namespace Trace {

@@ -66,7 +66,7 @@
         {
           "id": "peasy-visualizer-view",
           "name": "P Visualizer",
-          "contents": "Visualize P error traces and state machines.\n[Run Visualizer](command:peasy-visualizer.run)\n[Compile Current Project](command:peasy.compile)\n[Show Project Files](command:peasy.showProjectFiles)\nLearn more at the [Peasy documentation](https://p-org.github.io/peasy-ide-vscode/)."
+          "contents": "Visualize P error traces.\n[Run Visualizer](command:peasy-visualizer.run)\n[Compile Current Project](command:peasy.compile)\n[Show Project Files](command:peasy.showProjectFiles)\nLearn more at the [Peasy documentation](https://p-org.github.io/peasy-ide-vscode/)."
         }
       ]
     },
@@ -146,92 +146,29 @@
     "keybindings": [
       {
         "key": "f5",
-        "command": "runCommands",
-        "when": "editorLangId == p || resourceLangId == p || resourceExtname == .p",
-        "args": {
-          "commands": [
-            {
-              "command": "workbench.action.tasks.terminate",
-              "args": "terminateAll"
-            },
-            {
-              "command": "workbench.action.tasks.runTask",
-              "args": "p-vscode: Compile"
-            }
-          ]
-        }
+        "command": "peasy.compile",
+        "when": "editorLangId == p || resourceLangId == p || resourceExtname == .p"
       },
       {
         "key": "ctrl+b",
-        "command": "runCommands",
-        "when": "editorLangId == p || resourceLangId == p || resourceExtname == .p",
-        "args": {
-          "commands": [
-            {
-              "command": "workbench.action.tasks.terminate",
-              "args": "terminateAll"
-            },
-            {
-              "command": "workbench.action.tasks.runTask",
-              "args": "p-vscode: Compile"
-            }
-          ]
-        }
+        "command": "peasy.compile",
+        "when": "editorLangId == p || resourceLangId == p || resourceExtname == .p"
       },
       {
         "key": "f4",
-        "command": "runCommands",
-        "when": "editorLangId == p || resourceLangId == p || resourceExtname == .p",
-        "args": {
-          "commands": [
-            {
-              "command": "workbench.action.tasks.terminate",
-              "args": "terminateAll"
-            },
-            {
-              "command": "peasy.showProjectFiles"
-            }
-          ]
-        }
+        "command": "peasy.showProjectFiles",
+        "when": "editorLangId == p || resourceLangId == p || resourceExtname == .p"
       },
       {
         "key": "ctrl+l",
-        "command": "runCommands",
-        "when": "(editorLangId == p || resourceLangId == p || resourceExtname == .p) && !terminalFocus",
-        "args": {
-          "commands": [
-            {
-              "command": "workbench.action.tasks.terminate",
-              "args": "terminateAll"
-            },
-            {
-              "command": "peasy.showProjectFiles"
-            }
-          ]
-        }
+        "command": "peasy.showProjectFiles",
+        "when": "(editorLangId == p || resourceLangId == p || resourceExtname == .p) && !terminalFocus"
       },
       {
         "command": "peasy-visualizer.run",
         "key": "f6",
         "mac": "f6",
         "when": "(editorLangId == p || resourceLangId == p || resourceExtname == .p) && !inDebugMode"
-      },
-      {
-        "command": "runCommands",
-        "key": "f7",
-        "when": "editorLangId == p || resourceLangId == p || resourceExtname == .p",
-        "args": {
-          "commands": [
-            {
-              "command": "workbench.action.tasks.terminate",
-              "args": "terminateAll"
-            },
-            {
-              "command": "workbench.action.tasks.runTask",
-              "args": "p-vscode: Stately"
-            }
-          ]
-        }
       }
     ],
     "configuration": {
@@ -269,6 +206,24 @@
             "**/build/**"
           ],
           "description": "Manages the folders that must be excluded from compiling in P."
+        },
+        "p-vscode.compile.onChange": {
+          "scope": "window",
+          "type": "boolean",
+          "default": true,
+          "description": "Compile when P files change on disk, whether saved in the editor or changed by other tools. When off, compile with F5, Ctrl+B or the project picker."
+        },
+        "p-vscode.compile.onOpen": {
+          "scope": "window",
+          "type": "boolean",
+          "default": true,
+          "description": "Compile the project of a P file when it is opened, if the project has not been compiled since its sources last changed."
+        },
+        "p-vscode.compile.includingProjects": {
+          "scope": "window",
+          "type": "boolean",
+          "default": true,
+          "description": "Also compile the projects that include a compiled project through <IncludeProject>, since its changes may affect their errors."
         },
         "p-vscode.dotnetExecutablePath": {
           "scope": "machine-overridable",
@@ -309,6 +264,11 @@
         "command": "peasy.compile",
         "category": "Peasy",
         "title": "Compile Current Project"
+      },
+      {
+        "command": "peasy.showCompilerOutput",
+        "category": "Peasy",
+        "title": "Show Compiler Output"
       }
     ],
     "languages": [
