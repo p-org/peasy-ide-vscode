@@ -1,18 +1,33 @@
 :root {
   --container-padding: 20px;
+  --visualizer-sidebar-width: 328px;
   --input-padding-vertical: 6px;
   --input-padding-horizontal: 4px;
   --input-margin-vertical: 4px;
   --input-margin-horizontal: 0;
 }
 
+html {
+  overflow-x: auto;
+}
+
 body {
+  overflow-x: visible;
   padding: 0 var(--container-padding);
   color: var(--vscode-foreground);
   font-size: var(--vscode-font-size);
   font-weight: var(--vscode-font-weight);
   font-family: var(--vscode-font-family);
   background-color: var(--vscode-editor-background);
+}
+
+/* The fixed details sidebar must not cover the last machine in a wide trace.
+   Keep window scrolling: ShiViz uses it to synchronize the fixed host bar and
+   the log lines with the graph. */
+.visualization #vizContainer {
+  width: max-content;
+  min-width: 100%;
+  padding-right: var(--visualizer-sidebar-width);
 }
 
 ol,

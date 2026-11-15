@@ -525,6 +525,10 @@ Global.prototype.resize = function () {
   // TODO: rename to sidebarLeft sidebarRight middleWidth
   var headerWidth = $(".visualization header").outerWidth();
   var sidebarWidth = this.$sidebar.outerWidth();
+  document.documentElement.style.setProperty(
+    "--visualizer-sidebar-width",
+    sidebarWidth + "px"
+  );
   var globalWidth = $(window).width() - headerWidth - sidebarWidth;
 
   // * PeasyViz Change - Decreased the width of the searchbar because it overlapped with right sidebar texts, added '- 64' to the globalWidth
