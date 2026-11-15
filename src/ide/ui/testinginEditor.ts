@@ -30,17 +30,13 @@ export default class TestingEditor {
         updateNodeFromDocument(e.document)
       ),
       vscode.workspace.onWillDeleteFiles((e) =>
-        e.files.forEach(async (fileUri) => {
-          updateNodeFromDocument(
-            await vscode.workspace.openTextDocument(fileUri)
-          );
+        e.files.forEach((fileUri) => {
+          void discoverTestsInFile(fileUri);
         })
       ),
       vscode.workspace.onDidCreateFiles((e) =>
-        e.files.forEach(async (fileUri) => {
-          updateNodeFromDocument(
-            await vscode.workspace.openTextDocument(fileUri)
-          );
+        e.files.forEach((fileUri) => {
+          void discoverTestsInFile(fileUri);
         })
       )
     );
@@ -51,7 +47,7 @@ export default class TestingEditor {
       for (var i = 0; i < files.length; i++) {
         var x = files.at(i);
         if (x !== undefined) {
-          updateNodeFromDocument(await vscode.workspace.openTextDocument(x));
+          await discoverTestsInFile(x);
         }
       }
     }
@@ -75,7 +71,7 @@ export default class TestingEditor {
                 for (var i = 0; i < files.length; i++) {
           var x = files.at(i);
           if (x !== undefined) {
-            updateNodeFromDocument(await vscode.workspace.openTextDocument(x));
+            await discoverTestsInFile(x);
           }
         }
       }
@@ -374,16 +370,32 @@ function tokeniseShellArgs(input: string): string[] {
   return tokens;
 }
 
+function isPSource(uri: vscode.Uri): boolean {
+  // AppleDouble files are binary macOS metadata, even when named *.p.
+  return uri.scheme === "file" && uri.path.endsWith(".p") &&
+    !path.basename(uri.path).startsWith("._");
+}
+
+async function discoverTestsInFile(uri: vscode.Uri): Promise<void> {
+  if (!isPSource(uri)) {
+    return;
+  }
+  try {
+    updateNodeFromDocument(await vscode.workspace.openTextDocument(uri));
+  } catch (error) {
+    // A binary, unreadable, or removed file must not abort extension activation
+    // or prevent discovery of the remaining tests.
+    console.warn(`Peasy: could not discover tests in ${uri.fsPath}`, error);
+  }
+}
+
 function updateNodeFromDocument(e: vscode.TextDocument) {
 
   const filename = path.parse(e.fileName).base;
   if (filename == undefined) {
     return;
   }
-  if (e.uri.scheme !== "file") {
-    return;
-  }
-  if (!e.uri.path.endsWith(".p")) {
+  if (!isPSource(e.uri)) {
     return;
   }
   const file = getFile(e.uri);
