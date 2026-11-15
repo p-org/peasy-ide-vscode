@@ -25,7 +25,6 @@ export class PeasyVizPanel {
     // If we already have a panel, show it.
     if (PeasyVizPanel.currentPanel) {
       PeasyVizPanel.currentPanel._panel.reveal(column);
-      PeasyVizPanel.currentPanel._update();
       return;
     }
 
@@ -37,6 +36,10 @@ export class PeasyVizPanel {
       {
         // Enable javascript in the webview
         enableScripts: true,
+
+        // ShiViz keeps its graph transformations, selection and scroll position in
+        // the DOM. Preserve that context while another editor tab is active.
+        retainContextWhenHidden: true,
 
         // And restrict the webview to only loading content from our extension's `src/trace-visualizer` directory.
         localResourceRoots: [

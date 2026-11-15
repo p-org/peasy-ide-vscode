@@ -665,9 +665,9 @@ Controller.prototype.bindHiddenHosts = function (host, node) {
  * @param {Event} e The event object JQuery passes to the handler
  */
 Controller.prototype.onScroll = function (e) {
-  var x = window.pageXOffset;
-  $("#hostBar, .dialog.host:not(.hidden)").css("margin-left", -x);
-  $(".log").css("margin-left", x);
+  // Horizontal movement belongs to graphViewport. Move only the graph body
+  // vertically to follow the document; host headers stay at the top.
+  $("#vizContainer").css("transform", "translateY(" + -window.pageYOffset + "px)");
 
   if ($(".line.focus").length) {
     $(".highlight").css({
@@ -776,11 +776,11 @@ Controller.prototype.showDialog = function (e, type, elem) {
       .removeClass("left")
       .addClass("right")
       .show();
-  else if (e.getX() - $(window).scrollLeft() > $graph.width() / 2)
+  else if (e.getX() - $("#graphViewport").scrollLeft() > $graph.width() / 2)
     $dialog
       .css({
         left: e.getX() + $svg.offset().left - $dialog.width() - 30,
-        "margin-left": type ? -$(window).scrollLeft() : 0,
+        "margin-left": 0,
       })
       .removeClass("left")
       .addClass("right")
@@ -789,7 +789,7 @@ Controller.prototype.showDialog = function (e, type, elem) {
     $dialog
       .css({
         left: e.getX() + $svg.offset().left + 30,
-        "margin-left": type ? -$(window).scrollLeft() : 0,
+        "margin-left": 0,
       })
       .removeClass("right")
       .addClass("left")
@@ -897,6 +897,13 @@ Controller.prototype.showDialog = function (e, type, elem) {
     $dialog.find(".collapse").hide();
   }
 
+  if (type != 2) {
+    var graphLeft = $("#graphViewport").offset().left + 8;
+    var graphRight = graphLeft + $("#graphViewport").width() - 16;
+    $dialog.css("left", Math.max(graphLeft,
+      Math.min(parseFloat($dialog.css("left")), graphRight - $dialog.outerWidth())));
+  }
+
   // This is necessary to set so that host dialogs can be identified.
   // Dialog visibility toggling should ignore host dialogs only.
   if (type === 1) {
@@ -965,6 +972,12 @@ Controller.prototype.bindScroll = function () {
   $(window).bind("scroll", function (e) {
     self.onScroll(e);
   });
+  $("#graphViewport")
+    .off("scroll.graph")
+    .on("scroll.graph", function () {
+      // A popup anchored to a graph node must not drift into another column.
+      $(".dialog").hide();
+    });
   $(window).scroll();
 };
 

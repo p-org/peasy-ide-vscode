@@ -1,18 +1,224 @@
 :root {
   --container-padding: 20px;
+  --visualizer-log-width: min(384px, 38vw);
+  --visualizer-sidebar-width: min(264px, 30vw);
   --input-padding-vertical: 6px;
   --input-padding-horizontal: 4px;
   --input-margin-vertical: 4px;
   --input-margin-horizontal: 0;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
+  overflow-x: hidden;
   padding: 0 var(--container-padding);
   color: var(--vscode-foreground);
   font-size: var(--vscode-font-size);
   font-weight: var(--vscode-font-weight);
   font-family: var(--vscode-font-family);
   background-color: var(--vscode-editor-background);
+}
+
+/* Each column owns its horizontal space. Only the graph viewport scrolls
+   sideways; the document remains the shared vertical scroll owner. */
+.visualization {
+  --visualizer-left-width: var(--visualizer-log-width);
+}
+
+.visualization.graph-only {
+  --visualizer-left-width: 72px;
+}
+
+.visualization.logs-only {
+  --visualizer-left-width: calc(100vw - var(--visualizer-sidebar-width));
+}
+
+.visualization > .left {
+  overflow-x: clip;
+  width: calc(var(--visualizer-left-width) - 2 * var(--container-padding));
+}
+
+.visualization header,
+.visualization .left #tabs {
+  width: var(--visualizer-left-width) !important;
+  box-sizing: border-box;
+}
+
+.visualization .left .leftTabLinks {
+  position: fixed;
+  top: var(--container-padding);
+  left: var(--container-padding);
+  width: calc(var(--visualizer-left-width) - 2 * var(--container-padding));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  z-index: 5;
+}
+
+.visualization .left .leftTabLinks li {
+  position: static;
+}
+
+.visualization #panel-toggle {
+  top: 64px;
+  left: var(--container-padding) !important;
+  flex-direction: row;
+  max-width: calc(var(--visualizer-left-width) - 2 * var(--container-padding));
+  box-sizing: border-box;
+  z-index: 5;
+}
+
+.visualization #panel-toggle button {
+  width: auto;
+  margin: 0;
+  color: inherit;
+  background: transparent;
+}
+
+.visualization #panel-toggle button.selected {
+  background: var(--vscode-dropdown-background);
+}
+
+.visualization.graph-only #panel-toggle {
+  flex-direction: column;
+  top: var(--container-padding);
+}
+
+.visualization .log td {
+  position: relative;
+}
+
+.visualization .log .line {
+  max-width: 100%;
+}
+
+.visualization .log .line.focus {
+  width: calc(100% - 2em);
+}
+
+.visualization .log .logLabelL,
+.visualization .log .logLabelR {
+  top: 116px;
+  margin: 0;
+  padding: 8px 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: calc(var(--visualizer-left-width) - 2 * var(--container-padding));
+  overflow: hidden;
+}
+
+.visualization #graph {
+  margin-left: calc(var(--visualizer-left-width) - var(--container-padding)) !important;
+  width: calc(100vw - var(--visualizer-left-width) - var(--visualizer-sidebar-width));
+}
+
+.visualization #graphViewport {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: var(--visualizer-left-width);
+  right: var(--visualizer-sidebar-width);
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-inline: 1px solid var(--vscode-panel-border);
+  box-sizing: border-box;
+}
+
+.visualization.logs-only #graphViewport {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.visualization.logs-only #searchbar {
+  display: none;
+}
+
+.visualization #graphCanvas {
+  position: relative;
+  height: 100%;
+  min-width: 100%;
+}
+
+.visualization #vizContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 4em;
+  width: 100%;
+}
+
+.visualization .dialog:not(.hidden) {
+  max-width: calc(100vw - var(--visualizer-left-width) - var(--visualizer-sidebar-width) - 16px);
+  overflow-wrap: anywhere;
+}
+
+.visualization #hostBar {
+  position: absolute;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.visualization #viewLabelR,
+.visualization #viewSelectR,
+.visualization #selectIconR {
+  position: absolute;
+  right: 8px;
+}
+
+.visualization #searchbar {
+  left: var(--visualizer-left-width);
+  right: var(--visualizer-sidebar-width);
+  width: auto !important;
+  height: auto;
+  padding: var(--container-padding) 8px 8px;
+  box-sizing: border-box;
+}
+
+.visualization #searchbar #bar {
+  display: flex;
+  flex-wrap: wrap;
+  height: auto;
+}
+
+.visualization #searchbar #bar input {
+  flex: 1 1 60px;
+  min-width: 0;
+  width: 0;
+  padding-right: 4px;
+}
+
+.visualization #searchbar #bar .clear {
+  position: relative;
+  left: auto;
+  flex: 0 0 22pt;
+}
+
+.visualization #searchbar #bar #searchButton {
+  flex: 0 0 52pt;
+}
+
+.visualization #searchbar.results #bar input {
+  flex-basis: calc(100% - 22pt);
+}
+
+.visualization #searchbar #bar #prevButton {
+  margin-left: 0;
+}
+
+.visualization #searchbar #bar #numFound {
+  flex: 1;
+  width: auto;
+}
+
+.visualization #sidebar {
+  width: var(--visualizer-sidebar-width);
+  overflow: auto;
+  overflow-wrap: anywhere;
 }
 
 ol,

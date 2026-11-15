@@ -52,10 +52,6 @@ function Global($vizContainer, $sidebar, $hostBar, $logTable, views) {
   /** @private */
   this.pairwiseView = false;
 
-  this.$sidebar.css({
-    width: Global.SIDE_BAR_WIDTH + "px",
-  });
-
   var context = this;
   views.forEach(function (view) {
     view.controller = context.controller; //TODO
@@ -346,6 +342,17 @@ Global.prototype.drawAll = function () {
   }
 
   this.$vizContainer.height("auto");
+  // The fixed graph viewport does not contribute to document height. Reserve
+  // its full trace height so logs and graph keep sharing window scrollTop.
+  $("#graph").height(this.$vizContainer.outerHeight(true));
+  this.controller.onScroll();
+  // Log line positions include a 20px offset. Align their text centres with
+  // the graph nodes after both views have been laid out.
+  var lineHeight = parseFloat(this.$logTable.css("line-height"));
+  this.$logTable.css("top",
+    this.viewL.getSVG().offset().top -
+      $(".visualization > .left").offset().top - 20 - lineHeight / 2
+  );
   $(".dialog").hide();
   $(".hostConstraintDialog").hide();
   this.drawSideBar();
@@ -522,22 +529,19 @@ Global.prototype.resize = function () {
 
   var visibleHosts = viewLNumHosts + viewRNumHosts;
 
-  // TODO: rename to sidebarLeft sidebarRight middleWidth
-  var headerWidth = $(".visualization header").outerWidth();
-  var sidebarWidth = this.$sidebar.outerWidth();
-  var globalWidth = $(window).width() - headerWidth - sidebarWidth;
-
-  // * PeasyViz Change - Decreased the width of the searchbar because it overlapped with right sidebar texts, added '- 64' to the globalWidth
-  $("#searchbar").width(globalWidth - 20);
-
+  var globalWidth = Math.max(0, $("#graphViewport").width());
   var widthPerHost = Math.max(
     Global.MIN_HOST_WIDTH,
-    globalWidth / visibleHosts
+    globalWidth / Math.max(visibleHosts, 1)
   );
-  var logTableWidth =
-    this.viewR != null && this.getPairwiseView()
-      ? (this.SIDE_BAR_WIDTH - 12) / 2
-      : this.SIDE_BAR_WIDTH;
+  $("#graphCanvas").width(Math.max(globalWidth, visibleHosts * widthPerHost));
+
+  var logTableWidth = $(".visualization > .left").width();
+  if (this.viewR != null && this.getPairwiseView()) {
+    logTableWidth = (logTableWidth - 16) / 2;
+  }
+  // View.setLogTableWidth takes points; the measured column width is pixels.
+  logTableWidth = Math.max(0, logTableWidth) * 0.75;
 
   this.viewL.setWidth(viewLNumHosts * widthPerHost);
   this.viewL.setLogTableWidth(logTableWidth);

@@ -8,6 +8,9 @@ import Visualizer from "./visualizer";
 export default async function createAndRegisterPIntegration(
   installer: PInstaller
 ): Promise<void> {
+  // Register visualization before scanning workspace files for projects/tests.
+  Visualizer.createAndRegister(installer.context);
+
   // Compiles and runs P projects
   await CompileCommands.createAndRegister(installer.context);
 
@@ -20,6 +23,4 @@ export default async function createAndRegisterPIntegration(
   // Auto-formatting
   AutoFormatting.createAndRegister();
 
-  // Trace visualization
-  Visualizer.createAndRegister(installer.context);
 }
