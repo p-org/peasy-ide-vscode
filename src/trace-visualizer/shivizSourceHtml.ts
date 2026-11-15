@@ -401,9 +401,9 @@ const shivizSourceHtml = (
 	
 		<section class="visualization">
 			<div id="panel-toggle">
-				<div class="panel-toggle-options selected" id="panel-toggle-all" data-panel-selection="all">All</div>
-				<div class="panel-toggle-options" id="panel-toggle-logs" data-panel-selection="logs">Logs</div>
-				<div class="panel-toggle-options" id="panel-toggle-graph" data-panel-selection="graph">Graph</div>
+				<button type="button" class="panel-toggle-options selected" id="panel-toggle-all" data-panel-selection="all">All</button>
+				<button type="button" class="panel-toggle-options" id="panel-toggle-logs" data-panel-selection="logs">Logs</button>
+				<button type="button" class="panel-toggle-options" id="panel-toggle-graph" data-panel-selection="graph">Graph</button>
 			</div>
 			<div class="left">
 				<!-- <div class="bg"></div> -->
@@ -546,8 +546,12 @@ const shivizSourceHtml = (
 						</div>
 					</div>
 				</div>
-				<div id="hostBar"></div>
-				<div id="vizContainer"></div>
+				<div id="graphViewport" tabindex="0" aria-label="Trace graph, scroll horizontally to see more machines">
+					<div id="graphCanvas">
+						<div id="hostBar"></div>
+						<div id="vizContainer"></div>
+					</div>
+				</div>
 			</div>
 			<div id="sidebar">
 				<button class="pairwiseButton">Pairwise</button>

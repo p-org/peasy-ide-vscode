@@ -107,6 +107,9 @@ function Shiviz() {
    */
   const handlePanelSelection = (panelSelection) => {
     this.panelSelection = panelSelection;
+    $(".visualization")
+      .toggleClass("graph-only", panelSelection === "graph")
+      .toggleClass("logs-only", panelSelection === "logs");
     $("#panel-toggle-all").removeClass("selected");
     $("#panel-toggle-logs").removeClass("selected");
     $("#panel-toggle-graph").removeClass("selected");
@@ -714,6 +717,8 @@ Shiviz.prototype.go = function (index, store, force) {
       $(window).on("load resize", inputHeight);
       break;
     case 2:
+      // Measure columns only after the other pages have left document flow.
+      $("section:not(.visualization)").hide();
       $(".visualization").show();
       try {
         if (!$("#vizContainer svg").length || force)
@@ -730,7 +735,6 @@ Shiviz.prototype.go = function (index, store, force) {
         throw e;
       }
 
-      $("section:not(.visualization)").hide();
       $(window).scrollTop();
       break;
   }
